@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>StudHub: Пользователи</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <header th:insert="common/header :: header"></header>
+
+    <div class="container">
+        <h1 class="font-weight-bold">Пользователи</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Логин</th>
+                    <th>Имя</th>
+                    <th>Телефон</th>
+                    <th>Тип аккаунта</th>
+                </tr>
+            </thead>
+        </table>
+
+        <button type="button" class="btn btn-primary">Создать пользователя</button>
+    </div>
+</body>
+</html>
