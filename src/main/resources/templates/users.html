@@ -17,6 +17,7 @@
                     <th>Логин</th>
                     <th>Имя</th>
                     <th>Тип аккаунта</th>
+                    <th>Статус</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,7 @@
                     <td><span th:text="${user.getUsername()}"> Username </span></td>
                     <td><span th:text="${user.getFirstName() + ' ' + user.getLastName()}"> Name </span></td>
                     <td><span th:text="${user.getRolesString()}"> Role </span></td>
+                    <td><span th:text="${user.getStatus()}"> Status </span></td>
                 </tr>
             </tbody>
         </table>
