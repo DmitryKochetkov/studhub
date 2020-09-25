@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>StudHub: новый пользователь</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <header th:insert="common/header :: header"></header>
+
+    <div class="container mt-5 mb-5">
+        <h1 class="font-weight-bold">Новый пользователь</h1>
+
+        <form action="#" th:action="@{/users/new/register}" th:object="${form}" method="post" autocomplete="off">
+            <input type="text" th:field="*{firstName}" placeholder="Имя" class="form-control m-2">
+            <input type="text" th:field="*{lastName}" placeholder="Фамилия" class="form-control m-2">
+            <input type="text" th:field="*{username}" placeholder="Логин" class="form-control m-2">
+            <input type="text" th:field="*{password}" placeholder="Пароль" class="form-control m-2">
+
+            <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3">
+                <p>Роль: </p>
+                <select name="role" id="role" th:field="*{role}">
+                    <option value="ROLE_USER">Пользователь</option>
+                    <option value="ROLE_STUDENT">Ученик</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success">Зарегистрировать</button>
+        </form>
+    </div>
+</body>
+</html>
