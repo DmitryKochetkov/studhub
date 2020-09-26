@@ -84,7 +84,7 @@ public class MainController {
             ResponseEntity<User> response = restTemplate.postForEntity(uri, request, User.class);
         }
         catch (HttpClientErrorException.Conflict e) {
-            model.addAttribute("loginError", true); //TODO: вынести в подходящее место
+            model.addAttribute("loginError", true);
         }
 
         return redirectView;
