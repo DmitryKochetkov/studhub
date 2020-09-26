@@ -9,6 +9,7 @@ import com.studhub.entity.UserStatus;
 import com.studhub.repository.RoleRepository;
 import com.studhub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,10 @@ public class UserApiController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<UserDto> register(@RequestBody RegisterRequestDto dto) {
+        User registered = userRepository.findByUsername(dto.getUsername());
+        if (registered != null)
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+
         User user = new User();
         List<Role> roles = new ArrayList<>();
         roles.add(roleRepository.findByName(dto.getRole()));
