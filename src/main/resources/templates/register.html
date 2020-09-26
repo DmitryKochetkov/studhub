@@ -46,6 +46,8 @@
 
 
             <button type="submit" class="btn btn-success">Зарегистрировать</button>
+
+            <div class="alert alert-danger mt-2" th:if="${loginError}">Пользователь с таким логином уже зарегистрирован.</div>
         </form>
     </div>
 </body>

@@ -13,6 +13,8 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.nio.charset.Charset;
@@ -58,9 +60,10 @@ public class MainController {
     }
 
     @PostMapping("/users/register")
-    public String registerSubmit(
+    public RedirectView registerSubmit(
             Model model,
-            @ModelAttribute RegisterRequestDto form
+            @ModelAttribute RegisterRequestDto form,
+            RedirectAttributes redirectAttributes
     ) {
         RegisterRequestDto dto = new RegisterRequestDto();
         dto.setFirstName(form.getFirstName());
@@ -73,14 +76,18 @@ public class MainController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         String uri = "http://localhost:8081/api/users/register";
         HttpEntity<RegisterRequestDto> request = new HttpEntity<>(dto, headers);
-//        try {
-//            ResponseEntity<User> response = restTemplate.postForEntity(uri, request, User.class);
-//        }
-//        catch (HttpClientErrorException.Conflict e) {
-//            model.addAttribute("loginError",true);
-//        }
-        ResponseEntity<User> response = restTemplate.postForEntity(uri, request, User.class);
-        return "register";
+        RedirectView redirectView = new RedirectView("/users/register");
+        redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+
+        redirectAttributes.addFlashAttribute("loginError", true);
+        try {
+            ResponseEntity<User> response = restTemplate.postForEntity(uri, request, User.class);
+        }
+        catch (HttpClientErrorException.Conflict e) {
+            model.addAttribute("loginError", true); //TODO: вынести в подходящее место
+        }
+
+        return redirectView;
     }
 
     @GetMapping("/err500")
