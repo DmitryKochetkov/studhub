@@ -3,7 +3,6 @@ package com.studhub.controller.front;
 import com.studhub.dto.RegisterRequestDto;
 import com.studhub.dto.UserDto;
 import com.studhub.entity.User;
-import com.studhub.entity.UserStatus;
 import lombok.SneakyThrows;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -13,7 +12,6 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -48,9 +46,9 @@ public class MainController {
         return "students";
     }
 
-    @GetMapping("/account")
-    public String account(Model model) {
-        return "account";
+    @GetMapping("/profile")
+    public String profile(Model model) {
+        return "profile";
     }
 
     @GetMapping("/users/register")
