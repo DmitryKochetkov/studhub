@@ -106,4 +106,9 @@ public class MainController {
     public String test405() {
         throw new HttpRequestMethodNotSupportedException("sdfs", "sdfs");
     }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login_page";
+    }
 }
