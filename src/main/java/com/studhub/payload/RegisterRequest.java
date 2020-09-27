@@ -1,11 +1,11 @@
-package com.studhub.dto;
+package com.studhub.payload;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class RegisterRequestDto {
+public class RegisterRequest {
     private String firstName;
     private String lastName;
     private String username;

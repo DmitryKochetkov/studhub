@@ -1,7 +1,6 @@
 package com.studhub.controller.api;
 
-import com.studhub.dto.RegisterRequestDto;
-import com.studhub.dto.RoleDto;
+import com.studhub.payload.RegisterRequest;
 import com.studhub.dto.UserDto;
 import com.studhub.entity.Role;
 import com.studhub.entity.User;
@@ -40,7 +39,7 @@ public class UserApiController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<UserDto> register(@RequestBody RegisterRequestDto dto) {
+    public ResponseEntity<UserDto> register(@RequestBody RegisterRequest dto) {
         User registered = userRepository.findByUsername(dto.getUsername());
         if (registered != null)
             return new ResponseEntity<>(HttpStatus.CONFLICT);

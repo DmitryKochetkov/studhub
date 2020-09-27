@@ -1,6 +1,6 @@
 package com.studhub.controller.front;
 
-import com.studhub.dto.RegisterRequestDto;
+import com.studhub.payload.RegisterRequest;
 import com.studhub.dto.UserDto;
 import com.studhub.entity.User;
 import lombok.SneakyThrows;
@@ -53,17 +53,17 @@ public class MainController {
 
     @GetMapping("/users/register")
     public String register(Model model) {
-        model.addAttribute("form", new RegisterRequestDto());
+        model.addAttribute("form", new RegisterRequest());
         return "register";
     }
 
     @PostMapping("/users/register")
     public RedirectView registerSubmit(
             Model model,
-            @ModelAttribute RegisterRequestDto form,
+            @ModelAttribute RegisterRequest form,
             RedirectAttributes redirectAttributes
     ) {
-        RegisterRequestDto dto = new RegisterRequestDto();
+        RegisterRequest dto = new RegisterRequest();
         dto.setFirstName(form.getFirstName());
         dto.setLastName(form.getLastName());
         dto.setUsername(form.getUsername());
@@ -73,7 +73,7 @@ public class MainController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String uri = "http://localhost:8081/api/users/register";
-        HttpEntity<RegisterRequestDto> request = new HttpEntity<>(dto, headers);
+        HttpEntity<RegisterRequest> request = new HttpEntity<>(dto, headers);
         RedirectView redirectView = new RedirectView("/users/register");
         redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
 
@@ -95,7 +95,7 @@ public class MainController {
 
     @GetMapping("/err409")
     public String test409() {
-        RegisterRequestDto dto = new RegisterRequestDto();
+        RegisterRequest dto = new RegisterRequest();
         HttpHeaders headers = new HttpHeaders();
         byte[] b = new byte[6];
         throw new HttpClientErrorException(HttpStatus.CONFLICT, "msg", new HttpHeaders(), b, Charset.defaultCharset());
