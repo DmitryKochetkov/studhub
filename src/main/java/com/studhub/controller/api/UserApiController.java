@@ -1,6 +1,7 @@
 package com.studhub.controller.api;
 
-import com.studhub.payload.RegisterRequest;
+import com.studhub.controller.service.UserService;
+import com.studhub.payload.SignupRequest;
 import com.studhub.dto.UserDto;
 import com.studhub.entity.Role;
 import com.studhub.entity.User;
@@ -21,41 +22,27 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserApiController {
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
+    UserService userService;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getUsers() {
         List<UserDto> result = new ArrayList<>();
-        for (User user: userRepository.findAll())
+        for (User user: userService.getAll())
             result.add(new UserDto(user));
         return ResponseEntity.ok(result);
     }
 
     @PostMapping(
-            value = "/register",
+            value = "/signup",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<UserDto> register(@RequestBody RegisterRequest dto) {
-        User registered = userRepository.findByUsername(dto.getUsername());
+    public ResponseEntity<UserDto> signup(@RequestBody SignupRequest dto) {
+        User registered = userService.getByUsername(dto.getUsername());
         if (registered != null)
             return new ResponseEntity<>(HttpStatus.CONFLICT);
 
-        User user = new User();
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleRepository.findByName(dto.getRole()));
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-        user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword()); //TODO: bCryptPasswordEncoder
-        user.setStatus(UserStatus.ENABLED);
-        user.setRoles(roles);
-        Date now = new Date();
-        user.setCreated(now);
-        user.setLastModified(now);
-        return ResponseEntity.ok(new UserDto(userRepository.save(user)));
+
+        return ResponseEntity.ok(new UserDto(userService.register(dto)));
     }
 }

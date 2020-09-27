@@ -1,6 +1,6 @@
 package com.studhub.controller.front;
 
-import com.studhub.payload.RegisterRequest;
+import com.studhub.payload.SignupRequest;
 import com.studhub.dto.UserDto;
 import com.studhub.entity.User;
 import lombok.SneakyThrows;
@@ -51,43 +51,6 @@ public class MainController {
         return "profile";
     }
 
-    @GetMapping("/users/register")
-    public String register(Model model) {
-        model.addAttribute("form", new RegisterRequest());
-        return "register";
-    }
-
-    @PostMapping("/users/register")
-    public RedirectView registerSubmit(
-            Model model,
-            @ModelAttribute RegisterRequest form,
-            RedirectAttributes redirectAttributes
-    ) {
-        RegisterRequest dto = new RegisterRequest();
-        dto.setFirstName(form.getFirstName());
-        dto.setLastName(form.getLastName());
-        dto.setUsername(form.getUsername());
-        dto.setPassword(form.getPassword());
-        dto.setRole(form.getRole());
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        String uri = "http://localhost:8081/api/users/register";
-        HttpEntity<RegisterRequest> request = new HttpEntity<>(dto, headers);
-        RedirectView redirectView = new RedirectView("/users/register");
-        redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
-
-        redirectAttributes.addFlashAttribute("loginError", true);
-        try {
-            ResponseEntity<User> response = restTemplate.postForEntity(uri, request, User.class);
-        }
-        catch (HttpClientErrorException.Conflict e) {
-            model.addAttribute("loginError", true);
-        }
-
-        return redirectView;
-    }
-
     @GetMapping("/err500")
     public String testErr() {
         throw new NullPointerException();
@@ -95,7 +58,7 @@ public class MainController {
 
     @GetMapping("/err409")
     public String test409() {
-        RegisterRequest dto = new RegisterRequest();
+        SignupRequest dto = new SignupRequest();
         HttpHeaders headers = new HttpHeaders();
         byte[] b = new byte[6];
         throw new HttpClientErrorException(HttpStatus.CONFLICT, "msg", new HttpHeaders(), b, Charset.defaultCharset());
