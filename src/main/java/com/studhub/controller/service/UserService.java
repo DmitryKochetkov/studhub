@@ -47,4 +47,8 @@ public class UserService {
         user.setLastModified(now);
         return userRepository.save(user);
     }
+
+    public User getById(Long id) {
+        return userRepository.findById(id).get();
+    }
 }

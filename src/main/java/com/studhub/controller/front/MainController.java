@@ -46,10 +46,7 @@ public class MainController {
         return "students";
     }
 
-    @GetMapping("/profile")
-    public String profile(Model model) {
-        return "profile";
-    }
+
 
     @GetMapping("/err500")
     public String testErr() {

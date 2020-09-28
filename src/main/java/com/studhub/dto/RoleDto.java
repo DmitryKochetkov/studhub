@@ -1,9 +1,11 @@
 package com.studhub.dto;
 
 import com.studhub.entity.Role;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@AllArgsConstructor
 public class RoleDto {
     private String name;
 
@@ -13,6 +15,17 @@ public class RoleDto {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+
+        if (!(obj instanceof RoleDto))
+            return true;
+
+        return ((RoleDto)obj).getName() == this.name;
     }
 
     @Override

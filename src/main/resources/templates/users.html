@@ -24,9 +24,10 @@
                 <tr th:if="${users.empty}">
                     <td>Нет зарегистрированных пользователей.</td>
                 </tr>
-                <tr th:each="user : ${users}">
+                <tr th:style="'cursor: pointer;'"
+                    th:each="user : ${users}">
                     <td><span th:text="${user.getId()}"> ID </span></td>
-                    <td><span th:text="${user.getUsername()}"> Username </span></td>
+                    <td><a class="btn-link" th:text="${user.getUsername()}" th:href="'/profile/' + ${user.getId()}"> Username </a></td>
                     <td><span th:text="${user.getFirstName() + ' ' + user.getLastName()}"> Name </span></td>
                     <td><span th:text="${user.getRolesString()}"> Role </span></td>
                     <td><span th:text="${user.getStatus()}"> Status </span></td>

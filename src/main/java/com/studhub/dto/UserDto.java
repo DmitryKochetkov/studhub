@@ -40,4 +40,11 @@ public class UserDto {
             result = result + ", " + roles.get(i).toString();
         return result;
     }
+
+    public boolean isStudent() {
+        for (RoleDto roleDto: roles)
+            if (roleDto.getName() == "ROLE_STUDENT")
+                return true;
+        return false;
+    }
 }
