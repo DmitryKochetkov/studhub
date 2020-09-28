@@ -1,4 +1,4 @@
-package com.studhub.controller.service;
+package com.studhub.service;
 
 import com.studhub.entity.Role;
 import com.studhub.entity.User;

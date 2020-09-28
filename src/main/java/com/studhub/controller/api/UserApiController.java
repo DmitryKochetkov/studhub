@@ -1,13 +1,9 @@
 package com.studhub.controller.api;
 
-import com.studhub.controller.service.UserService;
+import com.studhub.service.UserService;
 import com.studhub.payload.SignupRequest;
 import com.studhub.dto.UserDto;
-import com.studhub.entity.Role;
 import com.studhub.entity.User;
-import com.studhub.entity.UserStatus;
-import com.studhub.repository.RoleRepository;
-import com.studhub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
