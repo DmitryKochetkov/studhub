@@ -43,7 +43,7 @@ public class UserDto {
 
     public boolean isStudent() {
         for (RoleDto roleDto: roles)
-            if (roleDto.getName() == "ROLE_STUDENT")
+            if (roleDto.getName().equals("ROLE_STUDENT"))
                 return true;
         return false;
     }
