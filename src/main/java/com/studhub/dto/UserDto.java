@@ -35,9 +35,9 @@ public class UserDto {
     public String getRolesString() {
         if (roles.isEmpty())
             return "NaN";
-        String result = roles.get(0).toString();
+        String result = roles.get(0).getNameForUI();
         for (int i = 1; i < roles.size(); i++)
-            result = result + ", " + roles.get(i).toString();
+            result = result + ", " + roles.get(i).getNameForUI();
         return result;
     }
 

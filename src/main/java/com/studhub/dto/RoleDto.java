@@ -28,8 +28,7 @@ public class RoleDto {
         return ((RoleDto)obj).getName() == this.name;
     }
 
-    @Override
-    public String toString() {
+    public String getNameForUI() {
         if (name.equals("ROLE_USER"))
             return "Пользователь";
 
