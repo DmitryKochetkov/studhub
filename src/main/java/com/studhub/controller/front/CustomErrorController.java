@@ -40,6 +40,8 @@ public class CustomErrorController implements ErrorController {
                     errorMsg = "Ошибка клиента.";
                 if (HttpStatus.resolve(httpErrorCode).is5xxServerError())
                     errorMsg = "Ошибка сервера.";
+                if (httpErrorCode == HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    errorMsg = "Внутренняя ошибка сервера.";
                 errorDescription = getErrorDescription(httpRequest);
                 break;
         }
