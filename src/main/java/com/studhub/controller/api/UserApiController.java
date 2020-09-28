@@ -19,12 +19,21 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserApiController {
     @Autowired
     UserService userService;
 
-    @GetMapping
+    @GetMapping("/user/{id}")
+    public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
+        User user = userService.getById(id);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(new UserDto(user));
+    }
+
+    @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getUsers() {
         List<UserDto> result = new ArrayList<>();
         for (User user: userService.getAll())
@@ -41,7 +50,6 @@ public class UserApiController {
         User registered = userService.getByUsername(dto.getUsername());
         if (registered != null)
             return new ResponseEntity<>(HttpStatus.CONFLICT);
-
 
         return ResponseEntity.ok(new UserDto(userService.register(dto)));
     }

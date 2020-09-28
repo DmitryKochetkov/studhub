@@ -46,8 +46,6 @@ public class MainController {
         return "students";
     }
 
-
-
     @GetMapping("/err500")
     public String testErr() {
         throw new NullPointerException();

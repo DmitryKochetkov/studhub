@@ -39,7 +39,7 @@ public class SignupController {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String uri = "http://localhost:8081/api/users/signup";
+        String uri = "http://localhost:8081/api/signup";
         HttpEntity<SignupRequest> request = new HttpEntity<>(dto, headers);
         RedirectView redirectView = new RedirectView("/users/signup");
         redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
