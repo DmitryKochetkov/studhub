@@ -19,6 +19,8 @@ public class UserDto {
     private String password;
     private UserStatus status;
     private List<RoleDto> roles;
+    private List<UserDto> followers;
+    private List<UserDto> following;
 
     public UserDto(User user) {
         this.id = user.getId();
@@ -30,6 +32,11 @@ public class UserDto {
         roles = new ArrayList<>();
         for (Role role: user.getRoles())
             roles.add(new RoleDto(role));
+
+        following = new ArrayList<>();
+        //not sure about efficiency here
+        for (User followingUser: user.getFollowing())
+            following.add(new UserDto(followingUser));
     }
 
     public String getRolesString() {
@@ -46,5 +53,9 @@ public class UserDto {
             if (roleDto.getName().equals("ROLE_STUDENT"))
                 return true;
         return false;
+    }
+
+    public String getFullname() {
+        return firstName + " " + lastName;
     }
 }

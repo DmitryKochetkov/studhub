@@ -30,7 +30,11 @@
         </div>
 
         <div class="row py-2">
-            <span class="font-weight-bold">Подписан(а) на:</span>
+            <span class="font-weight-bold pr-2">Подписан(а) на:</span>
+            <div th:each="following : ${user.getFollowing()}">
+                <a th:text="${following.getUsername()}" th:href="'/profile/' + ${following.getId()}" href=""></a>
+                <span>,</span>
+            </div>
             <span class="pl-2"></span>
         </div>
 

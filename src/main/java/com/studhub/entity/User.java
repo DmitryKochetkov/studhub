@@ -25,10 +25,26 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
             uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"}))
     private List<Role> roles;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="followers",
+            joinColumns=@JoinColumn(name="user_id"),
+            inverseJoinColumns=@JoinColumn(name="follower_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "follower_id"})
+    )
+    private List<User> followers;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="followers",
+            joinColumns=@JoinColumn(name="follower_id"),
+            inverseJoinColumns=@JoinColumn(name="user_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "follower_id"})
+    )
+    private List<User> following;
 }
