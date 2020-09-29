@@ -9,3 +9,16 @@ INSERT INTO studhub.public.users VALUES
 INSERT INTO studhub.public.user_roles VALUES
     (1, 3)
     ON CONFLICT DO NOTHING;
+
+INSERT INTO studhub.public.ref_courses VALUES
+    (1, now(), now(), 'Программирование на C++'),
+    (2, now(), now(), 'Программирование на Pascal'),
+    (3, now(), now(), 'Программирование на Java'),
+    (4, now(), now(), 'Олимпиадное программирование'),
+    (5, now(), now(), 'Информатика (ЕГЭ)'),
+    (6, now(), now(), 'Математика (ЕГЭ)'),
+    (7, now(), now(), 'Информатика (ОГЭ)'),
+    (8, now(), now(), 'Математика (ОГЭ)'),
+    (9, now(), now(), 'Математический анализ'),
+    (10, now(), now(), 'Линейная алгебра')
+    ON CONFLICT DO NOTHING;
