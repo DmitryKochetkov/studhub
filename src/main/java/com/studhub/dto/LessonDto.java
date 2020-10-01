@@ -10,11 +10,12 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LessonDto {
+public class LessonDto extends BaseDto {
     String topic;
     Date startDate;
 
     public LessonDto(Lesson lesson) {
+        super(lesson);
         this.topic = lesson.getTopic();
         this.startDate = lesson.getStartDate();
     }

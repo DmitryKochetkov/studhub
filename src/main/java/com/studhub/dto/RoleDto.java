@@ -6,10 +6,11 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleDto {
+public class RoleDto extends BaseDto {
     private String name;
 
     RoleDto(Role role) {
+        super(role);
         this.name = role.getName();
     }
 

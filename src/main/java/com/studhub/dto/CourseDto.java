@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class CourseDto {
+public class CourseDto extends BaseDto {
     Long id;
     Long studentId;
     String title;
@@ -20,6 +20,7 @@ public class CourseDto {
     Date startDate;
 
     public CourseDto(Course course) {
+        super(course);
         this.id = course.getId();
         this.studentId = course.getStudent().getId();
         this.title = course.getRefCourse().getTitle();

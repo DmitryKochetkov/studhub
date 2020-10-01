@@ -12,8 +12,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class UserDto {
-    private long id;
+public class UserDto extends BaseDto {
     private String firstName;
     private String lastName;
     private String username;
@@ -25,6 +24,7 @@ public class UserDto {
     private List<CourseDto> courses;
 
     public UserDto(User user) {
+        super(user);
         this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
