@@ -27,7 +27,5 @@ public class ProfileController {
         } catch (HttpClientErrorException.NotFound e) {
             throw new ResourceNotFoundException();
         }
-
-        //return "profile";
     }
 }

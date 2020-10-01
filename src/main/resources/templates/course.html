@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>StudHub: Курс</title>
+    <title th:text="'StudHub: ' + ${student.getFullname()} + ' - прогресс по курсу ' + ${course.getTitle()}">StudHub: Курс</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css}">
 
@@ -15,24 +15,25 @@
     <header th:insert="common/header :: header"></header>
     <div class="container">
 
-        <h2 class="font-weight-bold">Курс: Информатика (ЕГЭ)</h2>
+        <h2 class="font-weight-bold" th:text="'Курс: ' + ${course.getTitle()}">Курс</h2>
 
-        <div>Ученик: Имя Фамилия</div>
+        <div>Ученик: <a th:href="'/profile/' + ${student.getId()}" th:text="${student.getFullname()}">Имя Фамилия</a></div>
+        <div>Статус: <span class="font-weight-bold" th:text="${course.getStatus()}"></span></div>
 
-        <div class="row pt-5">
+        <div class="row pt-3">
             <div class="col">
                 <div class="font-weight-bold pb-3">Дедлайны / домашние задания</div>
                 <table class="table" style="font-size: 10pt;">
                     <thead class="thead-light">
-                    <tr>
-                        <th>Дата</th>
-                        <th>Разделы</th>
-                        <th>Заданий</th>
-                    </tr>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Разделы</th>
+                            <th>Заданий</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th></th>
+
                         </tr>
                     </tbody>
                 </table>
@@ -48,8 +49,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th></th>
+                        <tr th:each="lesson: ${course.getComingLessons()}">
+                            <td th:text="${lesson.getStartDate()}"></td>
+                            <td th:text="${lesson.getTopic()}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -84,10 +86,10 @@
         </div>
         <div class="row">
             <div class="col">
-                <div class="text-center"><a class="btn-link" style="font-size: 10pt;" href="/course/1/lessons">Все занятия</a></div>
+                <div class="text-center"><a class="btn-link" style="font-size: 10pt;" href="/course/1/homework">Все домашние задания</a></div>
             </div>
             <div class="col">
-                <div class="text-center"><a class="btn-link" style="font-size: 10pt;" href="/course/1/homework">Все домашние задания</a></div>
+                <div class="text-center"><a class="btn-link" style="font-size: 10pt;" href="/course/1/lessons">Все занятия</a></div>
             </div>
             <div class="col">
                 <div class="text-center"><a class="btn-link" style="font-size: 10pt;" href="/course/1/progress">Подробнее</a></div>

@@ -1,5 +1,6 @@
 package com.studhub.dto;
 
+import com.studhub.entity.Course;
 import com.studhub.entity.Role;
 import com.studhub.entity.User;
 import com.studhub.entity.UserStatus;
@@ -21,6 +22,7 @@ public class UserDto {
     private List<RoleDto> roles;
     private List<UserDto> followers;
     private List<UserDto> following;
+    private List<CourseDto> courses;
 
     public UserDto(User user) {
         this.id = user.getId();
@@ -37,6 +39,10 @@ public class UserDto {
         //not sure about efficiency here
         for (User followingUser: user.getFollowing())
             following.add(new UserDto(followingUser));
+
+        courses = new ArrayList<>();
+        for (Course course: user.getCourses())
+            courses.add(new CourseDto(course));
     }
 
     public String getRolesString() {

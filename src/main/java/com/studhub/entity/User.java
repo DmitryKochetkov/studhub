@@ -47,4 +47,7 @@ public class User extends BaseEntity {
             uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "follower_id"})
     )
     private List<User> following;
+
+    @OneToMany(mappedBy = "student")
+    private List<Course> courses;
 }
