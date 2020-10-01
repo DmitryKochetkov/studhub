@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 @Controller
 
 public class ProfileController {
-    @GetMapping("/profile/{id}")
+    @GetMapping("/user/{id}")
     public String profile(@PathVariable Long id, Model model) {
         RestTemplate restTemplate = new RestTemplate();
         try {
