@@ -2,7 +2,6 @@ package com.studhub.controller.front;
 
 import com.studhub.payload.SignupRequest;
 import com.studhub.dto.UserDto;
-import com.studhub.entity.User;
 import lombok.SneakyThrows;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -12,8 +11,6 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.nio.charset.Charset;
 import java.util.List;
@@ -28,7 +25,7 @@ public class MainController {
 
     @GetMapping("/courses")
     public String courses(Model model) {
-        return "courses";
+        return "about_courses";
     }
 
     @GetMapping("/users")
