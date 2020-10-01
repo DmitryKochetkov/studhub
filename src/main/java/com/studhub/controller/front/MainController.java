@@ -38,11 +38,6 @@ public class MainController {
         return "users";
     }
 
-    @GetMapping("/students")
-    public String students(Model model) {
-        return "students";
-    }
-
     @GetMapping("/err500")
     public String testErr() {
         throw new NullPointerException();
