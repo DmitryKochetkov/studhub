@@ -44,12 +44,13 @@ public class SignupController {
         RedirectView redirectView = new RedirectView("/users/signup");
         redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
 
-        redirectAttributes.addFlashAttribute("loginError", true);
+
         try {
             ResponseEntity<User> response = restTemplate.postForEntity(uri, request, User.class);
         }
         catch (HttpClientErrorException.Conflict e) {
             model.addAttribute("loginError", true);
+            redirectAttributes.addFlashAttribute("loginError", true);
         }
 
         return redirectView;
