@@ -18,6 +18,7 @@ public class CourseDto extends BaseDto {
     String title;
     CourseStatus status;
     Date startDate;
+    String courseTitle;
 
     public CourseDto(Course course) {
         super(course);
@@ -26,12 +27,12 @@ public class CourseDto extends BaseDto {
         this.title = course.getRefCourse().getTitle();
         this.status = course.getCourseStatus();
         this.startDate = course.getCreated();
+        this.courseTitle = course.getRefCourse().getTitle();
     }
 
     public List<LessonDto> getComingLessons() {
         List<LessonDto> result = new ArrayList<>();
-        result.add(new LessonDto("Topic 1", new Date()));
-        result.add(new LessonDto("Topic 2", new Date()));
+
         return result;
     }
 }

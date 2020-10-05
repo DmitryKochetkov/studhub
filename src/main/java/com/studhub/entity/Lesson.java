@@ -16,6 +16,6 @@ public class Lesson extends BaseEntity {
     Date startDate;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
     Course course;
 }
