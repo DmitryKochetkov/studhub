@@ -53,8 +53,8 @@ public class LessonController {
         try {
             ResponseEntity<LessonDto> response = restTemplate.postForEntity(uri, request, LessonDto.class);
         }
-        catch (HttpClientErrorException.Conflict e) {
-            redirectAttributes.addFlashAttribute("dateBusy", true);
+        catch (HttpClientErrorException e) {
+            return redirectView;
         }
 
         return redirectView;

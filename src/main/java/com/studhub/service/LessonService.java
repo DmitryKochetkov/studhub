@@ -1,5 +1,6 @@
 package com.studhub.service;
 
+import com.studhub.dto.LessonDto;
 import com.studhub.entity.Course;
 import com.studhub.entity.Lesson;
 import com.studhub.payload.CreateLessonRequest;
@@ -25,13 +26,14 @@ public class LessonService {
 
     public List<Lesson> getAll() { return lessonRepository.findAll(); }
 
-//    public Lesson createLesson(CreateLessonRequest request) {
-//        Lesson lesson = new Lesson();
-//        lesson.setStartDate(request.getStartDate());
-//        lesson.setTopic(request.getTopic());
-//        lesson.setCreated(new Date());
-//        lesson.setLastModified(new Date());
-//        lesson.setCourse(courseRepository.findById(request.getCourseId()).orElse(null)); //TODO: handle null
-//        return lessonRepository.save(lesson);
-//    }
+    public Lesson createLesson(LessonDto lessonDto) {
+        Lesson lesson = new Lesson();
+        lesson.setStartDate(lessonDto.getStartDate());
+        lesson.setTopic(lessonDto.getTopic());
+        Date date = new Date();
+        lesson.setCreated(date);
+        lesson.setLastModified(date);
+        lesson.setCourse(courseRepository.findById(1L).orElse(null)); //TODO: handle null
+        return lessonRepository.save(lesson);
+    }
 }

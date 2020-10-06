@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -27,16 +29,27 @@ public class LessonApiController {
         return ResponseEntity.ok(lessons);
     }
 
-//    @PostMapping(value = "/lessons/new",
-//    consumes = MediaType.APPLICATION_JSON_VALUE,
-//    produces = MediaType.APPLICATION_JSON_VALUE
-//    )
-//    public ResponseEntity<LessonDto> create(@RequestBody CreateLessonRequest request) {
-//        Lesson created = lessonService.createLesson(request);
-//
-//        if (created == null)
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//
-//        return ResponseEntity.ok(new LessonDto(created));
-//    }
+    @PostMapping(value = "/lessons/new",
+    consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<LessonDto> create(@RequestBody CreateLessonRequest request) {
+        LessonDto dto = new LessonDto();
+
+        //TODO: use java.time everywhere to store datetime
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(request.getStartDate());
+        calendar.add(Calendar.HOUR, request.getStartTime().getHours());
+        calendar.add(Calendar.MINUTE, request.getStartTime().getMinutes());
+
+        dto.setStartDate(calendar.getTime());
+        dto.setTopic(request.getTopic());
+
+        Lesson created = lessonService.createLesson(dto);
+
+        if (created == null)
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return ResponseEntity.ok(new LessonDto(created));
+    }
 }

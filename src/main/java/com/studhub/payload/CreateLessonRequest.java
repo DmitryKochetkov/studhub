@@ -11,10 +11,10 @@ import java.util.Date;
 public class CreateLessonRequest {
     String topic;
 
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date startDate;
 
-    @DateTimeFormat(pattern = "hh:mm")
+    @DateTimeFormat(pattern = "HH:mm")
     Date startTime;
 
     String studentUsername;
