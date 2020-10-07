@@ -1,5 +1,7 @@
 package com.studhub.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.studhub.entity.Course;
 import com.studhub.entity.CourseStatus;
 import com.studhub.entity.RefCourse;
@@ -19,6 +21,8 @@ public class CourseDto extends BaseDto {
     CourseStatus status;
     Date startDate;
     String courseTitle;
+
+    List<LessonDto> lessons;
 
     public CourseDto(Course course) {
         super(course);

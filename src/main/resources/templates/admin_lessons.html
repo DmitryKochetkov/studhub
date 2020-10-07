@@ -25,7 +25,7 @@
             </tr>
             <tr th:each="lesson : ${lessons}">
                 <td><span th:text="${#dates.format(lesson.getStartDate(), 'dd.MM.yyyy hh:mm')}"> Date </span></td>
-<!--                <td><a class="btn-link" th:text="${lesson.getCourseDto().getStudentId()}" th:href="'/user/' + ${lesson.getCourseDto().getStudentId()}"> Student </a></td>-->
+                <td><a class="btn-link" th:text="${lesson.getStudentId()}" th:href="'/user/' + ${lesson.getStudentId()}"> Student </a></td>
                 <td><span th:text="${lesson.getTopic()}"> Topic </span></td>
 <!--                <td><span th:text="${lesson.getStatus()}"> Status </span></td>-->
             </tr>

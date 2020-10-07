@@ -1,6 +1,8 @@
 package com.studhub.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.studhub.entity.Lesson;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,11 +21,13 @@ public class LessonDto extends BaseDto {
     Date startDate;
 
     Long courseId;
+    Long studentId;
 
     public LessonDto(Lesson lesson) {
         super(lesson);
         this.topic = lesson.getTopic();
         this.startDate = lesson.getStartDate();
         this.courseId = lesson.getCourse().getId();
+        this.studentId = lesson.getCourse().getStudent().getId();
     }
 }
