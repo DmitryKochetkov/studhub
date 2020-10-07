@@ -4,6 +4,7 @@ import com.studhub.dto.LessonDto;
 import com.studhub.entity.Lesson;
 import com.studhub.payload.CreateLessonRequest;
 import com.studhub.service.LessonService;
+import com.studhub.entity.LessonStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,6 +45,7 @@ public class LessonApiController {
 
         dto.setStartDate(calendar.getTime());
         dto.setTopic(request.getTopic());
+        dto.setStatus(LessonStatus.SCHEDULED);
 
         Lesson created = lessonService.createLesson(dto);
 

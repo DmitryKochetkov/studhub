@@ -18,4 +18,7 @@ public class Lesson extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
     Course course;
+
+    @Enumerated(EnumType.STRING)
+    LessonStatus status;
 }
