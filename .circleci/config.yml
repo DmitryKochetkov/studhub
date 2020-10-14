@@ -5,11 +5,12 @@ jobs:
     working_directory: ~/circleci-demo-java-spring
 
     docker:
-      - image: circleci/openjdk:8-jdk-stretch
+      - image: circleci/openjdk:latest
       - image: circleci/postgres:latest
         environment:
           POSTGRES_USER: studhub_app
           POSTGRES_DB: studhub_test
+          POSTGRES_PASSWORD: 1234
 
     steps:
 
