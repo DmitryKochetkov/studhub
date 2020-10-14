@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  build:
+    
+    working_directory: ~/circleci-demo-java-spring
+
+    docker:
+      - image: circleci/openjdk:8-jdk-stretch
+      - image: circleci/postgres:latest
+        environment:
+          POSTGRES_USER: studhub_app
+          POSTGRES_DB: studhub_test
+
+    steps:
+
+      - checkout
+      
+      - run: mvn package
+      
+      - store_test_results:
+          path: target/surefire-reports
+
+      - store_artifacts:
+          path: target/studhub-0.0.1-SNAPSHOT.jar
