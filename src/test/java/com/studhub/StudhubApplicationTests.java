@@ -7,9 +7,9 @@ import org.springframework.test.context.TestPropertySource;
 @SpringBootTest
 @TestPropertySource("/application-test.properties")
 class StudhubApplicationTests {
-
+  
     @Test
     void contextLoads() {
     }
-
+  
 }
