@@ -9,10 +9,15 @@ jobs:
       - image: circleci/postgres:latest
         environment:
           POSTGRES_USER: studhub_app
-          POSTGRES_DB: studhub_test
+          POSTGRES_DB: studhub
           POSTGRES_PASSWORD: 1234
 
     steps:
+      - run:
+          name: Setup PSQL Databases
+          command: |
+            sudo apt install -y postgresql-client
+            createdb -h localhost studhub_test -O studhub_app
 
       - checkout
       
