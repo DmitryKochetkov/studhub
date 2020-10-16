@@ -7,7 +7,7 @@ $('#student').on('change keyup', async function() {
         this.setCustomValidity('');
         $('#courses').empty();
         let data = await response.json();
-        if (data['student']) {
+        if (data['roles'].filter(role => role['name'] === "ROLE_STUDENT").length > 0) {
             for (let course of data['courses']) {
                 var opt = document.createElement('option');
                 opt.value = course['id'];

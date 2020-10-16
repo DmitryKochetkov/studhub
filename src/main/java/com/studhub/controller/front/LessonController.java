@@ -28,7 +28,7 @@ public class LessonController {
     @GetMapping
     public String get(Model model) {
         RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://localhost:8081/api/lessons/";
+        String uri = "http://localhost:8081/api/admin/lessons/";
         ResponseEntity<List<LessonDto>> response = restTemplate.exchange(uri, HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<LessonDto>>() {});
         List<LessonDto> lessons = response.getBody();
@@ -46,7 +46,7 @@ public class LessonController {
     @PostMapping("/new")
     public RedirectView createLesson(Model model, CreateLessonRequest request, RedirectAttributes redirectAttributes) {
         RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://localhost:8081/api/lessons/new";
+        String uri = "http://localhost:8081/api/admin/lessons/new";
 
         RedirectView redirectView = new RedirectView("/lessons");
         redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
