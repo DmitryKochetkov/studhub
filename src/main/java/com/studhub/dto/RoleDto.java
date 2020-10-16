@@ -1,5 +1,6 @@
 package com.studhub.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.studhub.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class RoleDto extends BaseDto {
         return ((RoleDto)obj).getName() == this.name;
     }
 
+    @JsonIgnore
     public String getNameForUI() {
         if (name.equals("ROLE_USER"))
             return "Пользователь";

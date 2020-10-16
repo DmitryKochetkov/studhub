@@ -19,7 +19,7 @@ public class UserApiController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/user/{id}")
+    @GetMapping(value = "/user/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
         User user = userService.getById(id);
         if (user == null)

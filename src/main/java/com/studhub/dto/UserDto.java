@@ -1,5 +1,8 @@
 package com.studhub.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.studhub.entity.Course;
 import com.studhub.entity.Role;
 import com.studhub.entity.User;
@@ -12,11 +15,15 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@JsonPropertyOrder({"id", "created", "lastModified", "username", "firstName", "lastName", "status", "roles", "followers", "following", "courses"})
 public class UserDto extends BaseDto {
     private String firstName;
     private String lastName;
     private String username;
+
+    @JsonIgnore
     private String password;
+
     private UserStatus status;
     private List<RoleDto> roles;
     private List<UserDto> followers;
@@ -36,6 +43,7 @@ public class UserDto extends BaseDto {
             roles.add(new RoleDto(role));
 
         following = new ArrayList<>();
+        followers = new ArrayList<>();
         //not sure about efficiency here
         if (user.getFollowing() != null)
             for (User followingUser: user.getFollowing())
@@ -47,6 +55,7 @@ public class UserDto extends BaseDto {
                 courses.add(new CourseDto(course));
     }
 
+    @JsonIgnore
     public String getRolesString() {
         if (roles.isEmpty())
             return "NaN";
@@ -56,6 +65,7 @@ public class UserDto extends BaseDto {
         return result;
     }
 
+    @JsonIgnore
     public boolean isStudent() {
         for (RoleDto roleDto: roles)
             if (roleDto.getName().equals("ROLE_STUDENT"))
@@ -63,6 +73,7 @@ public class UserDto extends BaseDto {
         return false;
     }
 
+    @JsonIgnore
     public String getFullname() {
         return firstName + " " + lastName;
     }
