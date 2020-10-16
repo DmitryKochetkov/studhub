@@ -1,4 +1,4 @@
-package com.studhub.controller.api;
+package com.studhub.controller.api.admin;
 
 import com.studhub.dto.LessonDto;
 import com.studhub.entity.Lesson;
@@ -17,8 +17,8 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
-public class LessonApiController {
+@RequestMapping("/api/admin")
+public class AdminLessonApiController {
     @Autowired
     LessonService lessonService;
 
