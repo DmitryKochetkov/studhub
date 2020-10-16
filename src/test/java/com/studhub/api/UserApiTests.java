@@ -57,7 +57,7 @@ public class UserApiTests {
     @Test
     public void testGetById() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/user/1"))
-                .andExpect(jsonPath("$[*]", hasSize(9)))
+                .andExpect(jsonPath("$[*]", hasSize(11)))
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.firstName").value("Ivan"))
                 .andExpect(jsonPath("$.lastName").value("Ivanov"))
