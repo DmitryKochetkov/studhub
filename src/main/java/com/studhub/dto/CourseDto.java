@@ -13,11 +13,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class CourseDto extends BaseDto {
-    Long id;
     Long studentId;
     String title;
     CourseStatus status;
     Date startDate;
+    List<LessonDto> comingLessons;
 
     public CourseDto(Course course) {
         super(course);
@@ -26,12 +26,6 @@ public class CourseDto extends BaseDto {
         this.title = course.getRefCourse().getTitle();
         this.status = course.getCourseStatus();
         this.startDate = course.getCreated();
-    }
-
-    public List<LessonDto> getComingLessons() {
-        List<LessonDto> result = new ArrayList<>();
-        result.add(new LessonDto("Topic 1", new Date()));
-        result.add(new LessonDto("Topic 2", new Date()));
-        return result;
+        this.comingLessons = new ArrayList<>();
     }
 }
