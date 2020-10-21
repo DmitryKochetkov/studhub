@@ -11,7 +11,7 @@
     <div class="container mt-5 mb-5">
         <h1 class="font-weight-bold pb-3">Новый пользователь</h1>
 
-        <form action="#" th:action="@{/users/signup}" th:object="${form}" method="post" autocomplete="off">
+        <form action="#" th:action="@{/users/signup}" th:object="${form}" method="post" autocomplete="off" class="was-validated">
             <div class="row">
                 <div class="col">
                     <div class="form-group">
@@ -45,9 +45,9 @@
             </div>
 
             <button type="submit" class="btn btn-success">Зарегистрировать</button>
-
-            <div class="alert alert-danger mt-2" th:if="${loginError}">Пользователь с таким логином уже зарегистрирован.</div>
         </form>
+
+        <script th:src="|/js/userValidator.js|"></script>
     </div>
 </body>
 </html>

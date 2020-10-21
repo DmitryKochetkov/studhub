@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>StudHub: Новый урок</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+    <body>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous"></script>-->
+        <header th:insert="common/header :: header"></header>
+
+        <div class="container mt-5 mb-5">
+            <h1 class="font-weight-bold pb-3">Новый урок</h1>
+
+            <form action="#" th:action="@{/lessons/new}" th:object="${form}" method="post" autocomplete="off" class="was-validated">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="start_date">Дата</label>
+                            <input type="date" name="start_date" id="start_date" th:field="*{startDate}" placeholder="Дата" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="start_time">Время</label>
+                            <input type="time" name="start_time" id="start_time" th:field="*{startTime}" placeholder="Время" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="student">Ученик</label>
+                    <input type="text" th:field="*{studentUsername}" id="student" placeholder="Ученик" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="courses">Курс:</label>
+                    <select name="role" id="courses" th:field="*{courseTitle}" class="form-control" disabled required>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="topic">Тема</label>
+                    <input type="text" th:field="*{topic}" id="topic" placeholder="Тема" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-success">Создать урок</button>
+            </form>
+        </div>
+
+        <script th:src="|/js/studentValidator.js|"></script>
+    </body>
+</html>
