@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/api/course/{course_id}")
 public class CourseApiController {
@@ -25,6 +27,4 @@ public class CourseApiController {
 
         return ResponseEntity.ok(new CourseDto(course));
     }
-
-
 }
