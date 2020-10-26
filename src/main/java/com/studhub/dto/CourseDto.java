@@ -1,15 +1,20 @@
 package com.studhub.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.studhub.entity.Course;
 import com.studhub.entity.CourseStatus;
 import com.studhub.entity.RefCourse;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 public class CourseDto extends BaseDto {
@@ -18,6 +23,8 @@ public class CourseDto extends BaseDto {
     String title;
     CourseStatus status;
     Date startDate;
+    String courseTitle;
+    List<LessonDto> comingLessons;
 
     public CourseDto(Course course) {
         super(course);
@@ -26,12 +33,11 @@ public class CourseDto extends BaseDto {
         this.title = course.getRefCourse().getTitle();
         this.status = course.getCourseStatus();
         this.startDate = course.getCreated();
+        this.courseTitle = course.getRefCourse().getTitle();
+        this.comingLessons = course.getLessons().stream().limit(3).map(LessonDto::new).collect(Collectors.toList());
     }
 
     public List<LessonDto> getComingLessons() {
-        List<LessonDto> result = new ArrayList<>();
-        result.add(new LessonDto("Topic 1", new Date()));
-        result.add(new LessonDto("Topic 2", new Date()));
-        return result;
+        return comingLessons;
     }
 }

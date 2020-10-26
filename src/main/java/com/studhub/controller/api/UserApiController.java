@@ -32,6 +32,15 @@ public class UserApiController {
         return ResponseEntity.ok(new UserDto(user));
     }
 
+    @GetMapping(value = "/user")
+    public ResponseEntity<UserDto> getUserByUsername(@RequestParam String username) {
+        User user = userService.getByUsername(username);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(new UserDto(user));
+    }
+
     @GetMapping("/users")
     @ApiOperation(value = "Get all users")
     public ResponseEntity<List<UserDto>> getUsers() {
