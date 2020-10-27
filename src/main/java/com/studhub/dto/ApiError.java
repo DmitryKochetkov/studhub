@@ -1,4 +1,4 @@
-package com.studhub.exception;
+package com.studhub.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
