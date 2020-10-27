@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'Studhub: Error ' + ${errorCode}">Studhub: Error</title>
+    <title th:text="'StudHub: Error ' + ${errorCode}">StudHub: Error</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
 </head>
@@ -18,12 +18,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="container" th:if="${!errorDescription.empty}">
-        <h5 class="font-weight-bold">Описание ошибки:</h5>
-<!--        <span th:text="${errorDescription}" style="font-family: 'Source Code Pro', monospace;"></span>-->
-        <pre th:text="${errorDescription}"></pre>
     </div>
 </body>
 </html>
