@@ -25,10 +25,4 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     public ResponseEntity<ApiError> handleTypeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request) {
         return new ResponseEntity<>(new ApiError(HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
     }
-
-    @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ApiError> globalExceptionHandler(Exception ex) {
-        return new ResponseEntity<ApiError>(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 }
