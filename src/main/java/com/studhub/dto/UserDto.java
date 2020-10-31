@@ -45,12 +45,14 @@ public class UserDto extends BaseDto {
         following = new ArrayList<>();
         followers = new ArrayList<>();
         //not sure about efficiency here
-        for (User followingUser: user.getFollowing())
-            following.add(new UserDto(followingUser));
+        if (user.getFollowing() != null)
+            for (User followingUser: user.getFollowing())
+                following.add(new UserDto(followingUser));
 
         courses = new ArrayList<>();
-        for (Course course: user.getCourses())
-            courses.add(new CourseDto(course));
+        if (user.getCourses() != null)
+            for (Course course: user.getCourses())
+                courses.add(new CourseDto(course));
     }
 
     @JsonIgnore
