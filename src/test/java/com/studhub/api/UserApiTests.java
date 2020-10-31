@@ -3,6 +3,7 @@ package com.studhub.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.studhub.StudhubApplication;
+import com.studhub.dto.UserDto;
 import com.studhub.entity.User;
 import com.studhub.entity.UserStatus;
 import com.studhub.service.UserService;
@@ -41,8 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-//@Sql(value = {"/users-list-after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-@Sql(value = {"/users-list-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class UserApiTests {
     @Autowired
     private MockMvc mockMvc;
@@ -59,12 +59,13 @@ public class UserApiTests {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/user/1"))
                 .andExpect(jsonPath("$[*]", hasSize(11)))
                 .andExpect(jsonPath("$.id").value(1))
+                //TODO: check created and lastModified
                 .andExpect(jsonPath("$.firstName").value("Ivan"))
                 .andExpect(jsonPath("$.lastName").value("Ivanov"))
                 .andExpect(jsonPath("$.status").value("ENABLED"))
                 .andExpect(jsonPath("$.username").value("admin"))
-                .andExpect(jsonPath("$.followers").value(emptyCollectionOf(User.class)))
-                .andExpect(jsonPath("$.following").value(emptyCollectionOf(User.class)))
+                .andExpect(jsonPath("$.followers").value(emptyCollectionOf(UserDto.class)))
+                .andExpect(jsonPath("$.following").value(emptyCollectionOf(UserDto.class)))
                 //TODO: check password is encrypted
                 //TODO: check order
                 .andReturn();
