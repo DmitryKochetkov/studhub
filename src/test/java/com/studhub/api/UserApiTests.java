@@ -78,9 +78,10 @@ public class UserApiTests {
     @Test
     public void testGetById400() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/user/string"))
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
-                .andExpect(jsonPath("$.status").value(400))
-                .andExpect(jsonPath("$.detail").value("Not found"))
+                .andExpect(jsonPath("$.statusCode").value(400))
+                .andExpect(jsonPath("$.detail").value("Bad Request"))
                 .andReturn();
     }
 
@@ -88,6 +89,9 @@ public class UserApiTests {
     public void testGetById404() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/100"))
                 .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$[*]", hasSize(2)))
+                .andExpect(jsonPath("$.statusCode").value(404))
+                .andExpect(jsonPath("$.detail").value("Not Found"))
                 .andReturn();
     }
 }
