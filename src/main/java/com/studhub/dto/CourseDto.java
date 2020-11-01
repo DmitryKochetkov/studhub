@@ -18,12 +18,10 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 public class CourseDto extends BaseDto {
-    Long id;
     Long studentId;
     String title;
     CourseStatus status;
     Date startDate;
-    String courseTitle;
     List<LessonDto> comingLessons;
 
     public CourseDto(Course course) {
@@ -33,7 +31,6 @@ public class CourseDto extends BaseDto {
         this.title = course.getRefCourse().getTitle();
         this.status = course.getCourseStatus();
         this.startDate = course.getCreated();
-        this.courseTitle = course.getRefCourse().getTitle();
         this.comingLessons = course.getLessons().stream().limit(3).map(LessonDto::new).collect(Collectors.toList());
     }
 
