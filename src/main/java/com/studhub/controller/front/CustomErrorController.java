@@ -18,7 +18,10 @@ public class CustomErrorController implements ErrorController {
 
         ModelAndView errorPage = new ModelAndView("custom_error");
         String errorMsg = "Неизвестная ошибка.";
-        int httpErrorCode = getErrorCode(httpRequest);
+        Integer httpErrorCode = getErrorCode(httpRequest);
+        if (httpErrorCode == null) {
+            httpErrorCode = 404;
+        }
         String errorDescription = "";
 
         switch (httpErrorCode) {
@@ -52,7 +55,7 @@ public class CustomErrorController implements ErrorController {
         return errorPage;
     }
 
-    private int getErrorCode(HttpServletRequest httpRequest) {
+    private Integer getErrorCode(HttpServletRequest httpRequest) {
         return (Integer) httpRequest.getAttribute("javax.servlet.error.status_code");
     }
 

@@ -1,5 +1,6 @@
 package com.studhub.controller.api;
 
+import com.studhub.exception.ResourceNotFoundException;
 import com.studhub.service.UserService;
 import com.studhub.payload.SignupRequest;
 import com.studhub.dto.UserDto;
@@ -23,7 +24,7 @@ public class UserApiController {
     public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
         User user = userService.getById(id);
         if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException();
 
         return ResponseEntity.ok(new UserDto(user));
     }
