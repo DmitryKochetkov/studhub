@@ -50,18 +50,4 @@ public class UserApiController {
             result.add(new UserDto(user));
         return ResponseEntity.ok(result);
     }
-
-    @ApiOperation(value = "Sign up a new user")
-    @PostMapping(
-            value = "/signup",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<UserDto> signup(@RequestBody SignupRequest dto) {
-        User registered = userService.getByUsername(dto.getUsername());
-        if (registered != null)
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-
-        return ResponseEntity.ok(new UserDto(userService.register(dto)));
-    }
 }
