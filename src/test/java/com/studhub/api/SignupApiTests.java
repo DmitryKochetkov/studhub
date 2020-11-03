@@ -84,7 +84,7 @@ public class SignupApiTests {
         String requestBody = ow.writeValueAsString(signupRequest);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/signup").contentType(APPLICATION_JSON_UTF8).content(requestBody))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$.statusCode").value(400))
                 .andExpect(jsonPath("$.detail").value("Bad Request"))
