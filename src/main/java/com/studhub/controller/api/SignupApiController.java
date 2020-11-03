@@ -9,6 +9,8 @@ import com.studhub.repository.RoleRepository;
 import com.studhub.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,10 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.HttpClientErrorException;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @RequestMapping("/api/signup")
@@ -36,6 +35,13 @@ public class SignupApiController {
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 409, message = "Conflict")
+        }
     )
     public ResponseEntity<UserDto> signup(@RequestBody SignupRequest dto) {
         User registered = userService.getByUsername(dto.getUsername());
