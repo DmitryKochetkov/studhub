@@ -7,6 +7,8 @@ import com.studhub.payload.SignupRequest;
 import com.studhub.repository.RoleRepository;
 import com.studhub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,8 +23,8 @@ public class UserService {
     @Autowired
     RoleRepository roleRepository;
 
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public Page<User> getAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     public User getByUsername(String username) {

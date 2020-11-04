@@ -1,7 +1,6 @@
 package com.studhub.api;
 
 import com.studhub.dto.CourseDto;
-import com.studhub.entity.Course;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.emptyCollectionOf;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -49,10 +47,5 @@ public class CourseApiTests {
                 //TODO: check password is encrypted
                 //TODO: check order
                 .andReturn();
-
-        //TODO: test /api/user/2 via comparing with JSON string
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/3"))
-                .andExpect(status().isNotFound());
     }
 }

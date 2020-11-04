@@ -1,18 +1,18 @@
 package com.studhub.controller.api;
 
-import com.studhub.exception.ResourceNotFoundException;
-import com.studhub.service.UserService;
-import com.studhub.payload.SignupRequest;
 import com.studhub.dto.UserDto;
 import com.studhub.entity.User;
+import com.studhub.exception.ResourceNotFoundException;
+import com.studhub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -39,10 +39,10 @@ public class UserApiController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserDto>> getUsers() {
-        List<UserDto> result = new ArrayList<>();
-        for (User user: userService.getAll())
-            result.add(new UserDto(user));
+    public ResponseEntity<Page<UserDto>> getUsers(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable) {
+        if (pageable == null)
+            throw new ResourceNotFoundException();
+        Page<UserDto> result = userService.getAll(pageable).map(UserDto::new);
         return ResponseEntity.ok(result);
     }
 }
