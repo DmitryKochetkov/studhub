@@ -2,6 +2,7 @@ package com.studhub.controller.api;
 
 import com.studhub.dto.UserDto;
 import com.studhub.entity.User;
+import com.studhub.exception.BadRequestException;
 import com.studhub.exception.ResourceNotFoundException;
 import com.studhub.service.UserService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -57,10 +59,19 @@ public class UserApiController {
 
     @GetMapping("/users")
     @ApiOperation(value = "Get all users")
-    public ResponseEntity<Page<UserDto>> getUsers(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable) {
-        if (pageable == null)
-            throw new ResourceNotFoundException();
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "Not found")
+    }
+    )
+    public ResponseEntity<Page<UserDto>> getUsers(@RequestParam(defaultValue = "0") Integer page) {
+        if (page < 0)
+            throw new BadRequestException();
+        Pageable pageable = PageRequest.of(page, 10);
         Page<UserDto> result = userService.getAll(pageable).map(UserDto::new);
+        if (result.getNumber() > result.getTotalPages())
+            throw new ResourceNotFoundException();
         return ResponseEntity.ok(result);
     }
 }
