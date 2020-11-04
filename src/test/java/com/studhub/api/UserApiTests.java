@@ -87,22 +87,25 @@ public class UserApiTests {
     }
 
     @Test
-    public void testGetAllUsers404() throws Exception {
+    public void testGetAllUsers400() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/users?page=-1"))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
-                .andExpect(jsonPath("$.statusCode").value(404))
-                .andExpect(jsonPath("$.detail").value("Not Found"))
+                .andExpect(jsonPath("$.statusCode").value(400))
+                .andExpect(jsonPath("$.detail").value("Bad Request"))
                 .andReturn();
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/users?page=some_string"))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
-                .andExpect(jsonPath("$.statusCode").value(404))
-                .andExpect(jsonPath("$.detail").value("Not Found"))
+                .andExpect(jsonPath("$.statusCode").value(400))
+                .andExpect(jsonPath("$.detail").value("Bad Request"))
                 .andReturn();
+    }
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/users?page=3"))
+    @Test
+    public void testGetAllUsers404() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/users?page=2"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$.statusCode").value(404))
