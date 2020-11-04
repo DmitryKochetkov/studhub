@@ -1,7 +1,6 @@
 package com.studhub.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.studhub.entity.Course;
 import com.studhub.entity.Role;
