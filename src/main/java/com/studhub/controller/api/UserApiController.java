@@ -19,9 +19,18 @@ public class UserApiController {
     @Autowired
     UserService userService;
 
-    @GetMapping(value = "/user/{id}")
+    @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
         User user = userService.getById(id);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(new UserDto(user));
+    }
+
+    @GetMapping(value = "/user")
+    public ResponseEntity<UserDto> getUserByUsername(@RequestParam String username) {
+        User user = userService.getByUsername(username);
         if (user == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -34,18 +43,5 @@ public class UserApiController {
         for (User user: userService.getAll())
             result.add(new UserDto(user));
         return ResponseEntity.ok(result);
-    }
-
-    @PostMapping(
-            value = "/signup",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<UserDto> signup(@RequestBody SignupRequest dto) {
-        User registered = userService.getByUsername(dto.getUsername());
-        if (registered != null)
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-
-        return ResponseEntity.ok(new UserDto(userService.register(dto)));
     }
 }
