@@ -1,4 +1,6 @@
 version: 2
+orbs:
+  codecov: codecov/codecov@1.1.1
 jobs:
   build:
     
@@ -30,3 +32,5 @@ jobs:
 
       - store_artifacts:
           path: target/studhub-0.0.1-SNAPSHOT.jar
+
+      - run: bash <(curl -s https://codecov.io/bash)
