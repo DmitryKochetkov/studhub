@@ -3,6 +3,7 @@ package com.studhub.controller.front;
 import com.studhub.dto.CourseDto;
 import com.studhub.dto.UserDto;
 import com.studhub.exception.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +18,23 @@ import org.springframework.web.client.RestTemplate;
 @Controller
 @RequestMapping("/course")
 public class CourseController {
+    @Value("${server.address}")
+    public String HOST;
+
+    @Value("${server.port}")
+    public String PORT;
+
     @GetMapping("/{id}")
     public String course(@PathVariable Long id, Model model) {
         RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://localhost:8081/api/course/" + id.toString();
+        String uri = "http://" + HOST + ":" + PORT + "/api/course/" + id.toString();
         try {
             ResponseEntity<CourseDto> course = restTemplate.exchange(uri, HttpMethod.GET, null,
                     new ParameterizedTypeReference<CourseDto>() {});
             CourseDto courseDto = course.getBody();
             model.addAttribute("course", course.getBody());
 
-            ResponseEntity<UserDto> student = restTemplate.exchange("http://localhost:8081/api/user/" + courseDto.getStudentId(), HttpMethod.GET, null,
+            ResponseEntity<UserDto> student = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + courseDto.getStudentId(), HttpMethod.GET, null,
                     new ParameterizedTypeReference<UserDto>() {});
             model.addAttribute("student", student.getBody());
 
