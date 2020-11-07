@@ -6,6 +6,7 @@ import com.studhub.dto.UserDto;
 import com.studhub.entity.User;
 import com.studhub.exception.ResourceNotFoundException;
 import com.studhub.payload.CreateLessonRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -25,10 +26,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/lessons")
 public class LessonController {
+    @Value("${server.address}")
+    public String HOST;
+
+    @Value("${server.port}")
+    public String PORT;
+
     @GetMapping
     public String get(Model model) {
         RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://localhost:8081/api/admin/lessons/";
+        String uri = "http://" + HOST + ":" + PORT + "/api/admin/lessons/";
         ResponseEntity<List<LessonDto>> response = restTemplate.exchange(uri, HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<LessonDto>>() {});
         List<LessonDto> lessons = response.getBody();
