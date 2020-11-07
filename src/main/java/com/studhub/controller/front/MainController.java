@@ -1,5 +1,6 @@
 package com.studhub.controller.front;
 
+import com.studhub.exception.ResourceNotFoundException;
 import com.studhub.payload.SignupRequest;
 import com.studhub.dto.UserDto;
 import lombok.SneakyThrows;
