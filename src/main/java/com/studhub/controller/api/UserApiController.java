@@ -1,5 +1,6 @@
 package com.studhub.controller.api;
 
+import com.studhub.dto.PageDto;
 import com.studhub.dto.UserDto;
 import com.studhub.entity.User;
 import com.studhub.exception.BadRequestException;
@@ -58,20 +59,20 @@ public class UserApiController {
     }
 
     @GetMapping("/users")
-    @ApiOperation(value = "Get all users")
+    @ApiOperation(value = "Get up to 10 users")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not found")
     }
     )
-    public ResponseEntity<Page<UserDto>> getUsers(@RequestParam(defaultValue = "0") Integer page) {
+    public ResponseEntity<PageDto<UserDto>> getUsers(@RequestParam(defaultValue = "0") Integer page) {
         if (page < 0)
             throw new BadRequestException();
         Pageable pageable = PageRequest.of(page, 10);
         Page<UserDto> result = userService.getAll(pageable).map(UserDto::new);
         if (result.getNumber() > result.getTotalPages())
             throw new ResourceNotFoundException();
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(new PageDto<>(result));
     }
 }

@@ -105,7 +105,7 @@ public class UserApiTests {
 
     @Test
     public void testGetAllUsers404() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/users?page=2"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/users?page=3"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$.statusCode").value(404))

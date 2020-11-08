@@ -1,8 +1,11 @@
 package com.studhub.controller.front;
 
+import com.studhub.dto.PageDto;
 import com.studhub.dto.UserDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,9 +39,10 @@ public class MainController {
     public String users(Model model) {
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://" + HOST + ":" + PORT + "/api/users";
-        ResponseEntity<List<UserDto>> response = restTemplate.exchange(uri, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<UserDto>>(){});
-        model.addAttribute("users", response.getBody());
+        ResponseEntity<PageDto<UserDto>> response = restTemplate.exchange(uri, HttpMethod.GET, null,
+                new ParameterizedTypeReference<>() {
+                });
+        model.addAttribute("users", response.getBody().getContent());
         return "users";
     }
 
