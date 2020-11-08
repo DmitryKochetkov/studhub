@@ -70,7 +70,7 @@ public class SignupApiTests {
     }
 
     @Test
-    public void testPostSignup400() throws Exception {
+    public void testPostSignup400_IncorectRole() throws Exception {
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setFirstName("Norman");
         signupRequest.setLastName("Osborn");
@@ -88,6 +88,22 @@ public class SignupApiTests {
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$.statusCode").value(400))
                 .andExpect(jsonPath("$.detail").value("Bad Request"))
+                .andReturn();
+    }
+
+    @Test
+    public void testPostSignup400_EmptyJSONBody() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/signup").contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+    @Test
+    public void testPostSignup415() throws Exception {
+        String requestBody = "";
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/signup"))
+                .andExpect(status().isUnsupportedMediaType())
                 .andReturn();
     }
 }
