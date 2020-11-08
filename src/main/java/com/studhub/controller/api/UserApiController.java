@@ -66,12 +66,12 @@ public class UserApiController {
             @ApiResponse(code = 404, message = "Not found")
     }
     )
-    public ResponseEntity<PageDto<UserDto>> getUsers(@RequestParam(defaultValue = "0") Integer page) {
-        if (page < 0)
+    public ResponseEntity<PageDto<UserDto>> getUsers(@RequestParam(defaultValue = "1") Integer page) {
+        if (page - 1 < 0)
             throw new BadRequestException();
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page-1, 10);
         Page<UserDto> result = userService.getAll(pageable).map(UserDto::new);
-        if (result.getNumber() > result.getTotalPages())
+        if (result.getNumber() + 1 > result.getTotalPages())
             throw new ResourceNotFoundException();
         return ResponseEntity.ok(new PageDto<>(result));
     }
