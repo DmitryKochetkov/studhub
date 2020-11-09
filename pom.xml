@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.studhub</groupId>
     <artifactId>studhub</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>studhub</name>
     <description>Personal accounts for my students</description>
 
