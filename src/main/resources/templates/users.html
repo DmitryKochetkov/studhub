@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:if="${users.empty}">
+                <tr th:if="${users.isEmpty()}">
                     <td>Нет зарегистрированных пользователей.</td>
                 </tr>
                 <tr th:style="'cursor: pointer;'"

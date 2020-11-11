@@ -16,7 +16,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Controller
-@RequestMapping("/course")
+@RequestMapping
 public class CourseController {
     @Value("${server.address}")
     public String HOST;
@@ -24,7 +24,12 @@ public class CourseController {
     @Value("${server.port}")
     public String PORT;
 
-    @GetMapping("/{id}")
+    @GetMapping("/courses")
+    public String courses(Model model) {
+        return "about_courses";
+    }
+
+    @GetMapping("/course/{id}")
     public String course(@PathVariable Long id, Model model) {
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://" + HOST + ":" + PORT + "/api/course/" + id.toString();

@@ -35,22 +35,6 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/courses")
-    public String courses(Model model) {
-        return "about_courses";
-    }
-
-    @GetMapping("/users")
-    public String users(Model model, @RequestParam(defaultValue = "1") Integer page) {
-        RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://" + HOST + ":" + PORT + "/api/users?page=" + page;
-        ResponseEntity<PageDto<UserDto>> response = restTemplate.exchange(uri, HttpMethod.GET, null,
-                new ParameterizedTypeReference<PageDto<UserDto>>() {
-                });
-        model.addAttribute("users", response.getBody().getContent());
-        return "users";
-    }
-
     @GetMapping("/login")
     public String loginPage() {
         return "login_page";
