@@ -45,7 +45,7 @@ public class MainController {
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://" + HOST + ":" + PORT + "/api/users?page=" + page;
         ResponseEntity<PageDto<UserDto>> response = restTemplate.exchange(uri, HttpMethod.GET, null,
-                new ParameterizedTypeReference<>() {
+                new ParameterizedTypeReference<PageDto<UserDto>>() {
                 });
         model.addAttribute("users", response.getBody().getContent());
         return "users";
