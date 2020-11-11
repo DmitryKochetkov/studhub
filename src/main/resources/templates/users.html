@@ -10,8 +10,12 @@
 
     <div class="container">
         <h1 class="font-weight-bold pb-3">Пользователи</h1>
-        <table class="table">
-            <thead class="thead-light">
+        <div class="table_empty_info" th:if="${!page.isHasPrevious() && page.getContent().isEmpty()}">
+            Нет зарегистрированных пользователей.
+        </div>
+        <div class="users_table" th:unless="${!page.isHasPrevious() && page.getContent().isEmpty()}">
+            <table class="table">
+                <thead class="thead-light">
                 <tr>
                     <th>ID</th>
                     <th>Логин</th>
@@ -19,21 +23,25 @@
                     <th>Тип аккаунта</th>
                     <th>Статус</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr th:if="${users.isEmpty()}">
-                    <td>Нет зарегистрированных пользователей.</td>
-                </tr>
+                </thead>
+                <tbody>
                 <tr th:style="'cursor: pointer;'"
-                    th:each="user : ${users}">
+                    th:each="user : ${page.getContent()}">
                     <td><span th:text="${user.getId()}"> ID </span></td>
                     <td><a class="btn-link" th:text="${user.getUsername()}" th:href="'/user/' + ${user.getId()}"> Username </a></td>
                     <td><span th:text="${user.getFirstName() + ' ' + user.getLastName()}"> Name </span></td>
                     <td><span th:text="${user.getRolesString()}"> Role </span></td>
                     <td><span th:text="${user.getStatus()}"> Status </span></td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+
+            <ul class="pagination">
+                <li class="page-item" th:each="i: ${#numbers.sequence(page.getNumber()-5, page.getNumber()+5)}" th:if="${i} > 0 and ${i} <= ${page.getTotalPages()}">
+                    <a class="page-link" th:href="'/users?page='+${i}" th:text="${i}">1</a>
+                </li>
+            </ul>
+        </div>
 
         <form action="/users/signup" method="get">
             <button type="submit" class="btn btn-primary">Создать пользователя</button>

@@ -2,6 +2,7 @@ package com.studhub.controller.front;
 
 import com.studhub.dto.PageDto;
 import com.studhub.dto.UserDto;
+import com.studhub.exception.BadRequestException;
 import com.studhub.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -28,10 +29,18 @@ public class UserController {
     public String users(Model model, @RequestParam(defaultValue = "1") Integer page) {
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://" + HOST + ":" + PORT + "/api/users?page=" + page;
-        ResponseEntity<PageDto<UserDto>> response = restTemplate.exchange(uri, HttpMethod.GET, null,
-                new ParameterizedTypeReference<PageDto<UserDto>>() {
-                });
-        model.addAttribute("users", response.getBody().getContent());
+        try {
+            ResponseEntity<PageDto<UserDto>> response = restTemplate.exchange(uri, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<PageDto<UserDto>>() {
+                    });
+            model.addAttribute("page", response.getBody());
+        }
+        catch (HttpClientErrorException.NotFound e) {
+            throw new ResourceNotFoundException();
+        }
+        catch (HttpClientErrorException.BadRequest e) {
+            throw new BadRequestException();
+        }
         return "users";
     }
 

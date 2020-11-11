@@ -9,12 +9,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class PageDto<T> {
-    int page;
+    int number;
     boolean hasNext;
     boolean hasPrevious;
+    int totalPages;
     List<T> content;
 
     public PageDto(Page<T> page) {
         this.content = page.getContent();
+        this.totalPages = page.getTotalPages();
     }
 }
