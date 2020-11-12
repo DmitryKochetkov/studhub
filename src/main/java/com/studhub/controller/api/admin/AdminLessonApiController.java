@@ -1,21 +1,25 @@
 package com.studhub.controller.api.admin;
 
 import com.studhub.dto.LessonDto;
+import com.studhub.dto.PageDto;
 import com.studhub.entity.Lesson;
 import com.studhub.entity.LessonStatus;
+import com.studhub.exception.BadRequestException;
+import com.studhub.exception.ResourceNotFoundException;
 import com.studhub.payload.CreateLessonRequest;
 import com.studhub.service.LessonService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -26,11 +30,14 @@ public class AdminLessonApiController {
 
     @GetMapping("/lessons")
     @ApiOperation("Get all lessons")
-    public ResponseEntity<List<LessonDto>> get() {
-        List<LessonDto> lessons = new ArrayList<>();
-        for (Lesson lesson: lessonService.getAll())
-            lessons.add(new LessonDto(lesson));
-        return ResponseEntity.ok(lessons);
+    public ResponseEntity<PageDto<LessonDto>> get(@RequestParam(defaultValue = "1") Integer page) {
+        if (page - 1 < 0)
+            throw new BadRequestException();
+        Pageable pageable = PageRequest.of(page-1, 10);
+        Page<LessonDto> result = lessonService.getAll(pageable).map(LessonDto::new);
+        if (result.getNumber() + 1 > result.getTotalPages())
+            throw new ResourceNotFoundException();
+        return ResponseEntity.ok(new PageDto<>(result));
     }
 
     @PostMapping(value = "/lessons/new",

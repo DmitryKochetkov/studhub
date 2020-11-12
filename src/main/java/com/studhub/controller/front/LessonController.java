@@ -1,6 +1,9 @@
 package com.studhub.controller.front;
 
 import com.studhub.dto.LessonDto;
+import com.studhub.dto.PageDto;
+import com.studhub.exception.BadRequestException;
+import com.studhub.exception.ResourceNotFoundException;
 import com.studhub.payload.CreateLessonRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,12 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/lessons")
@@ -29,14 +31,22 @@ public class LessonController {
     public String PORT;
 
     @GetMapping
-    public String get(Model model) {
+    public String get(Model model, @RequestParam(defaultValue = "1") Integer page) {
         RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://" + HOST + ":" + PORT + "/api/admin/lessons/";
-        ResponseEntity<List<LessonDto>> response = restTemplate.exchange(uri, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<LessonDto>>() {});
-        List<LessonDto> lessons = response.getBody();
-        model.addAttribute("lessons", lessons);
-        return "admin_lessons";
+        try {
+            String uri = "http://" + HOST + ":" + PORT + "/api/admin/lessons?page=" + page;
+            ResponseEntity<PageDto<LessonDto>> response = restTemplate.exchange(uri, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<PageDto<LessonDto>>() {
+                    });
+            model.addAttribute("page", response.getBody());
+            return "admin_lessons";
+        }
+        catch (HttpClientErrorException.NotFound e) {
+            throw new ResourceNotFoundException();
+        }
+        catch (HttpClientErrorException.BadRequest e) {
+            throw new BadRequestException();
+        }
     }
 
     @GetMapping("/new")
