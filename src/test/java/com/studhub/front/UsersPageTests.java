@@ -1,63 +1,62 @@
 package com.studhub.front;
 
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import static com.studhub.StudhubApplicationTests.TEXT_HTML_UTF8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("/application-test.properties")
-@AutoConfigureMockMvc
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class UsersPageTests {
-    @Autowired
-    MockMvc mockMvc;
+    @Value("${server.address}")
+    public String HOST;
 
-    @Before
-    @Test
-    public void contextLoads() {
-        assertThat(mockMvc).isNotNull();
-    }
+    @Value("${server.port}")
+    public String PORT;
 
     @Test
     public void usersPagesLoad() throws Exception {
-        String url = "/users?page=";
-        mockMvc.perform(MockMvcRequestBuilders.get(url + 1))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(TEXT_HTML_UTF8));
+        String baseUrl = "http://" + HOST + ":" + PORT + "/users?page=";
+        RestTemplate restTemplate = new RestTemplate();
+        List<String> urlsOk = new ArrayList<>();
+        urlsOk.add(baseUrl + 1);
+        urlsOk.add(baseUrl + 2);
+        for (String url: urlsOk) {
+            ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
+            Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+            Assert.assertEquals(Objects.requireNonNull(responseEntity.getHeaders().getContentType()), TEXT_HTML_UTF8);
+        }
+    }
 
-        mockMvc.perform(MockMvcRequestBuilders.get(url + 2))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(TEXT_HTML_UTF8));
-
-        mockMvc.perform(MockMvcRequestBuilders.get(url + 3))
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentType(TEXT_HTML_UTF8));
-
-        mockMvc.perform(MockMvcRequestBuilders.get(url + "string"))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(TEXT_HTML_UTF8));
-
-        mockMvc.perform(MockMvcRequestBuilders.get(url + 0))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(TEXT_HTML_UTF8));
-
-        mockMvc.perform(MockMvcRequestBuilders.get(url + "-1"))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(TEXT_HTML_UTF8));
+    @Test(expected = HttpClientErrorException.BadRequest.class)
+    public void usersPageBadRequest() {
+        String baseUrl = "http://" + HOST + ":" + PORT + "/users?page=";
+        RestTemplate restTemplate = new RestTemplate();
+        List<String> urlsBadRequest = new ArrayList<>();
+        urlsBadRequest.add(baseUrl + "-1");
+        urlsBadRequest.add(baseUrl + "0");
+        urlsBadRequest.add(baseUrl + "string");
+        for (String url: urlsBadRequest) {
+            ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
+            Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
+            Assert.assertEquals(Objects.requireNonNull(responseEntity.getHeaders().getContentType()), TEXT_HTML_UTF8);
+        }
     }
 }
