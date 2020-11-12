@@ -9,14 +9,14 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class CreateLessonRequest {
-    String topic;
+    private String topic;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    Date startDate;
+    private Date startDate;
 
     @DateTimeFormat(pattern = "HH:mm")
-    Date startTime;
+    private Date startTime;
 
-    String studentUsername;
-    String courseTitle;
+    private String studentUsername;
+    private String courseTitle;
 }
