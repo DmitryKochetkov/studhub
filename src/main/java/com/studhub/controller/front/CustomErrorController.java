@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class CustomErrorController implements ErrorController {
-    @RequestMapping(value = "errors")
+    @RequestMapping(value = "errors", produces = "text/html;charset=UTF-8")
     public ModelAndView renderErrorPage(HttpServletRequest httpRequest) {
 
         ModelAndView errorPage = new ModelAndView("custom_error");
@@ -59,7 +59,3 @@ public class CustomErrorController implements ErrorController {
         return "/errors";
     }
 }
-
-//class CustomErrorController {
-//
-//}

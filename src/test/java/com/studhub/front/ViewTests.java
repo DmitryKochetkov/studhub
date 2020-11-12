@@ -20,6 +20,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import java.util.Objects;
 
+import static com.studhub.StudhubApplicationTests.TEXT_HTML_UTF8;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("/application-test.properties")
@@ -48,7 +50,7 @@ public class ViewTests {
                     if (!endpoint.startsWith("/api")) {
                         ResponseEntity<String> responseEntity = restTemplate.exchange(root + endpoint, HttpMethod.GET, null, String.class, 1);
                         Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-                        Assert.assertEquals(Objects.requireNonNull(responseEntity.getHeaders().getContentType()).toString(), "text/html;charset=UTF-8");
+                        Assert.assertEquals(Objects.requireNonNull(responseEntity.getHeaders().getContentType()), TEXT_HTML_UTF8);
                         log.info("Test passed on endpoint " + endpoint);
                         //TODO: log if assertion fails
                     }
