@@ -1,10 +1,6 @@
 package com.studhub.controller.front;
 
-import com.studhub.dto.CourseDto;
 import com.studhub.dto.LessonDto;
-import com.studhub.dto.UserDto;
-import com.studhub.entity.User;
-import com.studhub.exception.ResourceNotFoundException;
 import com.studhub.payload.CreateLessonRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;

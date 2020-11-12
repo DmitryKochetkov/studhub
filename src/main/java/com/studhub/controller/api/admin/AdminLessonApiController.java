@@ -22,7 +22,7 @@ import java.util.List;
 @Api(tags = "Manage lessons", description = "Available only for administrator.")
 public class AdminLessonApiController {
     @Autowired
-    LessonService lessonService;
+    private LessonService lessonService;
 
     @GetMapping("/lessons")
     @ApiOperation("Get all lessons")
