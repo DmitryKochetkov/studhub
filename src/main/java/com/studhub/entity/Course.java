@@ -11,17 +11,17 @@ import java.util.List;
 public class Course extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, updatable = false)
-    User student;
+    private User student;
 
     @ManyToOne
     @JoinColumn(name = "course_type", referencedColumnName = "id", nullable = false, updatable = false)
-    RefCourse refCourse;
+    private RefCourse refCourse;
 
     @Enumerated(EnumType.STRING)
-    CourseStatus courseStatus;
+    private CourseStatus courseStatus;
 
     @OneToMany(mappedBy = "course")
-    List<Lesson> lessons;
+    private List<Lesson> lessons;
 
     //CodificatorProgress codificatorProgress = new Codificator(refCourse.getCodificatorTemplate())
 }

@@ -11,5 +11,5 @@ import javax.persistence.Table;
 @Data
 public class RefCourse extends BaseEntity {
     @Column
-    String title;
+    private String title;
 }

@@ -1,14 +1,11 @@
 package com.studhub.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.studhub.entity.Lesson;
 import com.studhub.entity.LessonStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -16,15 +13,13 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LessonDto extends BaseDto {
-    String topic;
+    private String topic;
+    private Long courseId;
+    private Long studentId;
+    private LessonStatus status;
 
     @JsonFormat(pattern = "dd.MM.yyyy hh:mm")
-    Date startDate;
-
-    Long courseId;
-    Long studentId;
-
-    LessonStatus status;
+    private Date startDate;
 
     public LessonDto(Lesson lesson) {
         super(lesson);
