@@ -74,7 +74,7 @@ public class SignupApiTests {
     }
 
     @Test
-    public void testPostSignup400_IncorectRole() throws Exception {
+    public void testPostSignup400IncorrectRole() throws Exception {
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setFirstName("Norman");
         signupRequest.setLastName("Osborn");
@@ -96,7 +96,7 @@ public class SignupApiTests {
     }
 
     @Test
-    public void testPostSignup400_IncorrectJSONBody() throws Exception {
+    public void testPostSignup400IncorrectJSONBody() throws Exception {
         String requestBody = "just_a_string";
         mockMvc.perform(MockMvcRequestBuilders.post("/api/signup").contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest())
