@@ -10,15 +10,15 @@ import java.util.Date;
 @Data
 public class Lesson extends BaseEntity {
     @Column
-    String topic;
+    private String topic;
 
     @Column
-    Date startDate;
+    private Date startDate;
 
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
-    Course course;
+    private Course course;
 
     @Enumerated(EnumType.STRING)
-    LessonStatus status;
+    private LessonStatus status;
 }

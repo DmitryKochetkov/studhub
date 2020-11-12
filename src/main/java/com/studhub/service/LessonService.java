@@ -1,9 +1,7 @@
 package com.studhub.service;
 
 import com.studhub.dto.LessonDto;
-import com.studhub.entity.Course;
 import com.studhub.entity.Lesson;
-import com.studhub.payload.CreateLessonRequest;
 import com.studhub.repository.CourseRepository;
 import com.studhub.repository.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +13,10 @@ import java.util.List;
 @Service
 public class LessonService {
     @Autowired
-    LessonRepository lessonRepository;
+    private LessonRepository lessonRepository;
 
     @Autowired
-    CourseRepository courseRepository;
+    private CourseRepository courseRepository;
 
     public Lesson getById(Long id) {
         return lessonRepository.findById(id).orElse(null);

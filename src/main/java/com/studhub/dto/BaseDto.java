@@ -9,9 +9,9 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class BaseDto {
-    Long id;
-    Date created;
-    Date lastModified;
+    protected Long id;
+    protected Date created;
+    protected Date lastModified;
 
     BaseDto(BaseEntity entity) {
         this.id = entity.getId();
