@@ -18,10 +18,10 @@ import java.util.List;
 @Service
 public class UserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     public Page<User> getAll(Pageable pageable) {
         return userRepository.findAll(pageable);

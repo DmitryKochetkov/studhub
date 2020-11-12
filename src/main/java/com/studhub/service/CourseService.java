@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CourseService {
     @Autowired
-    CourseRepository courseRepository;
+    private CourseRepository courseRepository;
 
     public Course getById(Long id) {
         return courseRepository.findById(id).orElse(null);

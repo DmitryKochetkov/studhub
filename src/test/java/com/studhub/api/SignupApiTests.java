@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class SignupApiTests {
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     @Test
