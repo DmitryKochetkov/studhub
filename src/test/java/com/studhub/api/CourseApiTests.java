@@ -11,7 +11,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,7 +36,7 @@ public class CourseApiTests {
     //test for /api/course/{courseId}
     @Test
     public void testGetById() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/course/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/course/1"))
                 .andExpect(jsonPath("$[*]", hasSize(8)))
                 .andExpect(jsonPath("$.id").value(1))
                 //TODO: check created and lastModified

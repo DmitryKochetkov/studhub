@@ -96,16 +96,18 @@ public class SignupApiTests {
     }
 
     @Test
-    public void testPostSignup400_EmptyJSONBody() throws Exception {
+    public void testPostSignup400_IncorrectJSONBody() throws Exception {
+        String requestBody = "just_a_string";
         mockMvc.perform(MockMvcRequestBuilders.post("/api/signup").contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/signup").contentType(APPLICATION_JSON_UTF8).content(requestBody))
                 .andExpect(status().isBadRequest())
                 .andReturn();
     }
 
     @Test
     public void testPostSignup415() throws Exception {
-        String requestBody = "";
-
         mockMvc.perform(MockMvcRequestBuilders.post("/api/signup"))
                 .andExpect(status().isUnsupportedMediaType())
                 .andReturn();

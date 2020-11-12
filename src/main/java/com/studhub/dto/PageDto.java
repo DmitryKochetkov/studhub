@@ -9,11 +9,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class PageDto<T> {
-    int number;
-    boolean hasNext;
-    boolean hasPrevious;
-    int totalPages;
-    List<T> content;
+    private int number;
+    private boolean hasNext;
+    private boolean hasPrevious;
+    private int totalPages;
+    private List<T> content;
 
     public PageDto(Page<T> page) {
         this.content = page.getContent();

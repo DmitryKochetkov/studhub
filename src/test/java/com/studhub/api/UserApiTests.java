@@ -11,7 +11,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,7 +37,7 @@ public class UserApiTests {
     //test for /api/user/{userId}
     @Test
     public void testGetUserById200() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/user/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/1"))
                 .andExpect(jsonPath("$[*]", hasSize(11)))
                 .andExpect(jsonPath("$.id").value(1))
                 //TODO: check created and lastModified
@@ -57,7 +56,7 @@ public class UserApiTests {
 
     @Test
     public void testGetUserById400() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/user/string"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/string"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$.statusCode").value(400))
