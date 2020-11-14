@@ -19,10 +19,6 @@ public class UserDto extends BaseDto {
     private String firstName;
     private String lastName;
     private String username;
-
-    @JsonIgnore
-    private String password;
-
     private UserStatus status;
     private List<RoleDto> roles;
     private List<UserDto> followers;
@@ -35,7 +31,6 @@ public class UserDto extends BaseDto {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.username = user.getUsername();
-        this.password = user.getPassword();
         this.status = user.getStatus();
         roles = new ArrayList<>();
         for (Role role: user.getRoles())

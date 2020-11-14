@@ -69,7 +69,6 @@ public class UserController {
         try {
             ResponseEntity<CourseDto> course = restTemplate.exchange(uri, HttpMethod.GET, null,
                     new ParameterizedTypeReference<CourseDto>() {});
-            CourseDto courseDto = course.getBody();
             model.addAttribute("course", course.getBody());
 
             ResponseEntity<UserDto> student = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + user_id, HttpMethod.GET, null,
