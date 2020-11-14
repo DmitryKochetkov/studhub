@@ -37,6 +37,8 @@ public class ViewTests {
     @Value("${server.port}")
     public String PORT;
 
+    public Integer[] uriVariables = {1, 1, 1, 1, 1, 1, 1, 1, 1}; //there will never be an endpoint with more than 10 uri variables
+
     @Test
     public void testViews() throws Exception {
         RestTemplate restTemplate = new RestTemplate();
@@ -48,11 +50,16 @@ public class ViewTests {
             if (requestMappingInfo.getMethodsCondition().getMethods().contains(RequestMethod.GET))
                 for (String endpoint: requestMappingInfo.getPatternsCondition().getPatterns()) {
                     if (!endpoint.startsWith("/api")) {
-                        ResponseEntity<String> responseEntity = restTemplate.exchange(root + endpoint, HttpMethod.GET, null, String.class, 1);
-                        Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-                        Assert.assertEquals(Objects.requireNonNull(responseEntity.getHeaders().getContentType()), TEXT_HTML_UTF8);
+                        try {
+                            ResponseEntity<String> responseEntity = restTemplate.exchange(root + endpoint, HttpMethod.GET, null, String.class, uriVariables);
+                            Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+                            Assert.assertEquals(Objects.requireNonNull(responseEntity.getHeaders().getContentType()), TEXT_HTML_UTF8);
+                        }
+                        catch (RuntimeException e) {
+                            log.info("Test failed on endpoint " + endpoint);
+                            throw e;
+                        }
                         log.info("Test passed on endpoint " + endpoint);
-                        //TODO: log if assertion fails
                     }
                 }
         }
