@@ -69,7 +69,7 @@ public class UserApiController {
             throw new BadRequestException();
         Pageable pageable = PageRequest.of(page-1, 10);
         Page<UserDto> result = userService.getAll(pageable).map(UserDto::new);
-        if (result.getNumber() + 1 > result.getTotalPages())
+        if (result.getNumber() + 1 > result.getTotalPages() && result.getTotalPages() > 0)
             throw new ResourceNotFoundException();
         return ResponseEntity.ok(new PageDto<>(result));
     }

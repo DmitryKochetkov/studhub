@@ -35,7 +35,7 @@ public class AdminLessonApiController {
             throw new BadRequestException();
         Pageable pageable = PageRequest.of(page-1, 10);
         Page<LessonDto> result = lessonService.getAll(pageable).map(LessonDto::new);
-        if (result.getNumber() + 1 > result.getTotalPages())
+        if (result.getNumber() + 1 > result.getTotalPages() && result.getTotalPages() > 0)
             throw new ResourceNotFoundException();
         return ResponseEntity.ok(new PageDto<>(result));
     }
