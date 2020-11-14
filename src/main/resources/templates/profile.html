@@ -50,7 +50,7 @@
                 </thead>
                 <tbody>
                     <tr th:each="course: ${user.getCourses()}">
-                        <td><a href="" th:text="${course.getTitle()}" th:href="'/course/' + ${course.getId()}"></a></td>
+                        <td><a th:text="${course.getTitle()}" th:href="${'/user/' + course.getStudentId()} + '/course/' + ${course.getId()}"></a></td>
                         <td th:text="${course.getStatus()}"></td>
                         <td th:text="${course.getStartDate()}"></td>
                     </tr>

@@ -1,10 +1,13 @@
 package com.studhub.controller.api;
 
+import com.studhub.dto.CourseDto;
 import com.studhub.dto.PageDto;
 import com.studhub.dto.UserDto;
+import com.studhub.entity.Course;
 import com.studhub.entity.User;
 import com.studhub.exception.BadRequestException;
 import com.studhub.exception.ResourceNotFoundException;
+import com.studhub.service.CourseService;
 import com.studhub.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,6 +28,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserApiController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CourseService courseService;
 
     @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get user by id")
@@ -72,5 +78,24 @@ public class UserApiController {
         if (result.getNumber() + 1 > result.getTotalPages() && result.getTotalPages() > 0)
             throw new ResourceNotFoundException();
         return ResponseEntity.ok(new PageDto<>(result));
+    }
+
+    @GetMapping(value = "/user/{user_id}/course/{course_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Get course by id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found")
+    }
+    )
+    public ResponseEntity<CourseDto> getCourse(@PathVariable Long user_id, @PathVariable Long course_id) {
+        User user = userService.getById(user_id);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        Course course = courseService.getById(course_id);
+        if (course == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(new CourseDto(course));
     }
 }

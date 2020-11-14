@@ -1,5 +1,6 @@
 package com.studhub.controller.front;
 
+import com.studhub.dto.CourseDto;
 import com.studhub.dto.PageDto;
 import com.studhub.dto.UserDto;
 import com.studhub.exception.BadRequestException;
@@ -19,7 +20,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-
 public class UserController {
     @Value("${server.address}")
     public String HOST;
@@ -60,5 +60,31 @@ public class UserController {
         } catch (HttpClientErrorException.NotFound e) {
             throw new ResourceNotFoundException();
         }
+    }
+
+    @GetMapping("/user/{user_id}/course/{course_id}")
+    public String course(@PathVariable Long user_id, @PathVariable Long course_id, Model model) {
+        RestTemplate restTemplate = new RestTemplate();
+        String uri = "http://" + HOST + ":" + PORT + "/api/user/" + user_id + "/course/" + course_id.toString();
+        try {
+            ResponseEntity<CourseDto> course = restTemplate.exchange(uri, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<CourseDto>() {});
+            CourseDto courseDto = course.getBody();
+            model.addAttribute("course", course.getBody());
+
+            ResponseEntity<UserDto> student = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + user_id, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<UserDto>() {});
+            model.addAttribute("student", student.getBody());
+
+        }
+        catch (HttpClientErrorException.NotFound e) {
+            throw new ResourceNotFoundException();
+        }
+//        catch (HttpClientErrorException.Unauthorized e) {
+//            throw new UnauthorizedException();
+//        }
+
+
+        return "course";
     }
 }
