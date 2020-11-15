@@ -96,6 +96,9 @@ public class UserApiController {
         if (course == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
+        if (course.getStudent().getId() != user_id)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         return ResponseEntity.ok(new CourseDto(course));
     }
 }
