@@ -24,8 +24,6 @@ import static com.studhub.StudhubApplicationTests.TEXT_HTML_UTF8;
 
 /**
  * Класс тестирования GET эндпоинтов.
- * @author Дмитрий Кочетков
- * @version 0.1
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)

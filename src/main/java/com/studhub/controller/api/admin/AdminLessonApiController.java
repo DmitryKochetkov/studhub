@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
 
+/**
+ * Контроллер администрирования уроков.
+ */
 @RestController
 @RequestMapping("/api/admin")
 @Api(tags = "Manage lessons", description = "Available only for administrator.")
