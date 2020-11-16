@@ -24,7 +24,7 @@ import static com.studhub.StudhubApplicationTests.TEXT_HTML_UTF8;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class UsersPageTests {
+public class AdminUsersPageTests {
     @Value("${server.address}")
     public String HOST;
 
@@ -32,8 +32,8 @@ public class UsersPageTests {
     public String PORT;
 
     @Test
-    public void usersPagesLoad() throws Exception {
-        String baseUrl = "http://" + HOST + ":" + PORT + "/users?page=";
+    public void usersPagesLoad() {
+        String baseUrl = "http://" + HOST + ":" + PORT + "/admin/users?page=";
         RestTemplate restTemplate = new RestTemplate();
         List<String> urlsOk = new ArrayList<>();
         urlsOk.add(baseUrl + 1);
@@ -47,7 +47,7 @@ public class UsersPageTests {
 
     @Test(expected = HttpClientErrorException.BadRequest.class)
     public void usersPageBadRequest() {
-        String baseUrl = "http://" + HOST + ":" + PORT + "/users?page=";
+        String baseUrl = "http://" + HOST + ":" + PORT + "/admin/users?page=";
         RestTemplate restTemplate = new RestTemplate();
         List<String> urlsBadRequest = new ArrayList<>();
         urlsBadRequest.add(baseUrl + "-1");
@@ -55,8 +55,8 @@ public class UsersPageTests {
         urlsBadRequest.add(baseUrl + "string");
         for (String url: urlsBadRequest) {
             ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
-            Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
-            Assert.assertEquals(Objects.requireNonNull(responseEntity.getHeaders().getContentType()), TEXT_HTML_UTF8);
+            Assert.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+            Assert.assertEquals(TEXT_HTML_UTF8, Objects.requireNonNull(responseEntity.getHeaders().getContentType()));
         }
     }
 }

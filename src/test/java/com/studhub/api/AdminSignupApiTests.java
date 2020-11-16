@@ -28,9 +28,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class SignupApiTests {
+public class AdminSignupApiTests {
     @Autowired
     private MockMvc mockMvc;
+    
+    private final String adminSignupEndpoint = "/api/admin/signup";
 
     @Before
     @Test
@@ -40,11 +42,8 @@ public class SignupApiTests {
 
     @Test
     public void testGetSignup405() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/signup"))
+        mockMvc.perform(MockMvcRequestBuilders.get(adminSignupEndpoint))
                 .andExpect(status().isMethodNotAllowed())
-//                .andExpect(jsonPath("$[*]", hasSize(2)))
-//                .andExpect(jsonPath("$.statusCode").value(405))
-//                .andExpect(jsonPath("$.detail").value("Not Found"))
                 .andReturn();
     }
 
@@ -53,7 +52,7 @@ public class SignupApiTests {
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setFirstName("Peter");
         signupRequest.setLastName("Parker");
-        signupRequest.setRole("ROLE_USER");
+        signupRequest.setRole("USER");
         signupRequest.setUsername("spider_man");
         signupRequest.setPassword("i_love_MJ");
 
@@ -62,12 +61,12 @@ public class SignupApiTests {
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
         String requestBody = ow.writeValueAsString(signupRequest);
 
-        String responseBody = mockMvc.perform(MockMvcRequestBuilders.post("/api/signup").contentType(APPLICATION_JSON_UTF8).content(requestBody))
+        String responseBody = mockMvc.perform(MockMvcRequestBuilders.post(adminSignupEndpoint).contentType(APPLICATION_JSON_UTF8).content(requestBody))
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
         JSONObject jsonObject = new JSONObject(responseBody);
-        Long id = jsonObject.getLong("id");
+        long id = jsonObject.getLong("id");
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/" + id))
                 .andExpect(status().isOk());
@@ -80,14 +79,14 @@ public class SignupApiTests {
         signupRequest.setLastName("Osborn");
         signupRequest.setUsername("green_goblin");
         signupRequest.setPassword("i_love_pumpkin");
-        signupRequest.setRole("ROLE_NOT_EXISTING");
+        signupRequest.setRole("NOT_EXISTING");
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
         String requestBody = ow.writeValueAsString(signupRequest);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/signup").contentType(APPLICATION_JSON_UTF8).content(requestBody))
+        mockMvc.perform(MockMvcRequestBuilders.post(adminSignupEndpoint).contentType(APPLICATION_JSON_UTF8).content(requestBody))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$.statusCode").value(400))
@@ -98,17 +97,17 @@ public class SignupApiTests {
     @Test
     public void testPostSignup400IncorrectJSONBody() throws Exception {
         String requestBody = "just_a_string";
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/signup").contentType(APPLICATION_JSON_UTF8))
+        mockMvc.perform(MockMvcRequestBuilders.post(adminSignupEndpoint).contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isBadRequest())
                 .andReturn();
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/signup").contentType(APPLICATION_JSON_UTF8).content(requestBody))
+        mockMvc.perform(MockMvcRequestBuilders.post(adminSignupEndpoint).contentType(APPLICATION_JSON_UTF8).content(requestBody))
                 .andExpect(status().isBadRequest())
                 .andReturn();
     }
 
     @Test
     public void testPostSignup415() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/signup"))
+        mockMvc.perform(MockMvcRequestBuilders.post(adminSignupEndpoint))
                 .andExpect(status().isUnsupportedMediaType())
                 .andReturn();
     }

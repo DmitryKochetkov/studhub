@@ -25,8 +25,8 @@ import org.springframework.web.servlet.view.RedirectView;
  * Контроллер страницы администрирования уроков.
  */
 @Controller
-@RequestMapping("/lessons")
-public class LessonController {
+@RequestMapping("/admin/lessons")
+public class AdminLessonController {
     @Value("${server.address}")
     public String HOST;
 
@@ -62,12 +62,12 @@ public class LessonController {
     @PostMapping("/new")
     public RedirectView createLesson(Model model, CreateLessonRequest request, RedirectAttributes redirectAttributes) {
         RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://localhost:8081/api/admin/lessons/new";
+        String uri = "http://" + HOST + ":" + PORT + "/api/admin/lessons/new";
 
-        RedirectView redirectView = new RedirectView("/lessons");
+        RedirectView redirectView = new RedirectView("/admin/lessons");
         redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
         try {
-            ResponseEntity<LessonDto> response = restTemplate.postForEntity(uri, request, LessonDto.class);
+            restTemplate.postForEntity(uri, request, LessonDto.class);
         }
         catch (HttpClientErrorException e) {
             return redirectView;

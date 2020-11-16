@@ -50,7 +50,7 @@ public class ViewTests {
     * @throws Exception в случае, если код ответа не равен 200 или ответом не является html-страница.
     * */
     @Test
-    public void testViews() throws Exception {
+    public void testViews() {
         RestTemplate restTemplate = new RestTemplate();
         String root = "http://" + HOST + ":" + PORT;
         log.info("Requests are gonna be sent to " + root);
@@ -62,10 +62,10 @@ public class ViewTests {
                     if (!url.startsWith("/api") && isEndpoint(url)) {
                         try {
                             ResponseEntity<String> responseEntity = restTemplate.exchange(root + url, HttpMethod.GET, null, String.class);
-                            Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-                            Assert.assertEquals(Objects.requireNonNull(responseEntity.getHeaders().getContentType()), TEXT_HTML_UTF8);
+                            Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+                            Assert.assertEquals(TEXT_HTML_UTF8, Objects.requireNonNull(responseEntity.getHeaders().getContentType()));
                         }
-                        catch (RuntimeException e) {
+                        catch (AssertionError | RuntimeException e) {
                             log.info("Test failed on endpoint " + url);
                             throw e;
                         }

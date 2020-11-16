@@ -25,8 +25,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:style="'cursor: pointer;'"
-                    th:each="user : ${page.getContent()}">
+                <tr th:each="user : ${page.getContent()}">
                     <td><span th:text="${user.getId()}"> ID </span></td>
                     <td><a class="btn-link" th:text="${user.getUsername()}" th:href="'/user/' + ${user.getId()}"> Username </a></td>
                     <td><span th:text="${user.getFirstName() + ' ' + user.getLastName()}"> Name </span></td>
@@ -38,12 +37,12 @@
 
             <ul class="pagination">
                 <li class="page-item" th:each="i: ${#numbers.sequence(page.getNumber()-5, page.getNumber()+5)}" th:if="${i} > 0 and ${i} <= ${page.getTotalPages()}">
-                    <a class="page-link" th:href="'/users?page='+${i}" th:text="${i}">1</a>
+                    <a class="page-link" th:href="'/admin/users?page='+${i}" th:text="${i}">1</a>
                 </li>
             </ul>
         </div>
 
-        <form action="/users/signup" method="get">
+        <form action="/admin/signup" method="get">
             <button type="submit" class="btn btn-primary">Создать пользователя</button>
         </form>
     </div>

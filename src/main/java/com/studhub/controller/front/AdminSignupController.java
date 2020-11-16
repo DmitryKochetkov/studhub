@@ -18,8 +18,8 @@ import org.springframework.web.servlet.view.RedirectView;
  * Контроллер страницы регистрации пользователя.
  */
 @Controller
-@RequestMapping("/users/signup")
-public class SignupController {
+@RequestMapping("/admin/signup")
+public class AdminSignupController {
     @GetMapping
     public String signup(Model model) {
         model.addAttribute("form", new SignupRequest());
@@ -41,7 +41,7 @@ public class SignupController {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String uri = "http://localhost:8081/api/signup";
+        String uri = "http://localhost:8081/api/admin/signup";
         HttpEntity<SignupRequest> request = new HttpEntity<>(dto, headers);
         RedirectView redirectView = new RedirectView("/users/signup");
         redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);

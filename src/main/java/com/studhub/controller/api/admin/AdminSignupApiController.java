@@ -1,4 +1,4 @@
-package com.studhub.controller.api;
+package com.studhub.controller.api.admin;
 
 import com.studhub.dto.UserDto;
 import com.studhub.entity.Role;
@@ -18,9 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/signup")
+@RequestMapping("/api/admin/signup")
 @Api(tags = "Signup", description = "Signup a new user.")
-public class SignupApiController {
+public class AdminSignupApiController {
     @Autowired
     private UserService userService;
 
@@ -44,7 +44,7 @@ public class SignupApiController {
         if (registered != null)
             return new ResponseEntity<>(HttpStatus.CONFLICT);
 
-        Role role = roleRepository.findByName(dto.getRole());
+        Role role = roleRepository.findByName("ROLE_" + dto.getRole());
         if (role == null)
             throw new BadRequestException();
 
