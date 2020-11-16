@@ -19,6 +19,9 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Контроллер страниц с информацией о пользователях.
+ */
 @Controller
 public class UserController {
     @Value("${server.address}")

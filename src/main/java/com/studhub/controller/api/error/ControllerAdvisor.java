@@ -13,6 +13,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * Класс, обрабатывающий ошибки контроллеров API.
+ */
 @ControllerAdvice(annotations = RestController.class)
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 

@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Контроллер главной страницы сайта и страницы авторизации.
+ */
 @Controller
 @RequestMapping("/")
 public class MainController {

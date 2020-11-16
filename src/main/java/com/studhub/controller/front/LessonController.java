@@ -21,6 +21,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+/**
+ * Контроллер страницы администрирования уроков.
+ */
 @Controller
 @RequestMapping("/lessons")
 public class LessonController {
