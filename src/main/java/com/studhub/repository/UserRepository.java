@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> findAll(Pageable pageable);
     User findByUsername(String nickname);
+    Page<User> findUsersByFollowingContains(User user, Pageable pageable); //find all users who follow user
+    Page<User> findUsersByFollowersContains(User user, Pageable pageable); //find all users who are followed by user
 }

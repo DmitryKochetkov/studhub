@@ -101,4 +101,46 @@ public class UserApiController {
 
         return ResponseEntity.ok(new CourseDto(course));
     }
+
+    @GetMapping(value = "/user/{user_id}/followers", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Get users who follow a user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found")
+    }
+    )
+    public ResponseEntity<PageDto<UserDto>> getFollowers(@PathVariable Long user_id, @RequestParam(defaultValue = "1") Integer page) {
+        User user = userService.getById(user_id);
+        if (user == null)
+            throw new ResourceNotFoundException();
+
+        if (page - 1 < 0)
+            throw new BadRequestException();
+        Pageable pageable = PageRequest.of(page-1, 10);
+        Page<UserDto> result = userService.getUsersWhoFollowUser(user, pageable).map(UserDto::new);
+        if (result.getNumber() + 1 > result.getTotalPages() && result.getTotalPages() > 0)
+            throw new ResourceNotFoundException();
+        return ResponseEntity.ok(new PageDto<>(result));
+    }
+
+    @GetMapping(value = "/user/{user_id}/following", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Get users followed by user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found")
+    }
+    )
+    public ResponseEntity<PageDto<UserDto>> getUsersWhoAreFollowedByUser(@PathVariable Long user_id, @RequestParam(defaultValue = "1") Integer page) {
+        User user = userService.getById(user_id);
+        if (user == null)
+            throw new ResourceNotFoundException();
+
+        if (page - 1 < 0)
+            throw new BadRequestException();
+        Pageable pageable = PageRequest.of(page-1, 10);
+        Page<UserDto> result = userService.getUsersWhoAreFollowedByUser(user, pageable).map(UserDto::new);
+        if (result.getNumber() + 1 > result.getTotalPages() && result.getTotalPages() > 0)
+            throw new ResourceNotFoundException();
+        return ResponseEntity.ok(new PageDto<>(result));
+    }
 }

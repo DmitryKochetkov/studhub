@@ -53,4 +53,12 @@ public class UserService {
     public User getById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
+
+    public Page<User> getUsersWhoFollowUser(User user, Pageable pageable) {
+        return userRepository.findUsersByFollowingContains(user, pageable);
+    }
+
+    public Page<User> getUsersWhoAreFollowedByUser(User user, Pageable pageable) {
+        return userRepository.findUsersByFollowersContains(user, pageable);
+    }
 }

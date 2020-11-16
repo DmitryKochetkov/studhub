@@ -1,6 +1,5 @@
 package com.studhub.api;
 
-import com.studhub.dto.UserDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.emptyCollectionOf;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,15 +36,13 @@ public class UserApiTests {
     @Test
     public void testGetUserById200() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/1"))
-                .andExpect(jsonPath("$[*]", hasSize(11)))
+                .andExpect(jsonPath("$[*]", hasSize(9)))
                 .andExpect(jsonPath("$.id").value(1))
                 //TODO: check created and lastModified
                 .andExpect(jsonPath("$.firstName").value("Ivan"))
                 .andExpect(jsonPath("$.lastName").value("Ivanov"))
                 .andExpect(jsonPath("$.status").value("ENABLED"))
                 .andExpect(jsonPath("$.username").value("admin"))
-                .andExpect(jsonPath("$.followers").value(emptyCollectionOf(UserDto.class)))
-                .andExpect(jsonPath("$.following").value(emptyCollectionOf(UserDto.class)))
                 //TODO: check password is encrypted
                 //TODO: check order
                 .andReturn();

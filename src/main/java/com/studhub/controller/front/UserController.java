@@ -56,8 +56,18 @@ public class UserController {
                     new ParameterizedTypeReference<UserDto>() {
                     });
             model.addAttribute("user", response.getBody());
-            return "profile";
         } catch (HttpClientErrorException.NotFound e) {
+            throw new ResourceNotFoundException();
+        }
+
+        try {
+            ResponseEntity<PageDto<UserDto>> response = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + id.toString() + "/followers", HttpMethod.GET, null,
+                    new ParameterizedTypeReference<PageDto<UserDto>>() {
+                    });
+            model.addAttribute("following", response.getBody().getContent());
+            return "profile";
+        }
+        catch (HttpClientErrorException.NotFound e) {
             throw new ResourceNotFoundException();
         }
     }
