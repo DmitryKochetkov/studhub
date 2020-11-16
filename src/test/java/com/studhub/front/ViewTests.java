@@ -22,6 +22,11 @@ import java.util.Objects;
 
 import static com.studhub.StudhubApplicationTests.TEXT_HTML_UTF8;
 
+/**
+ * Класс тестирования GET эндпоинтов.
+ * @author Дмитрий Кочетков
+ * @version 0.1
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("/application-test.properties")
@@ -37,8 +42,15 @@ public class ViewTests {
     @Value("${server.port}")
     public String PORT;
 
-    public Integer[] uriVariables = {1, 1, 1, 1, 1, 1, 1, 1, 1}; //there will never be an endpoint with more than 10 uri variables
+    private boolean isEndpoint(String url) {
+        return url.matches("(/[-a-zA-Z0-9@:%._\\+~#=]+)+");
+    }
 
+    /**
+    * Тестирование GET эндпоинтов. Проверяется, что все html-страницы, которые можно получить без
+     * параметров, возвращаются с кодом 200.
+    * @throws Exception в случае, если код ответа не равен 200 или ответом не является html-страница.
+    * */
     @Test
     public void testViews() throws Exception {
         RestTemplate restTemplate = new RestTemplate();
@@ -48,18 +60,18 @@ public class ViewTests {
         //automatically getting all GET endpoints here
         for (RequestMappingInfo requestMappingInfo: requestHandlerMapping.getHandlerMethods().keySet()) {
             if (requestMappingInfo.getMethodsCondition().getMethods().contains(RequestMethod.GET))
-                for (String endpoint: requestMappingInfo.getPatternsCondition().getPatterns()) {
-                    if (!endpoint.startsWith("/api")) {
+                for (String url: requestMappingInfo.getPatternsCondition().getPatterns()) {
+                    if (!url.startsWith("/api") && isEndpoint(url)) {
                         try {
-                            ResponseEntity<String> responseEntity = restTemplate.exchange(root + endpoint, HttpMethod.GET, null, String.class, uriVariables);
+                            ResponseEntity<String> responseEntity = restTemplate.exchange(root + url, HttpMethod.GET, null, String.class);
                             Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
                             Assert.assertEquals(Objects.requireNonNull(responseEntity.getHeaders().getContentType()), TEXT_HTML_UTF8);
                         }
                         catch (RuntimeException e) {
-                            log.info("Test failed on endpoint " + endpoint);
+                            log.info("Test failed on endpoint " + url);
                             throw e;
                         }
-                        log.info("Test passed on endpoint " + endpoint);
+                        log.info("Test passed on endpoint " + url);
                     }
                 }
         }
