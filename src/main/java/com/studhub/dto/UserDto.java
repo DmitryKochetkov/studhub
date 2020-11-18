@@ -41,16 +41,6 @@ public class UserDto extends BaseDto {
     }
 
     @JsonIgnore
-    public String getRolesString() {
-        if (roles.isEmpty())
-            return "NaN";
-        String result = roles.get(0).getNameForUI();
-        for (int i = 1; i < roles.size(); i++)
-            result = result + ", " + roles.get(i).getNameForUI();
-        return result;
-    }
-
-    @JsonIgnore
     public boolean isStudent() {
         for (RoleDto roleDto: roles)
             if (roleDto.getName().equals("ROLE_STUDENT"))

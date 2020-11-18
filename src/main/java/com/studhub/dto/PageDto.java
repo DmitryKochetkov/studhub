@@ -18,5 +18,8 @@ public class PageDto<T> {
     public PageDto(Page<T> page) {
         this.content = page.getContent();
         this.totalPages = page.getTotalPages();
+        this.number = page.getNumber() + 1;
+        this.hasNext = number < totalPages;
+        this.hasPrevious = number > 1;
     }
 }

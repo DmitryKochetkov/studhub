@@ -19,7 +19,10 @@
                 <div style="font-size: 40px;" th:text="${user.getFirstName() + ' ' + user.getLastName()}">Имя Фамилия</div>
                 <div>
                     <span class="font-weight-bold">Роль: </span>
-                    <span class="pl-1" th:text="${user.getRolesString()}">role</span>
+                    <span th:each="role : ${user.getRoles()}">
+                        <span th:text="${role.getAlias()}" > Role </span>
+                        <span th:unless="${role.equals(user.getRoles().get(user.getRoles().size() - 1))}">,</span>
+                    </span>
                 </div>
             </div>
         </div>

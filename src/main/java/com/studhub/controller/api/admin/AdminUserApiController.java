@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "Manage users", description = "Manage registered users.")
 public class AdminUserApiController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping("/admin/users")
     @ApiOperation(value = "Get up to 10 users")

@@ -31,7 +31,7 @@ public class RoleDto extends BaseDto {
     }
 
     @JsonIgnore
-    public String getNameForUI() {
+    public String getAlias() {
         if (name.equals("ROLE_USER"))
             return "Пользователь";
 

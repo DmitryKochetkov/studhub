@@ -29,7 +29,12 @@
                     <td><span th:text="${user.getId()}"> ID </span></td>
                     <td><a class="btn-link" th:text="${user.getUsername()}" th:href="'/user/' + ${user.getId()}"> Username </a></td>
                     <td><span th:text="${user.getFirstName() + ' ' + user.getLastName()}"> Name </span></td>
-                    <td><span th:text="${user.getRolesString()}"> Role </span></td>
+                    <td>
+                        <span th:each="role : ${user.getRoles()}">
+                            <span th:text="${role.getAlias()}" > Role </span>
+                            <span th:unless="${role.equals(user.getRoles().get(user.getRoles().size() - 1))}">,</span>
+                        </span>
+                    </td>
                     <td><span th:text="${user.getStatus()}"> Status </span></td>
                 </tr>
                 </tbody>
