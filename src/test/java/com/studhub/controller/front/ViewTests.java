@@ -1,4 +1,4 @@
-package com.studhub.front;
+package com.studhub.controller.front;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -41,16 +41,16 @@ public class ViewTests {
     public String PORT;
 
     private boolean isEndpoint(String url) {
-        return url.matches("(/[-a-zA-Z0-9@:%._\\+~#=]+)+");
+        return url.matches("(/[-a-zA-Z0-9@:%._+~#=]+)+");
     }
 
     /**
     * Тестирование GET эндпоинтов. Проверяется, что все html-страницы, которые можно получить без
      * параметров, возвращаются с кодом 200.
-    * @throws Exception в случае, если код ответа не равен 200 или ответом не является html-страница.
+    * @throws RuntimeException,AssertionError в случае, если код ответа не равен 200 или ответом не является html-страница.
     * */
     @Test
-    public void testViews() {
+    public void testViews() throws RuntimeException, AssertionError {
         RestTemplate restTemplate = new RestTemplate();
         String root = "http://" + HOST + ":" + PORT;
         log.info("Requests are gonna be sent to " + root);

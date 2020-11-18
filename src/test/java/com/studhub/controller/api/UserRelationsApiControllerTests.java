@@ -1,7 +1,6 @@
-package com.studhub.api;
+package com.studhub.controller.api;
 
 import com.studhub.service.UserService;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource("/application-test.properties")
 @Transactional
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class UserRelationsApiTests {
+public class UserRelationsApiControllerTests {
     @Autowired
     private MockMvc mockMvc;
 
@@ -50,7 +49,7 @@ public class UserRelationsApiTests {
                 .andExpect(jsonPath("$.hasNext").value(true))
                 .andExpect(jsonPath("$.hasPrevious").value(false))
                 .andExpect(jsonPath("$.totalPages").value(2))
-                .andExpect(jsonPath("$.content").value(Matchers.hasSize(10)));
+                .andExpect(jsonPath("$.content").value(hasSize(10)));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/2/followers?page=2"))
                 .andExpect(status().isOk())
@@ -59,7 +58,7 @@ public class UserRelationsApiTests {
                 .andExpect(jsonPath("$.hasNext").value(false))
                 .andExpect(jsonPath("$.hasPrevious").value(true))
                 .andExpect(jsonPath("$.totalPages").value(2))
-                .andExpect(jsonPath("$.content").value(Matchers.hasSize(2)));
+                .andExpect(jsonPath("$.content").value(hasSize(2)));
     }
 
     @Test

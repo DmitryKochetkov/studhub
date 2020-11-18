@@ -1,13 +1,17 @@
 package com.studhub.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "users")
 @Data
+@NoArgsConstructor
 public class User extends BaseEntity {
     @Column
     private String firstName;
@@ -49,4 +53,11 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "student")
     private List<Course> courses;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                '}';
+    }
 }

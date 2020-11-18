@@ -24,4 +24,11 @@ public class BaseEntity {
 
     @LastModifiedDate
     private Date lastModified;
+
+    @Override
+    public String toString() {
+        return "BaseEntity{" +
+                "id=" + id +
+                '}';
+    }
 }

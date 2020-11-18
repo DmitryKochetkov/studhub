@@ -1,4 +1,4 @@
-package com.studhub.api;
+package com.studhub.controller.api.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class AdminSignupApiTests {
+public class AdminSignupApiControllerTests {
     @Autowired
     private MockMvc mockMvc;
     

@@ -1,4 +1,4 @@
-package com.studhub.front;
+package com.studhub.controller.front;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ import static com.studhub.StudhubApplicationTests.TEXT_HTML_UTF8;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class AdminUsersPageTests {
+public class AdminUsersControllerTests {
     @Value("${server.address}")
     public String HOST;
 

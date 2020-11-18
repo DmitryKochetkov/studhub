@@ -1,3 +1,5 @@
+-- noinspection SqlWithoutWhereForFile
+
 DELETE FROM user_roles cascade;
 DELETE FROM followers cascade;
 DELETE FROM courses cascade;
@@ -6,24 +8,24 @@ DELETE FROM roles cascade;
 DELETE FROM ref_courses cascade;
 
 INSERT INTO studhub_test.public.roles VALUES
-(1, now(), now(), 'ROLE_USER'), (2, now(), now(), 'ROLE_STUDENT'),  (3, now(), now(), 'ROLE_ADMIN')
+(1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ROLE_USER'), (2, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ROLE_STUDENT'),  (3, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ROLE_ADMIN')
 ON CONFLICT DO NOTHING;
 
 INSERT INTO studhub_test.public.users (id, created, last_modified, first_name, last_name, password, status, username) VALUES
-(1, now(), now(), 'Ivan', 'Ivanov', '1234', 'ENABLED', 'admin'),
-(2, now(), now(), 'Petr', 'Petrov', '1234', 'ENABLED', 'petr'),
-(3, now(), now(), 'Gregory', 'Moore', '1234', 'ENABLED', 'gregory_moore'),
-(4, now(), now(), 'Edward', 'Weaver', '1234', 'ENABLED', 'edward_weaver'),
-(5, now(), now(), 'Brian', 'Howard', '1234', 'ENABLED', 'brian_howard'),
-(6, now(), now(), 'Abigail', 'Barnett', '1234', 'ENABLED', 'abigail_barnett'),
-(7, now(), now(), 'Regina', 'Lyons', '1234', 'ENABLED', 'regina_lyons'),
-(8, now(), now(), 'Michael', 'Fleming', '1234', 'ENABLED', 'michael_fleming'),
-(9, now(), now(), 'Simon', 'Walker', '1234', 'ENABLED', 'simon_walker'),
-(10, now(), now(), 'Francis', 'Gibson', '1234', 'ENABLED', 'francis_gibson'),
-(11, now(), now(), 'John', 'Davis', '1234', 'ENABLED', 'john_davis'),
-(12, now(), now(), 'Samuel', 'Todd', '1234', 'ENABLED', 'samuel_todd'),
-(13, now(), now(), 'Alan', 'Curtis', '1234', 'ENABLED', 'alan_curtis'),
-(14, now(), now(), 'Robert', 'Shaw', '1234', 'ENABLED', 'robert_shaw');
+(1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Ivan', 'Ivanov', '1234', 'ENABLED', 'admin'),
+(2, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Petr', 'Petrov', '1234', 'ENABLED', 'petr'),
+(3, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Gregory', 'Moore', '1234', 'ENABLED', 'gregory_moore'),
+(4, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Edward', 'Weaver', '1234', 'ENABLED', 'edward_weaver'),
+(5, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Brian', 'Howard', '1234', 'ENABLED', 'brian_howard'),
+(6, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Abigail', 'Barnett', '1234', 'ENABLED', 'abigail_barnett'),
+(7, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Regina', 'Lyons', '1234', 'ENABLED', 'regina_lyons'),
+(8, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Michael', 'Fleming', '1234', 'ENABLED', 'michael_fleming'),
+(9, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Simon', 'Walker', '1234', 'ENABLED', 'simon_walker'),
+(10, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Francis', 'Gibson', '1234', 'ENABLED', 'francis_gibson'),
+(11, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'John', 'Davis', '1234', 'ENABLED', 'john_davis'),
+(12, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Samuel', 'Todd', '1234', 'ENABLED', 'samuel_todd'),
+(13, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Alan', 'Curtis', '1234', 'ENABLED', 'alan_curtis'),
+(14, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Robert', 'Shaw', '1234', 'ENABLED', 'robert_shaw');
 
 INSERT INTO studhub_test.public.user_roles (user_id, role_id) VALUES
 (1, 1),
@@ -44,19 +46,19 @@ INSERT INTO studhub_test.public.user_roles (user_id, role_id) VALUES
 (14, 1);
 
 INSERT INTO studhub_test.public.ref_courses (id, created, last_modified, title) VALUES
-(1, now(), now(), 'Программирование на С++'),
-(2, now(), now(), 'Программирование на Pascal'),
-(3, now(), now(), 'Программирование на Java'),
-(4, now(), now(), 'Олимпиадное программирование'),
-(5, now(), now(), 'Информатика (ЕГЭ)'),
-(6, now(), now(), 'Математика (ЕГЭ)'),
-(7, now(), now(), 'Информатика (ОГЭ)'),
-(8, now(), now(), 'Математика (ОГЭ)'),
-(9, now(), now(), 'Математический анализ'),
-(10, now(), now(), 'Линейная алгебра');
+(1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на С++'),
+(2, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на Pascal'),
+(3, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на Java'),
+(4, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Олимпиадное программирование'),
+(5, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Информатика (ЕГЭ)'),
+(6, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Математика (ЕГЭ)'),
+(7, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Информатика (ОГЭ)'),
+(8, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Математика (ОГЭ)'),
+(9, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Математический анализ'),
+(10, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Линейная алгебра');
 
 INSERT INTO studhub_test.public.courses (id, created, last_modified, course_status, course_type, user_id) VALUES
-(1, now(), now(), 'ACTIVE', 1, 2);
+(1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ACTIVE', 1, 2);
 
 INSERT INTO studhub_test.public.followers (user_id, follower_id) VALUES
 (2, 3),
