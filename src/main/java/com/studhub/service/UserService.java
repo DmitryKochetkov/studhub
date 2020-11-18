@@ -44,6 +44,8 @@ public class UserService {
         user.setPassword(dto.getPassword()); //TODO: bCryptPasswordEncoder
         user.setStatus(UserStatus.ENABLED);
         user.setRoles(roles);
+        user.setFollowers(new ArrayList<>());
+        user.setFollowing(new ArrayList<>());
         Date now = new Date();
         user.setCreated(now);
         user.setLastModified(now);
