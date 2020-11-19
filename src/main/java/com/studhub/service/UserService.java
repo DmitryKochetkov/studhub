@@ -32,6 +32,9 @@ public class UserService {
     }
 
     public User register(SignupRequest dto) {
+        if (dto.getUsername() == null || dto.getUsername().equals(""))
+            return null;
+
         User user = new User();
         List<Role> roles = new ArrayList<>();
         roles.add(roleRepository.findByName("ROLE_USER"));

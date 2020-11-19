@@ -22,6 +22,4 @@ public class Course extends BaseEntity {
 
     @OneToMany(mappedBy = "course")
     private List<Lesson> lessons;
-
-    //CodificatorProgress codificatorProgress = new Codificator(refCourse.getCodificatorTemplate())
 }

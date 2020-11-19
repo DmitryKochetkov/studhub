@@ -21,7 +21,7 @@ public class UserServiceTests {
     private UserService userService;
 
     @Test
-    public void testRegistration() {
+    public void testRegistrationSuccessful() {
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setFirstName("Test");
         signupRequest.setLastName("Testov");
@@ -38,6 +38,23 @@ public class UserServiceTests {
         Assert.assertEquals(UserStatus.ENABLED, user.getStatus());
         Assert.assertNotNull(user.getFollowing());
         Assert.assertNotNull(user.getFollowers());
+    }
+
+    @Test
+    public void testRegistrationFailed() {
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setFirstName("Test");
+        signupRequest.setLastName("Testov");
+        signupRequest.setRole("ROLE_USER");
+        signupRequest.setUsername(null);
+        signupRequest.setPassword("123");
+
+        User user = userService.register(signupRequest);
+        Assert.assertNull(user);
+
+        signupRequest.setUsername("");
+        user = userService.register(signupRequest);
+        Assert.assertNull(user);
     }
 
     @Test
