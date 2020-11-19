@@ -1,6 +1,7 @@
 -- noinspection SqlWithoutWhereForFile
 
 DELETE FROM user_roles cascade;
+DELETE FROM lessons cascade;
 DELETE FROM followers cascade;
 DELETE FROM courses cascade;
 DELETE FROM users cascade;
@@ -73,3 +74,6 @@ INSERT INTO studhub_test.public.followers (user_id, follower_id) VALUES
 (2, 12),
 (2, 13),
 (2, 14);
+
+INSERT INTO studhub_test.public.lessons (id, created, last_modified, start_date, status, topic, course_id) VALUES
+(1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'SCHEDULED', 'Topic 1', 1);
