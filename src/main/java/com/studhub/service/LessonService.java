@@ -5,10 +5,11 @@ import com.studhub.entity.Lesson;
 import com.studhub.repository.CourseRepository;
 import com.studhub.repository.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class LessonService {
@@ -22,7 +23,9 @@ public class LessonService {
         return lessonRepository.findById(id).orElse(null);
     }
 
-    public List<Lesson> getAll() { return lessonRepository.findAll(); }
+    public Page<Lesson> getAll(Pageable pageable) {
+        return lessonRepository.findAll(pageable);
+    }
 
     public Lesson createLesson(LessonDto lessonDto) {
         Lesson lesson = new Lesson();

@@ -8,9 +8,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Класс, генерирующий веб-страницу с сообщением об ошибке в случае необработнных исключений в контроллерах
+ * представлений.
+ */
 @Controller
 public class CustomErrorController implements ErrorController {
-    @RequestMapping(value = "errors")
+    @RequestMapping(value = "errors", produces = "text/html;charset=UTF-8")
     public ModelAndView renderErrorPage(HttpServletRequest httpRequest) {
 
         ModelAndView errorPage = new ModelAndView("custom_error");
@@ -19,7 +23,6 @@ public class CustomErrorController implements ErrorController {
         if (httpErrorCode == null) {
             httpErrorCode = 404;
         }
-        String errorDescription = "";
 
         switch (httpErrorCode) {
             case 400: {
@@ -59,7 +62,3 @@ public class CustomErrorController implements ErrorController {
         return "/errors";
     }
 }
-
-//class CustomErrorController {
-//
-//}

@@ -6,6 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+/**
+ * Тело запроса на создание урока
+ */
 @Data
 @NoArgsConstructor
 public class CreateLessonRequest {

@@ -7,24 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Контроллер главной страницы сайта и страницы авторизации.
+ * Контроллер страницы с информацией о курсах.
  */
 @Controller
-@RequestMapping("/")
-public class MainController {
+@RequestMapping
+public class CourseInfoController {
     @Value("${server.address}")
     public String HOST;
 
     @Value("${server.port}")
     public String PORT;
 
-    @GetMapping
-    public String mainpage(Model model) {
-        return "index";
-    }
-
-    @GetMapping("/login")
-    public String loginPage() {
-        return "login_page";
+    @GetMapping("/about-courses")
+    public String courses(Model model) {
+        return "about_courses";
     }
 }

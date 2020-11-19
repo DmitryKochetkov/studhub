@@ -1,4 +1,4 @@
-package com.studhub.front;
+package com.studhub.controller.front;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -20,6 +20,11 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import java.util.Objects;
 
+import static com.studhub.StudhubApplicationTests.TEXT_HTML_UTF8;
+
+/**
+ * Класс тестирования GET эндпоинтов.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("/application-test.properties")
@@ -35,8 +40,17 @@ public class ViewTests {
     @Value("${server.port}")
     public String PORT;
 
+    private boolean isEndpoint(String url) {
+        return url.matches("(/[-a-zA-Z0-9@:%._+~#=]+)+");
+    }
+
+    /**
+    * Тестирование GET эндпоинтов. Проверяется, что все html-страницы, которые можно получить без
+     * параметров, возвращаются с кодом 200.
+    * @throws RuntimeException,AssertionError в случае, если код ответа не равен 200 или ответом не является html-страница.
+    * */
     @Test
-    public void testViews() throws Exception {
+    public void testViews() throws RuntimeException, AssertionError {
         RestTemplate restTemplate = new RestTemplate();
         String root = "http://" + HOST + ":" + PORT;
         log.info("Requests are gonna be sent to " + root);
@@ -44,16 +58,20 @@ public class ViewTests {
         //automatically getting all GET endpoints here
         for (RequestMappingInfo requestMappingInfo: requestHandlerMapping.getHandlerMethods().keySet()) {
             if (requestMappingInfo.getMethodsCondition().getMethods().contains(RequestMethod.GET))
-                for (String endpoint: requestMappingInfo.getPatternsCondition().getPatterns()) {
-                    if (!endpoint.startsWith("/api")) {
-                        ResponseEntity<String> responseEntity = restTemplate.exchange(root + endpoint, HttpMethod.GET, null, String.class, 1);
-                        Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-                        Assert.assertEquals(Objects.requireNonNull(responseEntity.getHeaders().getContentType()).toString(), "text/html;charset=UTF-8");
-                        log.info("Test passed on endpoint " + endpoint);
-                        //TODO: log if assertion fails
+                for (String url: requestMappingInfo.getPatternsCondition().getPatterns()) {
+                    if (!url.startsWith("/api") && isEndpoint(url)) {
+                        try {
+                            ResponseEntity<String> responseEntity = restTemplate.exchange(root + url, HttpMethod.GET, null, String.class);
+                            Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+                            Assert.assertEquals(TEXT_HTML_UTF8, Objects.requireNonNull(responseEntity.getHeaders().getContentType()));
+                        }
+                        catch (AssertionError | RuntimeException e) {
+                            log.info("Test failed on endpoint " + url);
+                            throw e;
+                        }
+                        log.info("Test passed on endpoint " + url);
                     }
                 }
         }
     }
-
 }
