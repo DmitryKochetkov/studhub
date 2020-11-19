@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "Relations", description = "Get relations between users.")
 public class UserRelationsApiController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping(value = "/user/{user_id}/followers", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get users who follow a user")
