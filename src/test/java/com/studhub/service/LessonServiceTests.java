@@ -23,7 +23,7 @@ public class LessonServiceTests {
     public void testGetById() {
         Lesson lesson = lessonService.getById(1L);
         Assert.assertNotNull(lesson);
-        Assert.assertEquals(1, lesson.getId());
+        Assert.assertEquals(1L, lesson.getId().longValue());
         Assert.assertEquals(LessonStatus.SCHEDULED, lesson.getStatus());
         Assert.assertEquals("Topic 1", lesson.getTopic());
 

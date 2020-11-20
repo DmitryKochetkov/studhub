@@ -23,7 +23,7 @@ public class CourseServiceTests {
     public void testGetById() {
         Course course = courseService.getById(1L);
         Assert.assertNotNull(course);
-        Assert.assertEquals(1, course.getId());
+        Assert.assertEquals(1, course.getId().longValue());
         Assert.assertEquals("petr", course.getStudent().getUsername());
         Assert.assertEquals(CourseStatus.ACTIVE, course.getCourseStatus());
 

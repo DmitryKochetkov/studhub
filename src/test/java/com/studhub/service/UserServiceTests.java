@@ -65,7 +65,7 @@ public class UserServiceTests {
     public void testGetById() {
         User user = userService.getById(1L);
         Assert.assertNotNull(user);
-        Assert.assertEquals(1, user.getId());
+        Assert.assertEquals(1, user.getId().longValue());
         Assert.assertEquals("admin", user.getUsername());
         Assert.assertEquals("Ivan", user.getFirstName());
         Assert.assertEquals("Ivanov", user.getLastName());

@@ -48,7 +48,7 @@ public class UserRepositoryTests {
         Page<User> result = userRepository.findAll(pageable);
 
         User user1 = new User();
-        user1.setId(1);
+        user1.setId(1L);
         user1.setCreated(creation);
         user1.setLastModified(creation);
         user1.setUsername("admin");
