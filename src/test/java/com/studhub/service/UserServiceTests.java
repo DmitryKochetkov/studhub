@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,6 +20,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class UserServiceTests {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
     public void testRegistrationSuccessful() {
@@ -34,7 +38,7 @@ public class UserServiceTests {
         Assert.assertEquals("Test", user.getFirstName());
         Assert.assertEquals("Testov", user.getLastName());
         Assert.assertEquals("test_user", user.getUsername());
-        Assert.assertEquals("123", user.getPassword());
+        Assert.assertTrue(passwordEncoder.matches("123", user.getPassword()));
         Assert.assertEquals(UserStatus.ENABLED, user.getStatus());
         Assert.assertNotNull(user.getFollowing());
         Assert.assertNotNull(user.getFollowers());
