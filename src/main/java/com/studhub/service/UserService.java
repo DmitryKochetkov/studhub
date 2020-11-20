@@ -9,6 +9,7 @@ import com.studhub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +23,9 @@ public class UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public Page<User> getAll(Pageable pageable) {
         return userRepository.findAll(pageable);
@@ -44,7 +48,7 @@ public class UserService {
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword()); //TODO: bCryptPasswordEncoder
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setStatus(UserStatus.ENABLED);
         user.setRoles(roles);
         user.setFollowers(new ArrayList<>());
