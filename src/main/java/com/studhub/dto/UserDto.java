@@ -47,9 +47,4 @@ public class UserDto extends BaseDto {
                 return true;
         return false;
     }
-
-    @JsonIgnore
-    public String getFullname() {
-        return firstName + " " + lastName;
-    }
 }
