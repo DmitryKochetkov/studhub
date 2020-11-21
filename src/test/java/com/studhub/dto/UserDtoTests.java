@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class UserDtoTests {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Before
     @Test
