@@ -40,25 +40,25 @@
             </span>
         </div>
 
-        <div class="py-2" th:if="${user.isStudent()}">
-            <h3 class="font-weight-bold pb-2">Курсы</h3>
-            <table class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th>Название</th>
-                        <th>Статус</th>
-                        <th>Дата старта</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="course: ${user.getCourses()}">
-                        <td><a th:text="${course.getTitle()}" th:href="${'/user/' + course.getStudentId()} + '/course/' + ${course.getId()}"></a></td>
-                        <td th:text="${course.getStatus()}"></td>
-                        <td th:text="${course.getStartDate()}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<!--        <div class="py-2" th:if="${user.isStudent()}">-->
+<!--            <h3 class="font-weight-bold pb-2">Курсы</h3>-->
+<!--            <table class="table">-->
+<!--                <thead class="thead-light">-->
+<!--                    <tr>-->
+<!--                        <th>Название</th>-->
+<!--                        <th>Статус</th>-->
+<!--                        <th>Дата старта</th>-->
+<!--                    </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                    <tr th:each="course: ${(T(Student)(user)).getCourses()}">-->
+<!--                        <td><a th:text="${course.getTitle()}" th:href="${'/user/' + course.getStudentId()} + '/course/' + ${course.getId()}"></a></td>-->
+<!--                        <td th:text="${course.getStatus()}"></td>-->
+<!--                        <td th:text="${course.getStartDate()}"></td>-->
+<!--                    </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
 
         <div>
             <a class="btn btn-primary" th:href="'/user/' + ${user.getId()} + '/edit'">Зачислить на курс</a>

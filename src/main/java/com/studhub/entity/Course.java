@@ -10,8 +10,8 @@ import java.util.List;
 @Data
 public class Course extends BaseEntity {
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, updatable = false)
-    private User student;
+    @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false, updatable = false)
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "course_type", referencedColumnName = "id", nullable = false, updatable = false)

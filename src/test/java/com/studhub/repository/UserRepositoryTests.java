@@ -27,7 +27,6 @@ import java.util.List;
 @TestPropertySource("/application-test.properties")
 @Transactional
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-//@TestPropertySource("/application-test.properties")
 public class UserRepositoryTests {
     @Autowired
     private UserRepository userRepository;
@@ -55,7 +54,7 @@ public class UserRepositoryTests {
         user1.setFirstName("Ivan");
         user1.setLastName("Ivanov");
         user1.setPassword("1234");
-        user1.setCourses(new ArrayList<>());
+//        user1.setCourses(new ArrayList<>());
         user1.setFollowing(new ArrayList<>());
         user1.setFollowers(new ArrayList<>());
         user1.setStatus(UserStatus.ENABLED);
