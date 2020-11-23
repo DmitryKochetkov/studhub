@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,6 @@ import java.util.List;
 @WebAppConfiguration
 public class PageDtoTests {
     @Test
-    @Transactional
     public void testUserDtoConstructor() {
         List<TestObject> content = new ArrayList<>();
         for (int i = 0; i < 19; i++)

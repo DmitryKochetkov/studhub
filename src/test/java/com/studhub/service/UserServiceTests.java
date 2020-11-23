@@ -1,5 +1,6 @@
 package com.studhub.service;
 
+import com.studhub.entity.Student;
 import com.studhub.entity.User;
 import com.studhub.entity.UserStatus;
 import com.studhub.payload.SignupRequest;
@@ -22,6 +23,9 @@ public class UserServiceTests {
     @Autowired
     private UserService userService;
 
+//    @Autowired
+//    private
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -33,7 +37,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testRegistrationSuccessful() {
+    public void testUserRegistrationSuccessful() {
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setFirstName("Test");
         signupRequest.setLastName("Testov");
@@ -53,7 +57,30 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testRegistrationFailed() {
+    public void testStudentRegistrationSuccessful() {
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setFirstName("Test");
+        signupRequest.setLastName("Testov");
+        signupRequest.setRole("STUDENT");
+        signupRequest.setUsername("test_student");
+        signupRequest.setPassword("123");
+
+        User user = userService.register(signupRequest);
+        Assert.assertNotNull(user);
+        Assert.assertEquals("Test", user.getFirstName());
+        Assert.assertEquals("Testov", user.getLastName());
+        Assert.assertEquals("test_student", user.getUsername());
+        Assert.assertTrue(passwordEncoder.matches("123", user.getPassword()));
+        Assert.assertEquals(UserStatus.ENABLED, user.getStatus());
+        Assert.assertNotNull(user.getFollowing());
+        Assert.assertNotNull(user.getFollowers());
+        Assert.assertTrue(user instanceof Student);
+        Student student = (Student) user;
+        Assert.assertNotNull(student.getCourses());
+    }
+
+    @Test
+    public void testUserRegistrationFailed() {
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setFirstName("Test");
         signupRequest.setLastName("Testov");

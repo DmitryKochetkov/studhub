@@ -74,6 +74,5 @@ public class UserRelationsApiControllerTests {
                 .andExpect(jsonPath("$.hasNext").value(false))
                 .andExpect(jsonPath("$.hasPrevious").value(false))
                 .andExpect(jsonPath("$.totalPages").value(1));
-                //TODO: assert expected content
     }
 }
