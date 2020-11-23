@@ -4,6 +4,7 @@ import com.studhub.entity.User;
 import com.studhub.entity.UserStatus;
 import com.studhub.payload.SignupRequest;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class UserServiceTests {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Before
+    @Test
+    public void contextLoads() {
+        Assert.assertNotNull(userService);
+        Assert.assertNotNull(passwordEncoder);
+    }
 
     @Test
     public void testRegistrationSuccessful() {
@@ -72,5 +80,10 @@ public class UserServiceTests {
         Assert.assertEquals(UserStatus.ENABLED, user.getStatus());
         Assert.assertNotNull(user.getFollowing());
         Assert.assertNotNull(user.getFollowers());
+
+        for (long i = 2; i < 14; i++) {
+            user = userService.getById(i);
+            Assert.assertNotNull(user);
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.studhub.service;
 import com.studhub.entity.Lesson;
 import com.studhub.entity.LessonStatus;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class LessonServiceTests {
     @Autowired
     private LessonService lessonService;
+
+    @Before
+    @Test
+    public void contextLoads() {
+        Assert.assertNotNull(lessonService);
+    }
 
     @Test
     public void testGetById() {

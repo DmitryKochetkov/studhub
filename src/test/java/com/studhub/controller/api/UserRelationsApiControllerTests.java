@@ -38,27 +38,29 @@ public class UserRelationsApiControllerTests {
     @Test
     public void contextLoads() {
         assertThat(mockMvc).isNotNull();
+        assertThat(userService).isNotNull();
     }
 
     @Test
     public void testGetFollowers() throws Exception {
 //        List<UserDto> expectedContent = userService.getById(3L).getFollowers().stream().map(UserDto::new).collect(Collectors.toList());
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/2/followers"))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(5)))
                 .andExpect(jsonPath("$.number").value(1))
+                .andExpect(jsonPath("$.content").value(hasSize(10)))
                 .andExpect(jsonPath("$.hasNext").value(true))
                 .andExpect(jsonPath("$.hasPrevious").value(false))
-                .andExpect(jsonPath("$.totalPages").value(2))
-                .andExpect(jsonPath("$.content").value(hasSize(10)));
+                .andExpect(jsonPath("$.totalPages").value(2));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/2/followers?page=2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(5)))
                 .andExpect(jsonPath("$.number").value(2))
+                .andExpect(jsonPath("$.content").value(hasSize(2)))
                 .andExpect(jsonPath("$.hasNext").value(false))
                 .andExpect(jsonPath("$.hasPrevious").value(true))
-                .andExpect(jsonPath("$.totalPages").value(2))
-                .andExpect(jsonPath("$.content").value(hasSize(2)));
+                .andExpect(jsonPath("$.totalPages").value(2));
     }
 
     @Test

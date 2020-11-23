@@ -6,9 +6,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -22,6 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@WebAppConfiguration
+@ContextConfiguration
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
@@ -38,18 +42,29 @@ public class UserApiControllerTests {
     @Test
     public void testGetUserById200() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/1"))
-                .andExpect(jsonPath("$[*]", hasSize(9)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(8)))
                 .andExpect(jsonPath("$.id").value(1))
-                //TODO: check created and lastModified
+                .andExpect(jsonPath("$.created").exists())
+                .andExpect(jsonPath("$.lastModified").exists())
                 .andExpect(jsonPath("$.firstName").value("Ivan"))
                 .andExpect(jsonPath("$.lastName").value("Ivanov"))
                 .andExpect(jsonPath("$.status").value("ENABLED"))
                 .andExpect(jsonPath("$.username").value("admin"))
-                //TODO: check password is encrypted
-                //TODO: check order
+                .andExpect(jsonPath("$.roles").exists())
                 .andReturn();
 
-        //TODO: test /api/user/2 via comparing with JSON string
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(8)))
+                .andExpect(jsonPath("$.id").value(2))
+                .andExpect(jsonPath("$.created").exists())
+                .andExpect(jsonPath("$.lastModified").exists())
+                .andExpect(jsonPath("$.firstName").value("Petr"))
+                .andExpect(jsonPath("$.lastName").value("Petrov"))
+                .andExpect(jsonPath("$.status").value("ENABLED"))
+                .andExpect(jsonPath("$.username").value("petr"))
+                .andExpect(jsonPath("$.roles").exists());
     }
 
     @Test
