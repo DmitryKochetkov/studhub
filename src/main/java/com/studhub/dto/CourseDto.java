@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +17,7 @@ public class CourseDto extends BaseDto {
     private Long studentId;
     private String title;
     private CourseStatus status;
-    private Date startDate;
+    private LocalDateTime startDate;
     private List<LessonDto> comingLessons;
 
     public CourseDto(Course course) {

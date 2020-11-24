@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -19,12 +19,12 @@ public class LessonDto extends BaseDto {
     private LessonStatus status;
 
     @JsonFormat(pattern = "dd.MM.yyyy hh:mm")
-    private Date startDate;
+    private LocalDateTime startDate;
 
     public LessonDto(Lesson lesson) {
         super(lesson);
         this.topic = lesson.getTopic();
-        this.startDate = lesson.getStartDate();
+        this.startDate = lesson.getStartDateTime();
         this.courseId = lesson.getCourse().getId();
         this.studentId = lesson.getCourse().getStudent().getId();
         this.status = lesson.getStatus();

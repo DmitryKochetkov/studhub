@@ -19,7 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 /**
  * Контроллер администрирования уроков.
@@ -51,14 +51,7 @@ public class AdminLessonApiController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<LessonDto> create(@RequestBody CreateLessonRequest request) {
         LessonDto dto = new LessonDto();
-
-        //TODO: use java.time everywhere to store datetime
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(request.getStartDate());
-        calendar.add(Calendar.HOUR, request.getStartTime().getHours());
-        calendar.add(Calendar.MINUTE, request.getStartTime().getMinutes());
-
-        dto.setStartDate(calendar.getTime());
+        dto.setStartDate(LocalDateTime.of(request.getStartDate(), request.getStartTime()));
         dto.setTopic(request.getTopic());
         dto.setStatus(LessonStatus.SCHEDULED);
 

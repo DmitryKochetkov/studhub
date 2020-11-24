@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Service
 public class LessonService {
@@ -29,13 +29,13 @@ public class LessonService {
 
     public Lesson createLesson(LessonDto lessonDto) {
         Lesson lesson = new Lesson();
-        lesson.setStartDate(lessonDto.getStartDate());
+        lesson.setStartDateTime(lessonDto.getStartDate());
         lesson.setTopic(lessonDto.getTopic());
         lesson.setStatus(lessonDto.getStatus());
-        Date date = new Date();
+        LocalDateTime date = LocalDateTime.now();
         lesson.setCreated(date);
         lesson.setLastModified(date);
-        lesson.setCourse(courseRepository.findById(1L).orElse(null)); //TODO: handle null
+        lesson.setCourse(courseRepository.findById(1L).orElse(null));
         return lessonRepository.save(lesson);
     }
 }

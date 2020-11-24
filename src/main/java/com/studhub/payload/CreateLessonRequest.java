@@ -4,7 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  * Тело запроса на создание урока
@@ -15,10 +16,10 @@ public class CreateLessonRequest {
     private String topic;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date startDate;
+    private LocalDate startDate;
 
     @DateTimeFormat(pattern = "HH:mm")
-    private Date startTime;
+    private LocalTime startTime;
 
     private String studentUsername;
     private String courseTitle;

@@ -22,4 +22,7 @@ public class Course extends BaseEntity {
 
     @OneToMany(mappedBy = "course")
     private List<Lesson> lessons;
+
+    @OneToMany(mappedBy = "course")
+    private List<Homework> homework;
 }
