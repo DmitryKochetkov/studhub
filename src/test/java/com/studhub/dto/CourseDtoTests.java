@@ -22,7 +22,7 @@ import javax.transaction.Transactional;
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class CourseDtoTests {
     @Autowired
-    CourseService courseService;
+    private CourseService courseService;
 
     @Before
     @Test
