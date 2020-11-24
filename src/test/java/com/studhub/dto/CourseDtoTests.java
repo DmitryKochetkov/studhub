@@ -1,7 +1,7 @@
-package com.studhub.service;
+package com.studhub.dto;
 
-import com.studhub.entity.Course;
 import com.studhub.entity.CourseStatus;
+import com.studhub.service.CourseService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,12 +11,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
+import javax.transaction.Transactional;
+
+@SpringBootTest
+@WebAppConfiguration
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class CourseServiceTests {
+public class CourseDtoTests {
     @Autowired
     private CourseService courseService;
 
@@ -27,14 +31,11 @@ public class CourseServiceTests {
     }
 
     @Test
-    public void testGetById() {
-        Course course = courseService.getById(1L);
-        Assert.assertNotNull(course);
-        Assert.assertEquals(1, course.getId().longValue());
-        Assert.assertEquals("petr", course.getStudent().getUsername());
-        Assert.assertEquals(CourseStatus.ACTIVE, course.getCourseStatus());
-
-        course = courseService.getById(100L);
-        Assert.assertNull(course);
+    @Transactional
+    public void testCourseDtoConstructor() {
+        CourseDto courseDto = new CourseDto(courseService.getById(1L));
+        Assert.assertEquals("Информатика (ЕГЭ)", courseDto.getTitle());
+        Assert.assertEquals(2L, courseDto.getStudentId().longValue());
+        Assert.assertEquals(CourseStatus.ACTIVE, courseDto.getStatus());
     }
 }

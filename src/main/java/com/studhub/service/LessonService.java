@@ -35,7 +35,7 @@ public class LessonService {
         Date date = new Date();
         lesson.setCreated(date);
         lesson.setLastModified(date);
-        lesson.setCourse(courseRepository.findById(1L).orElse(null)); //TODO: handle null
+        lesson.setCourse(courseRepository.findById(lessonDto.getCourseId()).orElse(null));
         return lessonRepository.save(lesson);
     }
 }

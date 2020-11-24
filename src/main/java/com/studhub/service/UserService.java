@@ -1,6 +1,7 @@
 package com.studhub.service;
 
 import com.studhub.entity.Role;
+import com.studhub.entity.Student;
 import com.studhub.entity.User;
 import com.studhub.entity.UserStatus;
 import com.studhub.payload.SignupRequest;
@@ -20,6 +21,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+//    @Autowired
+//    private StudentRepository studentRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -42,8 +46,10 @@ public class UserService {
         User user = new User();
         List<Role> roles = new ArrayList<>();
         roles.add(roleRepository.findByName("ROLE_USER"));
-        if (dto.getRole().equals("STUDENT"))
+        if (dto.getRole().equals("STUDENT")) {
+            user = new Student();
             roles.add(roleRepository.findByName("ROLE_STUDENT"));
+        }
 
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
