@@ -1,6 +1,5 @@
 package com.studhub.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.studhub.entity.Role;
 import com.studhub.entity.User;
@@ -31,13 +30,5 @@ public class UserDto extends BaseDto {
         roles = new ArrayList<>();
         for (Role role: user.getRoles())
             roles.add(new RoleDto(role));
-    }
-
-    @JsonIgnore
-    public boolean isStudent() {
-        for (RoleDto roleDto: roles)
-            if (roleDto.getName().equals("ROLE_STUDENT"))
-                return true;
-        return false;
     }
 }
