@@ -1,20 +1,12 @@
 -- noinspection SqlWithoutWhereForFile
 
-DELETE FROM user_roles cascade;
-DELETE FROM lessons cascade;
-DELETE FROM followers cascade;
-DELETE FROM courses cascade;
-DELETE FROM students cascade;
-DELETE FROM users cascade;
-DELETE FROM roles cascade;
-DELETE FROM ref_courses cascade;
 
-INSERT INTO studhub_test.public.roles (id, created, last_modified, name) VALUES
+INSERT INTO studhub.public.roles (id, created, last_modified, name) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ROLE_USER'),
 (2, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ROLE_STUDENT'),
 (3, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ROLE_ADMIN');
 
-INSERT INTO studhub_test.public.users (id, created, last_modified, first_name, last_name, password, status, username) VALUES
+INSERT INTO studhub.public.users (id, created, last_modified, first_name, last_name, password, status, username) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Ivan', 'Ivanov', '1234', 'ENABLED', 'admin'),
 (2, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Petr', 'Petrov', '1234', 'ENABLED', 'petr'),
 (3, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Gregory', 'Moore', '1234', 'ENABLED', 'gregory_moore'),
@@ -33,7 +25,7 @@ INSERT INTO studhub_test.public.users (id, created, last_modified, first_name, l
 INSERT INTO students (id) VALUES
 (2);
 
-INSERT INTO studhub_test.public.user_roles (user_id, role_id) VALUES
+INSERT INTO studhub.public.user_roles (user_id, role_id) VALUES
 (1, 1),
 (1, 3),
 (2, 1),
@@ -51,7 +43,7 @@ INSERT INTO studhub_test.public.user_roles (user_id, role_id) VALUES
 (13, 1),
 (14, 1);
 
-INSERT INTO studhub_test.public.ref_courses (id, created, last_modified, title) VALUES
+INSERT INTO studhub.public.ref_courses (id, created, last_modified, title) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на С++'),
 (2, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на Pascal'),
 (3, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на Java'),
@@ -63,10 +55,10 @@ INSERT INTO studhub_test.public.ref_courses (id, created, last_modified, title) 
 (9, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Математический анализ'),
 (10, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Линейная алгебра');
 
-INSERT INTO studhub_test.public.courses (id, created, last_modified, course_status, course_type, student_id) VALUES
+INSERT INTO studhub.public.courses (id, created, last_modified, course_status, course_type, student_id) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ACTIVE', 5, 2);
 
-INSERT INTO studhub_test.public.followers (user_id, follower_id) VALUES
+INSERT INTO studhub.public.followers (user_id, follower_id) VALUES
 (2, 3),
 (2, 4),
 (2, 5),
@@ -80,5 +72,5 @@ INSERT INTO studhub_test.public.followers (user_id, follower_id) VALUES
 (2, 13),
 (2, 14);
 
-INSERT INTO studhub_test.public.lessons (id, created, last_modified, start_date_time, status, topic, course_id) VALUES
+INSERT INTO studhub.public.lessons (id, created, last_modified, start_date_time, status, topic, course_id) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'SCHEDULED', 'Topic 1', 1);

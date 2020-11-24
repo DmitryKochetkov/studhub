@@ -51,7 +51,7 @@ public class AdminLessonApiController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<LessonDto> create(@RequestBody CreateLessonRequest request) {
         LessonDto dto = new LessonDto();
-        dto.setStartDate(LocalDateTime.of(request.getStartDate(), request.getStartTime()));
+        dto.setStartDateTime(LocalDateTime.of(request.getStartDate(), request.getStartTime()));
         dto.setTopic(request.getTopic());
         dto.setStatus(LessonStatus.SCHEDULED);
 

@@ -16,7 +16,7 @@ public class BaseEntity {
     @Id
     @GeneratedValue(generator = "increment")
     @Column(name = "id", nullable = false)
-    private long id;
+    private Long id;
 
     @CreatedDate
     @Column(name = "created")

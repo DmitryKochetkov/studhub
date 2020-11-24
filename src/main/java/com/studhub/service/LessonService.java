@@ -29,13 +29,13 @@ public class LessonService {
 
     public Lesson createLesson(LessonDto lessonDto) {
         Lesson lesson = new Lesson();
-        lesson.setStartDateTime(lessonDto.getStartDate());
+        lesson.setStartDateTime(lessonDto.getStartDateTime());
         lesson.setTopic(lessonDto.getTopic());
         lesson.setStatus(lessonDto.getStatus());
         LocalDateTime date = LocalDateTime.now();
         lesson.setCreated(date);
         lesson.setLastModified(date);
-        lesson.setCourse(courseRepository.findById(1L).orElse(null));
+        lesson.setCourse(courseRepository.findById(lessonDto.getCourseId()).orElse(null));
         return lessonRepository.save(lesson);
     }
 }

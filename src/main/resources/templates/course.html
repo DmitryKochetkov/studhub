@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'StudHub: ' + ${student.getFullname()} + ' - прогресс по курсу ' + ${course.getTitle()}">StudHub: Курс</title>
+    <title th:text="'StudHub: ' + ${student.getFirstName() + student.getLastName()} + ' - прогресс по курсу ' + ${course.getTitle()}">StudHub: Курс</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css}">
 
@@ -17,7 +17,7 @@
 
         <h2 class="font-weight-bold" th:text="'Курс: ' + ${course.getTitle()}">Курс</h2>
 
-        <div>Ученик: <a th:href="'/user/' + ${student.getId()}" th:text="${student.getFullname()}">Имя Фамилия</a></div>
+        <div>Ученик: <a th:href="'/user/' + ${student.getId()}" th:text="${student.getFirstName() + student.getLastName()}">Имя Фамилия</a></div>
         <div>Статус: <span class="font-weight-bold" th:text="${course.getStatus()}"></span></div>
 
         <div class="row pt-3">
@@ -50,7 +50,7 @@
                     </thead>
                     <tbody>
                         <tr th:each="lesson: ${course.getComingLessons()}">
-                            <td th:text="${lesson.getStartDate()}"></td>
+                            <td th:text="${#temporals.format(lesson.getStartDateTime(), 'dd.MM.yyyy hh:mm')}"></td>
                             <td th:text="${lesson.getTopic()}"></td>
                         </tr>
                     </tbody>

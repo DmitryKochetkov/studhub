@@ -2,6 +2,7 @@ package com.studhub.controller.front;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -26,9 +28,10 @@ import static com.studhub.StudhubApplicationTests.TEXT_HTML_UTF8;
  * Класс тестирования GET эндпоинтов.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest//(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@ContextConfiguration
+@WebAppConfiguration
 @TestPropertySource("/application-test.properties")
-@Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Slf4j
 public class ViewTests {
     @Autowired
@@ -44,8 +47,14 @@ public class ViewTests {
         return url.matches("(/[-a-zA-Z0-9@:%._+~#=]+)+");
     }
 
+    @Before
+    @Test
+    public void contextLoads() {
+        Assert.assertNotNull(requestHandlerMapping);
+    }
+
     /**
-    * Тестирование GET эндпоинтов. Проверяется, что все html-страницы, которые можно получить без
+    * Тестирование всех GET эндпоинтов приложения. Проверяется, что все html-страницы, которые можно получить без
      * параметров, возвращаются с кодом 200.
     * @throws RuntimeException,AssertionError в случае, если код ответа не равен 200 или ответом не является html-страница.
     * */

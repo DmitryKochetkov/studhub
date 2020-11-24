@@ -27,7 +27,7 @@ public class RoleDto extends BaseDto {
         if (!(obj instanceof RoleDto))
             return true;
 
-        return ((RoleDto)obj).getName() == this.name;
+        return ((RoleDto) obj).getName().equals(this.name);
     }
 
     @JsonIgnore

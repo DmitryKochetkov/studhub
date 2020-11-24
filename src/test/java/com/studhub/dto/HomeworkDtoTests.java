@@ -34,6 +34,6 @@ public class HomeworkDtoTests {
         Assert.assertEquals(created, homeworkDto.getCreated());
         Assert.assertEquals(deadline, homeworkDto.getDeadline());
         Assert.assertEquals("Description", homeworkDto.getDescription());
-        Assert.assertEquals(course.getId(), homeworkDto.getCourseId().longValue());
+        Assert.assertEquals(course.getId().longValue(), homeworkDto.getCourseId().longValue());
     }
 }

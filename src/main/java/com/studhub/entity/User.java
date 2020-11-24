@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User extends BaseEntity {
     @Column
     private String firstName;
@@ -50,9 +51,6 @@ public class User extends BaseEntity {
             uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "follower_id"})
     )
     private List<User> following;
-
-    @OneToMany(mappedBy = "student")
-    private List<Course> courses;
 
     @Override
     public String toString() {
