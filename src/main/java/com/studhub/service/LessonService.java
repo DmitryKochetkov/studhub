@@ -29,7 +29,7 @@ public class LessonService {
 
     public Lesson createLesson(LessonDto lessonDto) {
         Lesson lesson = new Lesson();
-        lesson.setStartDate(lessonDto.getStartDate());
+        lesson.setStartDateTime(lessonDto.getStartDateTime());
         lesson.setTopic(lessonDto.getTopic());
         lesson.setStatus(lessonDto.getStatus());
         Date date = new Date();

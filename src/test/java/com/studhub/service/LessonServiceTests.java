@@ -1,5 +1,6 @@
 package com.studhub.service;
 
+import com.studhub.dto.LessonDto;
 import com.studhub.entity.Lesson;
 import com.studhub.entity.LessonStatus;
 import org.junit.Assert;
@@ -11,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.time.LocalDateTime;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -36,5 +39,13 @@ public class LessonServiceTests {
 
         lesson = lessonService.getById(100L);
         Assert.assertNull(lesson);
+    }
+
+    @Test
+    public void testCreateLesson() {
+        LessonDto lessonDto = new LessonDto();
+        lessonDto.setCourseId(1L);
+        lessonDto.setStartDateTime(LocalDateTime.of(2020, 12, 31, 15, 0));
+        lessonService.createLesson(lessonDto);
     }
 }
