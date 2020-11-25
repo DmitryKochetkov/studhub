@@ -2,28 +2,22 @@ var keyPressTimeout;
 $("#student").on("change keyup", async function() {
     // clearTimeout(keyPressTimeout);
     // keyPressTimeout = setTimeout(function () {
-    var response = await fetch("http://localhost:8081/api/user/" + $(this).val());
+    let username = $(this).val();
+    let response = await fetch("/api/student?username=" + username);
     if (response.ok) {
         this.setCustomValidity("");
         $("#courses").empty();
-        let data = await response.json();
-        if (data["roles"].filter((role) => role["name"] === "ROLE_STUDENT").length > 0) {
-            for (let course of data["courses"]) {
-                var opt = document.createElement("option");
-                opt.value = course["id"];
-                opt.innerHTML = course["title"];
-                document.getElementById("courses").appendChild(opt);
-            }
-            document.getElementById("courses").disabled = false;
+        let student = await response.json();
+        for (let course of student["courses"]) {
+            let opt = document.createElement("option");
+            opt.value = course["id"];
+            opt.innerHTML = course["title"];
+            document.getElementById("courses").appendChild(opt);
         }
-        else {
-            this.setCustomValidity("Данный пользователь не является учеником.");
-            $("#courses").empty();
-            document.getElementById("courses").disabled = true;
-        }
+        document.getElementById("courses").disabled = false;
     }
     else {
-        this.setCustomValidity("Пользователь не найден.");
+        this.setCustomValidity("Ученик не найден.");
         $("#courses").empty();
         document.getElementById("courses").disabled = true;
     }

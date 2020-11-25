@@ -1,8 +1,8 @@
 package com.studhub.service;
 
-import com.studhub.dto.LessonDto;
 import com.studhub.entity.Lesson;
 import com.studhub.entity.LessonStatus;
+import com.studhub.payload.CreateLessonRequest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -42,10 +43,35 @@ public class LessonServiceTests {
     }
 
     @Test
-    public void testCreateLesson() {
-        LessonDto lessonDto = new LessonDto();
-        lessonDto.setCourseId(1L);
-        lessonDto.setStartDateTime(LocalDateTime.of(2020, 12, 31, 15, 0));
-        lessonService.createLesson(lessonDto);
+    public void testCreateLessonOK() {
+        CreateLessonRequest request = new CreateLessonRequest();
+        request.setCourseId(1L);
+        request.setTopic("Test topic");
+        request.setCourseId(1L);
+        request.setStartDate(LocalDate.of(2020, 12, 31));
+        request.setStartTime(LocalTime.of(15, 0));
+        lessonService.createLesson(request);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateLessonBadRequest1() {
+        CreateLessonRequest request = new CreateLessonRequest();
+        request.setCourseId(1L);
+        request.setTopic("Test topic");
+        request.setCourseId(null);
+        request.setStartDate(LocalDate.of(2020, 12, 31));
+        request.setStartTime(LocalTime.of(15, 0));
+        lessonService.createLesson(request);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateLessonBadRequest2() {
+        CreateLessonRequest request = new CreateLessonRequest();
+        request.setCourseId(1L);
+        request.setTopic("Test topic");
+        request.setCourseId(100L);
+        request.setStartDate(LocalDate.of(2020, 12, 31));
+        request.setStartTime(LocalTime.of(15, 0));
+        lessonService.createLesson(request);
     }
 }

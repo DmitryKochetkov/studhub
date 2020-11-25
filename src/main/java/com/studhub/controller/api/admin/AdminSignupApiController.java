@@ -40,7 +40,7 @@ public class AdminSignupApiController {
         }
     )
     public ResponseEntity<UserDto> signup(@RequestBody SignupRequest dto) {
-        User registered = userService.getByUsername(dto.getUsername());
+        User registered = userService.getUserByUsername(dto.getUsername());
         if (registered != null)
             return new ResponseEntity<>(HttpStatus.CONFLICT);
 

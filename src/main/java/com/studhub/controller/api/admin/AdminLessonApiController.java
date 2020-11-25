@@ -3,7 +3,6 @@ package com.studhub.controller.api.admin;
 import com.studhub.dto.LessonDto;
 import com.studhub.dto.PageDto;
 import com.studhub.entity.Lesson;
-import com.studhub.entity.LessonStatus;
 import com.studhub.exception.BadRequestException;
 import com.studhub.exception.InternalServerErrorException;
 import com.studhub.exception.NotFoundException;
@@ -19,8 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 /**
  * Контроллер администрирования уроков.
@@ -51,17 +48,12 @@ public class AdminLessonApiController {
     @ApiOperation("Create new lesson")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<LessonDto> create(@RequestBody CreateLessonRequest request) {
-        LessonDto dto = new LessonDto();
-
-        dto.setStartDateTime(LocalDateTime.of(request.getStartDate(), request.getStartTime()));
-        dto.setTopic(request.getTopic());
-        dto.setStatus(LessonStatus.SCHEDULED);
-
-        Lesson created = lessonService.createLesson(dto);
-
-        if (created == null)
+        try {
+            Lesson created = lessonService.createLesson(request);
+            return new ResponseEntity<>(new LessonDto(created), HttpStatus.ACCEPTED);
+        }
+        catch (IllegalArgumentException e) {
             throw new InternalServerErrorException();
-
-        return new ResponseEntity<>(new LessonDto(created), HttpStatus.ACCEPTED);
+        }
     }
 }

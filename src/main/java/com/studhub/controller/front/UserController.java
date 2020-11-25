@@ -50,16 +50,16 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/{user_id}/course/{course_id}")
-    public String course(@PathVariable Long user_id, @PathVariable Long course_id, Model model) {
+    @GetMapping("/student/{student_id}/course/{course_id}")
+    public String course(@PathVariable Long student_id, @PathVariable Long course_id, Model model) {
         RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://" + HOST + ":" + PORT + "/api/user/" + user_id + "/course/" + course_id.toString();
+        String uri = "http://" + HOST + ":" + PORT + "/api/student/" + student_id + "/course/" + course_id.toString();
         try {
             ResponseEntity<CourseDto> course = restTemplate.exchange(uri, HttpMethod.GET, null,
                     new ParameterizedTypeReference<CourseDto>() {});
             model.addAttribute("course", course.getBody());
 
-            ResponseEntity<UserDto> student = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + user_id, HttpMethod.GET, null,
+            ResponseEntity<UserDto> student = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + student_id, HttpMethod.GET, null,
                     new ParameterizedTypeReference<UserDto>() {});
             model.addAttribute("student", student.getBody());
 
