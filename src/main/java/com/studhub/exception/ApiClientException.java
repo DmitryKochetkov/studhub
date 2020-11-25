@@ -1,4 +1,4 @@
 package com.studhub.exception;
 
-public class ApiClientException extends ApiException {
+public abstract class ApiClientException extends ApiException {
 }
