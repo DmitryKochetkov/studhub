@@ -3,7 +3,7 @@ package com.studhub.controller.front;
 import com.studhub.dto.LessonDto;
 import com.studhub.dto.PageDto;
 import com.studhub.exception.BadRequestException;
-import com.studhub.exception.ResourceNotFoundException;
+import com.studhub.exception.NotFoundException;
 import com.studhub.payload.CreateLessonRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -45,7 +45,7 @@ public class AdminLessonController {
             return "admin_lessons";
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         }
         catch (HttpClientErrorException.BadRequest e) {
             throw new BadRequestException();
@@ -70,7 +70,7 @@ public class AdminLessonController {
             restTemplate.postForEntity(uri, request, LessonDto.class);
         }
         catch (HttpClientErrorException e) {
-            return redirectView;
+            throw new BadRequestException();
         }
 
         return redirectView;

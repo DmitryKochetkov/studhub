@@ -3,7 +3,7 @@ package com.studhub.controller.front;
 import com.studhub.dto.CourseDto;
 import com.studhub.dto.PageDto;
 import com.studhub.dto.UserDto;
-import com.studhub.exception.ResourceNotFoundException;
+import com.studhub.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -35,7 +35,7 @@ public class UserController {
                     });
             model.addAttribute("user", response.getBody());
         } catch (HttpClientErrorException.NotFound e) {
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         }
 
         try {
@@ -46,7 +46,7 @@ public class UserController {
             return "profile";
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         }
     }
 
@@ -65,7 +65,7 @@ public class UserController {
 
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         }
 //        catch (HttpClientErrorException.Unauthorized e) {
 //            throw new UnauthorizedException();

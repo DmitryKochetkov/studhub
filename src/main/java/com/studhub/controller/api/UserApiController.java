@@ -4,7 +4,7 @@ import com.studhub.dto.CourseDto;
 import com.studhub.dto.UserDto;
 import com.studhub.entity.Course;
 import com.studhub.entity.User;
-import com.studhub.exception.ResourceNotFoundException;
+import com.studhub.exception.NotFoundException;
 import com.studhub.service.CourseService;
 import com.studhub.service.UserService;
 import io.swagger.annotations.Api;
@@ -40,7 +40,7 @@ public class UserApiController {
     public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
         User user = userService.getById(id);
         if (user == null)
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
 
         return ResponseEntity.ok(new UserDto(user));
     }

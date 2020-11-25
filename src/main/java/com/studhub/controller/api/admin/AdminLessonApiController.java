@@ -5,7 +5,8 @@ import com.studhub.dto.PageDto;
 import com.studhub.entity.Lesson;
 import com.studhub.entity.LessonStatus;
 import com.studhub.exception.BadRequestException;
-import com.studhub.exception.ResourceNotFoundException;
+import com.studhub.exception.InternalServerErrorException;
+import com.studhub.exception.NotFoundException;
 import com.studhub.payload.CreateLessonRequest;
 import com.studhub.service.LessonService;
 import io.swagger.annotations.Api;
@@ -39,7 +40,7 @@ public class AdminLessonApiController {
         Pageable pageable = PageRequest.of(page-1, 10);
         Page<LessonDto> result = lessonService.getAll(pageable).map(LessonDto::new);
         if (result.getNumber() + 1 > result.getTotalPages() && result.getTotalPages() > 0)
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         return ResponseEntity.ok(new PageDto<>(result));
     }
 
@@ -65,7 +66,7 @@ public class AdminLessonApiController {
         Lesson created = lessonService.createLesson(dto);
 
         if (created == null)
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException();
 
         return new ResponseEntity<>(new LessonDto(created), HttpStatus.ACCEPTED);
     }

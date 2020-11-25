@@ -3,7 +3,7 @@ package com.studhub.controller.api.admin;
 import com.studhub.dto.PageDto;
 import com.studhub.dto.UserDto;
 import com.studhub.exception.BadRequestException;
-import com.studhub.exception.ResourceNotFoundException;
+import com.studhub.exception.NotFoundException;
 import com.studhub.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,7 +40,7 @@ public class AdminUserApiController {
         Pageable pageable = PageRequest.of(page-1, 10);
         Page<UserDto> result = userService.getAll(pageable).map(UserDto::new);
         if (result.getNumber() + 1 > result.getTotalPages() && result.getTotalPages() > 0)
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         return ResponseEntity.ok(new PageDto<>(result));
     }
 }
