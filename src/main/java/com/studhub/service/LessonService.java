@@ -30,7 +30,11 @@ public class LessonService {
 
     public Lesson createLesson(CreateLessonRequest request) {
         Lesson lesson = new Lesson();
-        lesson.setStartDateTime(LocalDateTime.of(request.getStartDate(), request.getStartTime()));
+        LocalDateTime start = LocalDateTime.of(request.getStartDate(), request.getStartTime());
+        if (start.isBefore(LocalDateTime.now()))
+            throw new IllegalArgumentException();
+
+        lesson.setStartDateTime(start);
         lesson.setTopic(request.getTopic());
         lesson.setStatus(LessonStatus.SCHEDULED);
 

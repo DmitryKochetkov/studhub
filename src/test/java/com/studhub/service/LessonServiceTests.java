@@ -47,14 +47,13 @@ public class LessonServiceTests {
         CreateLessonRequest request = new CreateLessonRequest();
         request.setCourseId(1L);
         request.setTopic("Test topic");
-        request.setCourseId(1L);
         request.setStartDate(LocalDate.of(2020, 12, 31));
         request.setStartTime(LocalTime.of(15, 0));
         lessonService.createLesson(request);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testCreateLessonBadRequest1() {
+    public void testCreateLessonBadRequest_CourseIdIsNull() {
         CreateLessonRequest request = new CreateLessonRequest();
         request.setCourseId(1L);
         request.setTopic("Test topic");
@@ -65,13 +64,24 @@ public class LessonServiceTests {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testCreateLessonBadRequest2() {
+    public void testCreateLessonBadRequest_CourseIdIsNotPresented() {
+        CreateLessonRequest request = new CreateLessonRequest();
+        request.setTopic("Test topic");
+        request.setCourseId(100L);
+        request.setStudentUsername("petr");
+        request.setStartDate(LocalDate.of(2020, 12, 31));
+        request.setStartTime(LocalTime.of(15, 0));
+        lessonService.createLesson(request);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateLessonBadRequest_InvalidDate() {
         CreateLessonRequest request = new CreateLessonRequest();
         request.setCourseId(1L);
         request.setTopic("Test topic");
-        request.setCourseId(100L);
-        request.setStartDate(LocalDate.of(2020, 12, 31));
+        request.setStartDate(LocalDate.of(2020, 11, 25));
         request.setStartTime(LocalTime.of(15, 0));
+
         lessonService.createLesson(request);
     }
 }
