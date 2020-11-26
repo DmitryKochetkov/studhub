@@ -48,5 +48,36 @@
         </div>
 
         <script th:src="|/js/studentValidator.js|"></script>
+        <script>
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            if(dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            today = yyyy + '-' + mm + '-' + dd;
+            start_date = document.getElementById("start_date");
+            start_date.setAttribute("min", today);
+
+            let start_time = document.getElementById("start_time");
+            let timeCheck = function() {
+                let start_date = document.getElementById("start_date");
+                let start_time = document.getElementById("start_time");
+                if (new Date() > (new Date(start_date.value + " " + start_time.value)))
+                    start_time.setCustomValidity("Incorrect time");
+                else start_time.setCustomValidity("");
+            };
+            start_time.onkeypress = timeCheck;
+            start_date.onkeypress = timeCheck;
+            start_date.onclick = timeCheck;
+            start_time.onclick = timeCheck;
+
+
+        </script>
     </body>
 </html>
