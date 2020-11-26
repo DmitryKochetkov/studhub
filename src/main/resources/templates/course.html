@@ -26,14 +26,16 @@
                 <table class="table" style="font-size: 10pt;">
                     <thead class="thead-light">
                         <tr>
-                            <th>Дата</th>
-                            <th>Разделы</th>
-                            <th>Заданий</th>
+                            <th>Срок сдачи</th>
+                            <th>Прогресс</th>
+<!--                            <th>К занятию</th>-->
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-
+                        <tr th:each="homework: ${course.getComingHomework()}">
+                            <td th:text="${#temporals.format(homework.getDeadline(), 'dd.MM.yyyy hh:mm')}"></td>
+                            <td th:text="${homework.getSolvedProblemsCount()} + '/' + ${homework.getTotalProblemsCount()}">0/0</td>
+<!--                            <td th:if="${!homework.getLessonId().equals(null)}"></td>-->
                         </tr>
                     </tbody>
                 </table>

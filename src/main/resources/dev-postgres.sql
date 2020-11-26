@@ -74,3 +74,6 @@ INSERT INTO studhub.public.followers (user_id, follower_id) VALUES
 
 INSERT INTO studhub.public.lessons (id, created, last_modified, start_date_time, status, topic, course_id) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'SCHEDULED', 'Topic 1', 1);
+
+INSERT INTO studhub.public.homework (id, created, last_modified, deadline, description, course_id, lesson_id) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2020-01-07 12:00:00', 'Basics of linear algebra.', 1, 1);
