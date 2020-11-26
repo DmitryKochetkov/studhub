@@ -88,7 +88,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <div class="text-center"><a class="btn-link" style="font-size: 10pt;" href="/course/1/homework">Все домашние задания</a></div>
+                <div class="text-center"><a class="btn-link" style="font-size: 10pt;" th:href="'/student/' + ${student.getId()} + '/course/' + ${course.getId()} + '/homework'">Все домашние задания</a></div>
             </div>
             <div class="col">
                 <div class="text-center"><a class="btn-link" style="font-size: 10pt;" href="/course/1/lessons">Все занятия</a></div>

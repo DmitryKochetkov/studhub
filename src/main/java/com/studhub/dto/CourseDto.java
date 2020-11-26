@@ -29,7 +29,8 @@ public class CourseDto extends BaseDto {
         this.status = course.getCourseStatus();
         this.startDate = course.getCreated();
         this.comingLessons = course.getLessons().stream().limit(3).map(LessonDto::new).collect(Collectors.toList());
-        this.comingHomework = course.getHomework().stream().limit(3).map(HomeworkDto::new).collect(Collectors.toList());
+        this.comingHomework = course.
+                getHomework().stream().limit(3).map(HomeworkDto::new).collect(Collectors.toList());
     }
 
     public List<LessonDto> getComingLessons() {

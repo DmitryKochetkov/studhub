@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<!--    <title th:text="'StudHub: ' + ${student.getFirstName() + student.getLastName()} + ' - Домашние работы по курсу ' + ${course.getTitle()}">StudHub: Курс</title>-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css}">
+</head>
+<body>
+    <header th:insert="common/header :: header"></header>
+    <div class="container">
+        <h2 class="font-weight-bold">Домашние работы</h2>
+        <h5 class="font-weight-bold" th:text="'по курсу'"><a th:text="'#' + ${homeworkList.get(0).getCourseId()}" th:href=""></a></h5>
+
+        <table class="table" style="font-size: 10pt;">
+            <thead class="thead-light">
+                <tr>
+                    <th>Тема</th>
+                    <th>Занятие</th>
+                    <th>Срок сдачи</th>
+                    <th>Прогресс</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="homework: ${homeworkList}">
+                    <td th:text="${homework.getDescription()}"></td>
+                    <td th:text="${homework.getLessonId()}"></td>
+                    <td th:text="${#temporals.format(homework.getDeadline(), 'dd.MM.yyyy hh:mm')}"></td>
+                    <td th:text="${homework.getSolvedProblemsCount()} + '/' + ${homework.getTotalProblemsCount()}">0/0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

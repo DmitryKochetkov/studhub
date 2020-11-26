@@ -1,6 +1,5 @@
 package com.studhub.controller.front;
 
-import com.studhub.dto.CourseDto;
 import com.studhub.dto.PageDto;
 import com.studhub.dto.UserDto;
 import com.studhub.exception.NotFoundException;
@@ -48,30 +47,5 @@ public class UserController {
         catch (HttpClientErrorException.NotFound e) {
             throw new NotFoundException();
         }
-    }
-
-    @GetMapping("/student/{student_id}/course/{course_id}")
-    public String course(@PathVariable Long student_id, @PathVariable Long course_id, Model model) {
-        RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://" + HOST + ":" + PORT + "/api/student/" + student_id + "/course/" + course_id.toString();
-        try {
-            ResponseEntity<CourseDto> course = restTemplate.exchange(uri, HttpMethod.GET, null,
-                    new ParameterizedTypeReference<CourseDto>() {});
-            model.addAttribute("course", course.getBody());
-
-            ResponseEntity<UserDto> student = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + student_id, HttpMethod.GET, null,
-                    new ParameterizedTypeReference<UserDto>() {});
-            model.addAttribute("student", student.getBody());
-
-        }
-        catch (HttpClientErrorException.NotFound e) {
-            throw new NotFoundException();
-        }
-//        catch (HttpClientErrorException.Unauthorized e) {
-//            throw new UnauthorizedException();
-//        }
-
-
-        return "course";
     }
 }

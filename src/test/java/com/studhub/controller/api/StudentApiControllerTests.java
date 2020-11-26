@@ -80,4 +80,25 @@ public class StudentApiControllerTests {
                 .andExpect(jsonPath("$.detail").value("Not Found"))
                 .andReturn();
     }
+
+    @Test
+    public void testGetCourse() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/student/2/course/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(9)))
+                .andExpect(jsonPath("$.studentId").value(2))
+                .andExpect(jsonPath("$.id").value(1));
+    }
+
+    @Test
+    public void testGetAllHomeworkInCourse() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/student/2/course/1/homework"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(5)))
+                .andExpect(jsonPath("$.hasNext").value(false))
+                .andExpect(jsonPath("$.hasPrevious").value(false))
+                .andExpect(jsonPath("$.totalPages").value(1))
+                .andExpect(jsonPath("$.number").value(1));
+    }
+
 }
