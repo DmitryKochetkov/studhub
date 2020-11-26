@@ -3,7 +3,7 @@ package com.studhub.controller.front;
 import com.studhub.dto.CourseDto;
 import com.studhub.dto.PageDto;
 import com.studhub.dto.UserDto;
-import com.studhub.exception.ResourceNotFoundException;
+import com.studhub.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -35,7 +35,7 @@ public class UserController {
                     });
             model.addAttribute("user", response.getBody());
         } catch (HttpClientErrorException.NotFound e) {
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         }
 
         try {
@@ -46,26 +46,26 @@ public class UserController {
             return "profile";
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         }
     }
 
-    @GetMapping("/user/{user_id}/course/{course_id}")
-    public String course(@PathVariable Long user_id, @PathVariable Long course_id, Model model) {
+    @GetMapping("/student/{student_id}/course/{course_id}")
+    public String course(@PathVariable Long student_id, @PathVariable Long course_id, Model model) {
         RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://" + HOST + ":" + PORT + "/api/user/" + user_id + "/course/" + course_id.toString();
+        String uri = "http://" + HOST + ":" + PORT + "/api/student/" + student_id + "/course/" + course_id.toString();
         try {
             ResponseEntity<CourseDto> course = restTemplate.exchange(uri, HttpMethod.GET, null,
                     new ParameterizedTypeReference<CourseDto>() {});
             model.addAttribute("course", course.getBody());
 
-            ResponseEntity<UserDto> student = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + user_id, HttpMethod.GET, null,
+            ResponseEntity<UserDto> student = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + student_id, HttpMethod.GET, null,
                     new ParameterizedTypeReference<UserDto>() {});
             model.addAttribute("student", student.getBody());
 
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         }
 //        catch (HttpClientErrorException.Unauthorized e) {
 //            throw new UnauthorizedException();

@@ -35,7 +35,7 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
-    public User getByUsername(String username) {
+    public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 

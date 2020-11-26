@@ -28,13 +28,13 @@ public class CourseServiceTests {
 
     @Test
     public void testGetById() {
-        Course course = courseService.getById(1L);
+        Course course = courseService.getById(1L).orElse(null);
         Assert.assertNotNull(course);
         Assert.assertEquals(1, course.getId().longValue());
         Assert.assertEquals("petr", course.getStudent().getUsername());
         Assert.assertEquals(CourseStatus.ACTIVE, course.getCourseStatus());
 
-        course = courseService.getById(100L);
+        course = courseService.getById(100L).orElse(null);
         Assert.assertNull(course);
     }
 }

@@ -22,5 +22,5 @@ public class CreateLessonRequest {
     private LocalTime startTime;
 
     private String studentUsername;
-    private String courseTitle;
+    private Long courseId;
 }

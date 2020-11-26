@@ -1,8 +1,8 @@
 package com.studhub.service;
 
-import com.studhub.dto.LessonDto;
 import com.studhub.entity.Lesson;
-import com.studhub.repository.CourseRepository;
+import com.studhub.entity.LessonStatus;
+import com.studhub.payload.CreateLessonRequest;
 import com.studhub.repository.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +17,7 @@ public class LessonService {
     private LessonRepository lessonRepository;
 
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseService courseService;
 
     public Lesson getById(Long id) {
         return lessonRepository.findById(id).orElse(null);
@@ -27,15 +27,24 @@ public class LessonService {
         return lessonRepository.findAll(pageable);
     }
 
-    public Lesson createLesson(LessonDto lessonDto) {
+    public Lesson createLesson(CreateLessonRequest request) {
         Lesson lesson = new Lesson();
-        lesson.setStartDateTime(lessonDto.getStartDateTime());
-        lesson.setTopic(lessonDto.getTopic());
-        lesson.setStatus(lessonDto.getStatus());
         LocalDateTime date = LocalDateTime.now();
         lesson.setCreated(date);
         lesson.setLastModified(date);
-        lesson.setCourse(courseRepository.findById(lessonDto.getCourseId()).orElse(null));
+        
+        LocalDateTime start = LocalDateTime.of(request.getStartDate(), request.getStartTime());
+        if (start.isBefore(LocalDateTime.now()))
+            throw new IllegalArgumentException();
+
+        lesson.setStartDateTime(start);
+        lesson.setTopic(request.getTopic());
+        lesson.setStatus(LessonStatus.SCHEDULED);
+        
+        Long courseId = request.getCourseId();
+        if (courseId == null)
+            throw new IllegalArgumentException();
+        lesson.setCourse(courseService.getById(courseId).orElseThrow(IllegalArgumentException::new));
         return lessonRepository.save(lesson);
     }
 }

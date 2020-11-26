@@ -3,7 +3,7 @@ package com.studhub.controller.front;
 import com.studhub.dto.PageDto;
 import com.studhub.dto.UserDto;
 import com.studhub.exception.BadRequestException;
-import com.studhub.exception.ResourceNotFoundException;
+import com.studhub.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -35,7 +35,7 @@ public class AdminUserController {
             result.addObject("page", response.getBody());
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         }
         catch (HttpClientErrorException.BadRequest e) {
             throw new BadRequestException();
