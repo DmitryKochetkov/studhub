@@ -1,6 +1,5 @@
 -- noinspection SqlWithoutWhereForFile
 
-DELETE FROM homework cascade;
 DELETE FROM user_roles cascade;
 DELETE FROM lessons cascade;
 DELETE FROM followers cascade;
