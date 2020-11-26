@@ -53,7 +53,7 @@ public class LessonServiceTests {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testCreateLessonBadRequest_CourseIdIsNull() {
+    public void testCreateLessonBadRequestWhenCourseIdIsNull() {
         CreateLessonRequest request = new CreateLessonRequest();
         request.setCourseId(1L);
         request.setTopic("Test topic");
@@ -64,7 +64,7 @@ public class LessonServiceTests {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testCreateLessonBadRequest_CourseIdIsNotPresented() {
+    public void testCreateLessonBadRequestWhenCourseIdIsNotPresented() {
         CreateLessonRequest request = new CreateLessonRequest();
         request.setTopic("Test topic");
         request.setCourseId(100L);
@@ -75,7 +75,7 @@ public class LessonServiceTests {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testCreateLessonBadRequest_InvalidDate() {
+    public void testCreateLessonBadRequestWhenDateIsInvalid() {
         CreateLessonRequest request = new CreateLessonRequest();
         request.setCourseId(1L);
         request.setTopic("Test topic");
