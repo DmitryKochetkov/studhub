@@ -50,7 +50,7 @@
                     </thead>
                     <tbody>
                         <tr th:each="lesson: ${course.getComingLessons()}">
-                            <td th:text="${lesson.getStartDate()}"></td>
+                            <td th:text="${lesson.getStartDateTime()}"></td>
                             <td th:text="${lesson.getTopic()}"></td>
                         </tr>
                     </tbody>

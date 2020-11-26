@@ -3,9 +3,9 @@ package com.studhub.controller.api.admin;
 import com.studhub.dto.LessonDto;
 import com.studhub.dto.PageDto;
 import com.studhub.entity.Lesson;
-import com.studhub.entity.LessonStatus;
 import com.studhub.exception.BadRequestException;
-import com.studhub.exception.ResourceNotFoundException;
+import com.studhub.exception.InternalServerErrorException;
+import com.studhub.exception.NotFoundException;
 import com.studhub.payload.CreateLessonRequest;
 import com.studhub.service.LessonService;
 import io.swagger.annotations.Api;
@@ -18,8 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Calendar;
 
 /**
  * Контроллер администрирования уроков.
@@ -39,7 +37,7 @@ public class AdminLessonApiController {
         Pageable pageable = PageRequest.of(page-1, 10);
         Page<LessonDto> result = lessonService.getAll(pageable).map(LessonDto::new);
         if (result.getNumber() + 1 > result.getTotalPages() && result.getTotalPages() > 0)
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         return ResponseEntity.ok(new PageDto<>(result));
     }
 
@@ -50,23 +48,12 @@ public class AdminLessonApiController {
     @ApiOperation("Create new lesson")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<LessonDto> create(@RequestBody CreateLessonRequest request) {
-        LessonDto dto = new LessonDto();
-
-        //TODO: use java.time everywhere to store datetime
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(request.getStartDate());
-        calendar.add(Calendar.HOUR, request.getStartTime().getHours());
-        calendar.add(Calendar.MINUTE, request.getStartTime().getMinutes());
-
-        dto.setStartDate(calendar.getTime());
-        dto.setTopic(request.getTopic());
-        dto.setStatus(LessonStatus.SCHEDULED);
-
-        Lesson created = lessonService.createLesson(dto);
-
-        if (created == null)
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
-        return new ResponseEntity<>(new LessonDto(created), HttpStatus.ACCEPTED);
+        try {
+            Lesson created = lessonService.createLesson(request);
+            return new ResponseEntity<>(new LessonDto(created), HttpStatus.ACCEPTED);
+        }
+        catch (IllegalArgumentException e) {
+            throw new InternalServerErrorException();
+        }
     }
 }

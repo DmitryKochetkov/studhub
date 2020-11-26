@@ -80,5 +80,5 @@ INSERT INTO studhub_test.public.followers (user_id, follower_id) VALUES
 (2, 13),
 (2, 14);
 
-INSERT INTO studhub_test.public.lessons (id, created, last_modified, start_date, status, topic, course_id) VALUES
+INSERT INTO studhub_test.public.lessons (id, created, last_modified, start_date_time, status, topic, course_id) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'SCHEDULED', 'Topic 1', 1);

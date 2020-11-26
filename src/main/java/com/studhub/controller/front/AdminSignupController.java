@@ -21,7 +21,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/admin/signup")
 public class AdminSignupController {
     @GetMapping
-    public String signup(Model model) {
+    public String signupPage(Model model) {
         model.addAttribute("form", new SignupRequest());
         return "signup";
     }
@@ -32,20 +32,13 @@ public class AdminSignupController {
             @ModelAttribute SignupRequest form,
             RedirectAttributes redirectAttributes
     ) {
-        SignupRequest dto = new SignupRequest();
-        dto.setFirstName(form.getFirstName());
-        dto.setLastName(form.getLastName());
-        dto.setUsername(form.getUsername());
-        dto.setPassword(form.getPassword());
-        dto.setRole(form.getRole());
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String uri = "http://localhost:8081/api/admin/signup";
-        HttpEntity<SignupRequest> request = new HttpEntity<>(dto, headers);
+        HttpEntity<SignupRequest> request = new HttpEntity<>(form, headers);
         RedirectView redirectView = new RedirectView("/users/signup");
         redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
-
 
         try {
             ResponseEntity<User> response = restTemplate.postForEntity(uri, request, User.class);

@@ -3,7 +3,7 @@ package com.studhub.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "lessons")
@@ -13,7 +13,7 @@ public class Lesson extends BaseEntity {
     private String topic;
 
     @Column
-    private Date startDate;
+    private LocalDateTime startDateTime;
 
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)

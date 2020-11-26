@@ -4,7 +4,7 @@ import com.studhub.dto.PageDto;
 import com.studhub.dto.UserDto;
 import com.studhub.entity.User;
 import com.studhub.exception.BadRequestException;
-import com.studhub.exception.ResourceNotFoundException;
+import com.studhub.exception.NotFoundException;
 import com.studhub.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,14 +38,14 @@ public class UserRelationsApiController {
     public ResponseEntity<PageDto<UserDto>> getFollowers(@PathVariable Long user_id, @RequestParam(defaultValue = "1") Integer page) {
         User user = userService.getById(user_id);
         if (user == null)
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
 
         if (page - 1 < 0)
             throw new BadRequestException();
         Pageable pageable = PageRequest.of(page-1, 10);
         Page<UserDto> result = userService.getUsersWhoFollowUser(user, pageable).map(UserDto::new);
         if (result.getNumber() + 1 > result.getTotalPages() && result.getTotalPages() > 0)
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         return ResponseEntity.ok(new PageDto<>(result));
     }
 
@@ -59,14 +59,14 @@ public class UserRelationsApiController {
     public ResponseEntity<PageDto<UserDto>> getUsersWhoAreFollowedByUser(@PathVariable Long user_id, @RequestParam(defaultValue = "1") Integer page) {
         User user = userService.getById(user_id);
         if (user == null)
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
 
         if (page - 1 < 0)
             throw new BadRequestException();
         Pageable pageable = PageRequest.of(page-1, 10);
         Page<UserDto> result = userService.getUsersWhoAreFollowedByUser(user, pageable).map(UserDto::new);
         if (result.getNumber() + 1 > result.getTotalPages() && result.getTotalPages() > 0)
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         return ResponseEntity.ok(new PageDto<>(result));
     }
 }

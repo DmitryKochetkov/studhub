@@ -1,10 +1,8 @@
 package com.studhub.controller.api;
 
-import com.studhub.dto.CourseDto;
 import com.studhub.dto.UserDto;
-import com.studhub.entity.Course;
 import com.studhub.entity.User;
-import com.studhub.exception.ResourceNotFoundException;
+import com.studhub.exception.NotFoundException;
 import com.studhub.service.CourseService;
 import com.studhub.service.UserService;
 import io.swagger.annotations.Api;
@@ -40,7 +38,7 @@ public class UserApiController {
     public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
         User user = userService.getById(id);
         if (user == null)
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
 
         return ResponseEntity.ok(new UserDto(user));
     }
@@ -53,32 +51,10 @@ public class UserApiController {
     }
     )
     public ResponseEntity<UserDto> getUserByUsername(@RequestParam String username) {
-        User user = userService.getByUsername(username);
+        User user = userService.getUserByUsername(username);
         if (user == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         return ResponseEntity.ok(new UserDto(user));
-    }
-
-    @GetMapping(value = "/user/{user_id}/course/{course_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Get course by id")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Not Found")
-    }
-    )
-    public ResponseEntity<CourseDto> getCourse(@PathVariable Long user_id, @PathVariable Long course_id) {
-        User user = userService.getById(user_id);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        Course course = courseService.getById(course_id);
-        if (course == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        if (course.getStudent().getId() != user_id)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        return ResponseEntity.ok(new CourseDto(course));
     }
 }
