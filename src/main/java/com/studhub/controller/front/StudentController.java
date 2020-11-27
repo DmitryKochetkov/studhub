@@ -62,6 +62,7 @@ public class StudentController {
             ResponseEntity<UserDto> student = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + student_id, HttpMethod.GET, null,
                     new ParameterizedTypeReference<UserDto>() {});
             model.addAttribute("student", student.getBody());
+            model.addAttribute("course_id", course_id);
 
         }
         catch (HttpClientErrorException.NotFound e) {
