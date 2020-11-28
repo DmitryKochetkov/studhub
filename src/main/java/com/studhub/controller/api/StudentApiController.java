@@ -112,4 +112,31 @@ public class StudentApiController {
         Page<HomeworkDto> result = homeworkService.getAllHomeworkInCourse(course, page).map(HomeworkDto::new);
         return ResponseEntity.ok(new PageDto<HomeworkDto>(result));
     }
+
+    @GetMapping(value = "/student/{user_id}/course/{course_id}/homework/{homework_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Get homework by id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found")
+    }
+    )
+    public ResponseEntity<HomeworkDto> getHomeworkById(
+            @PathVariable Long user_id,
+            @PathVariable Long course_id,
+            @PathVariable Long homework_id,
+            @RequestParam(defaultValue = "1") Integer page) {
+        User user = userService.getById(user_id);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        Course course = courseService.getById(course_id).orElseThrow(IllegalArgumentException::new);
+        if (course == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        if (course.getStudent().getId() != user_id)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        HomeworkDto result = new HomeworkDto(homeworkService.getById(homework_id).orElseThrow(NotFoundException::new));
+        return ResponseEntity.ok(result);
+    }
 }

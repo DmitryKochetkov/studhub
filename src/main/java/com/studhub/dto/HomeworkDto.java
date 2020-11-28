@@ -4,12 +4,15 @@ import com.studhub.entity.Homework;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalUnit;
 
 @Data
 @NoArgsConstructor
 public class HomeworkDto extends BaseDto {
     private LocalDateTime deadline;
+    private Long remainingHours;
     private Long courseId;
     private String description;
     private Long lessonId;
@@ -24,6 +27,7 @@ public class HomeworkDto extends BaseDto {
             lessonId = homework.getLesson().getId();
         description = homework.getDescription();
         totalProblemsCount = homework.getProblems().size();
+        remainingHours = Math.max(Duration.between(LocalDateTime.now(), deadline).toSeconds(), 0);
         //solvedProblemsCount = homework.getSubmissions().stream().filter(submitted).distinct(by problem id).toList();
     }
 }

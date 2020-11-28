@@ -71,4 +71,30 @@ public class StudentController {
         return "course-homework";
     }
 
+    @GetMapping("/student/{student_id}/course/{course_id}/homework/{homework_id}")
+    public String homeworkById(
+            @PathVariable Long student_id,
+            @PathVariable Long course_id,
+            @PathVariable Long homework_id,
+            Model model,
+            @RequestParam(defaultValue = "1") String page) {
+        RestTemplate restTemplate = new RestTemplate();
+        String uri = "http://" + HOST + ":" + PORT + "/api/student/" + student_id + "/course/" + course_id.toString() + "/homework/" + homework_id;
+        try {
+            ResponseEntity<HomeworkDto> homeworkPage = restTemplate.exchange(uri, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<HomeworkDto>() {});
+            model.addAttribute("homework", homeworkPage.getBody());
+
+//            ResponseEntity<UserDto> student = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + student_id, HttpMethod.GET, null,
+//                    new ParameterizedTypeReference<UserDto>() {});
+//            model.addAttribute("student", student.getBody());
+//            model.addAttribute("course_id", course_id);
+
+        }
+        catch (HttpClientErrorException.NotFound e) {
+            throw new NotFoundException();
+        }
+        return "homework";
+    }
+
 }

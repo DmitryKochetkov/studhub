@@ -9,33 +9,38 @@
 <body>
     <header th:insert="common/header :: header"></header>
     <div class="container">
-        <h2 class="font-weight-bold">Домашние работы</h2>
-        <span>
-            <span class="font-weight-bold" th:text="'по курсу'"></span>
-            <a class="btn-link" th:text="${course_id}" th:href="'/student/' + ${student.getId()} + '/course/' + ${course_id}"></a>
-        </span>
+        <div>
+            <h2 class="font-weight-bold">Домашние работы</h2>
+            <span>
+                <span class="font-weight-bold" th:text="'по курсу'"></span>
+                <a class="btn-link" th:text="${course_id}" th:href="'/student/' + ${student.getId()} + '/course/' + ${course_id}"></a>
+            </span>
+        </div>
 
-        <table class="table pt-2" style="font-size: 10pt;">
-            <thead class="thead-light">
+        <div class="pt-3">
+            <table class="table" style="font-size: 10pt;">
+                <thead class="thead-light">
                 <tr>
                     <th>Тема</th>
                     <th>Занятие</th>
                     <th>Срок сдачи</th>
                     <th>Прогресс</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr th:each="homework: ${homeworkList}">
                     <td th:text="${homework.getDescription()}"></td>
                     <td th:text="${homework.getLessonId()}"></td>
                     <td th:text="${#temporals.format(homework.getDeadline(), 'dd.MM.yyyy hh:mm')}"></td>
                     <td>
                         <span th:text="${homework.getSolvedProblemsCount()} + '/' + ${homework.getTotalProblemsCount()}"></span>
-                        <a class="btn-link pl-2" th:href="@{'homework/' + ${homework.getId()}}">Подробнее</a>
+                        <a class="btn-link pl-2" th:href="@{'' + ${homework.getId()}}">Подробнее</a>
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </body>
 </html>
