@@ -34,7 +34,7 @@
                     <td th:text="${#temporals.format(homework.getDeadline(), 'dd.MM.yyyy hh:mm')}"></td>
                     <td>
                         <span th:text="${homework.getSolvedProblemsCount()} + '/' + ${homework.getTotalProblemsCount()}"></span>
-                        <a class="btn-link pl-2" th:href="@{'' + ${homework.getId()}}">Подробнее</a>
+                        <a class="btn-link pl-2" th:href="'homework/' + ${homework.getId()}">Подробнее</a>
                     </td>
                 </tr>
                 </tbody>
