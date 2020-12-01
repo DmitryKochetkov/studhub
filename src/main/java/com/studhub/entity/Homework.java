@@ -24,12 +24,8 @@ public class Homework extends BaseEntity {
     @Column
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "homework_problem",
-            joinColumns = {@JoinColumn(name = "homework_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "problem_id", referencedColumnName = "id")},
-            uniqueConstraints = @UniqueConstraint(columnNames = {"homework_id", "problem_id"}))
-    private List<AbstractProblem> problems;
+    @OneToMany(mappedBy = "problem")
+    private List<HomeworkProblem> problems;
 
     //private List<Submission> submissions;
 }

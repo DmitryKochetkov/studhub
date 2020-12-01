@@ -1,14 +1,20 @@
 package com.studhub.dto;
 
 import com.studhub.entity.AbstractProblem;
+import com.studhub.entity.ShortAnswerProblem;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 public class ProblemDto extends BaseDto {
-    private String type;
+    private String type = "unknown";
     private String formulation;
 
     public ProblemDto(AbstractProblem problem) {
-        super();
+        super(problem);
         formulation = problem.getFormulation();
-        type = "unknown";
+        if (problem instanceof ShortAnswerProblem)
+            type = "shortAnswer";
     }
 }

@@ -77,3 +77,12 @@ INSERT INTO studhub.public.lessons (id, created, last_modified, start_date_time,
 
 INSERT INTO studhub.public.homework (id, created, last_modified, deadline, description, course_id, lesson_id) VALUES
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2020-01-07 12:00:00', 'Basics of linear algebra.', 1, 1);
+
+INSERT INTO studhub.public.abstract_problem (id, created, last_modified, formulation) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find sum of 2 and 3.');
+
+INSERT INTO studhub.public.short_answer_problem (id, answer) VALUES
+(1, 5);
+
+INSERT INTO studhub.public.homework_problems (id, created, last_modified, homework_id, problem_id, number_in_homework, required, max_attempts, used_attempts) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 1, 1, true, 2, 0);

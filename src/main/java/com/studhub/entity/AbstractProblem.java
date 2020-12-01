@@ -11,7 +11,4 @@ import javax.persistence.*;
 public abstract class AbstractProblem extends BaseEntity {
     @Column
     private String formulation;
-
-    @Column
-    private boolean required; // Определяет попадет ли задание в общую статистику по заданием данного типа
 }

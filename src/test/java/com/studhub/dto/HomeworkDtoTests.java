@@ -1,19 +1,13 @@
 package com.studhub.dto;
 
-import com.studhub.entity.AbstractProblem;
-import com.studhub.entity.Course;
-import com.studhub.entity.Homework;
-import com.studhub.entity.ShortAnswerProblem;
-import com.studhub.entity.Lesson;
+import com.studhub.entity.*;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 //@RunWith(SpringRunner.class)
 @SpringBootTest//(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -35,13 +29,20 @@ public class HomeworkDtoTests {
         homework.setDeadline(deadline);
         homework.setDescription("Description");
 
+        HomeworkProblem homeworkProblem = new HomeworkProblem();
         ShortAnswerProblem problem = new ShortAnswerProblem();
         problem.setFormulation("Find a sum of 2 and 3.");
-        problem.setRequired(true);
+//        problem.setRequired(true);
         problem.setAnswer("5");
 
-        ArrayList<AbstractProblem> problems = new ArrayList<>();
-        problems.add(problem);
+        homeworkProblem.setProblem(problem);
+        homeworkProblem.setHomework(homework);
+        homeworkProblem.setRequired(true);
+        homeworkProblem.setMaxAttempts(100);
+        homeworkProblem.setUsedAttempts(0);
+
+        ArrayList<HomeworkProblem> problems = new ArrayList<>();
+        problems.add(homeworkProblem);
 
         homework.setProblems(problems);
 
