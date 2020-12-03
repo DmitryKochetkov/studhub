@@ -1,10 +1,12 @@
 package com.studhub.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "courses")
 @Data
@@ -22,4 +24,12 @@ public class Course extends BaseEntity {
 
     @OneToMany(mappedBy = "course")
     private List<Lesson> lessons;
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + this.getId() +
+                ", student='" + student.getUsername() +
+                "'}";
+    }
 }
