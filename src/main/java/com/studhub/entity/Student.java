@@ -20,4 +20,12 @@ public class Student extends User {
     public Student() {
         courses = new ArrayList<>();
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + this.getId() +
+                ", username='" + this.getUsername() + '\'' +
+                '}';
+    }
 }

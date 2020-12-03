@@ -24,4 +24,11 @@ public abstract class BaseEntity {
 
     @LastModifiedDate
     private LocalDateTime lastModified;
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "{" +
+                "id=" + id +
+                '}';
+    }
 }
