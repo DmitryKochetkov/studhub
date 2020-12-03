@@ -45,5 +45,8 @@ public class ToStringTests {
         Assert.assertEquals("Student{id=2, username='best_student'}", student.toString());
         Assert.assertEquals("Course{id=1, student='best_student'}", course.toString());
         Assert.assertEquals("Lesson{id=1}", lesson.toString());
+        Role role = new Role();
+        role.setName("ADMIN");
+        Assert.assertEquals("Role{ADMIN}", role.toString());
     }
 }

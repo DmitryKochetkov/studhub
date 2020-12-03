@@ -20,8 +20,6 @@ public class Role extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Role{" +
-                "name='" + name + '\'' +
-                '}';
+        return "Role{" + name + '}';
     }
 }
