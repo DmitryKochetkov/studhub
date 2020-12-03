@@ -1,10 +1,12 @@
 package com.studhub.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "lessons")
 @Data
@@ -21,4 +23,9 @@ public class Lesson extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private LessonStatus status;
+
+    @Override
+    public String toString() {
+        return super.toString();//"Lesson{id=id}";
+    }
 }
