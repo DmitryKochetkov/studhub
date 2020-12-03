@@ -1,13 +1,12 @@
 package com.studhub.controller.front;
 
-import com.studhub.dto.CourseDto;
-import com.studhub.dto.HomeworkDto;
-import com.studhub.dto.PageDto;
-import com.studhub.dto.UserDto;
+import com.studhub.dto.*;
+import com.studhub.exception.BadRequestException;
 import com.studhub.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class StudentController {
@@ -72,7 +72,22 @@ public class StudentController {
     }
 
     @GetMapping("/student/{student_id}/course/{course_id}/homework/{homework_id}")
-    public String homeworkById(
+    public RedirectView homeworkRedirectToDescription(
+        @PathVariable Long student_id,
+        @PathVariable Long course_id,
+        @PathVariable Long homework_id
+    ) {
+        String url = "/student/" + student_id +
+        "/course/" + course_id +
+                "/homework/" + homework_id + "/description";
+        RedirectView redirectView = new RedirectView(url);
+        redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+
+        return redirectView;
+    }
+
+    @GetMapping("/student/{student_id}/course/{course_id}/homework/{homework_id}/description")
+    public String homeworkById_description(
             @PathVariable Long student_id,
             @PathVariable Long course_id,
             @PathVariable Long homework_id,
@@ -81,20 +96,79 @@ public class StudentController {
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://" + HOST + ":" + PORT + "/api/student/" + student_id + "/course/" + course_id.toString() + "/homework/" + homework_id;
         try {
-            ResponseEntity<HomeworkDto> homeworkPage = restTemplate.exchange(uri, HttpMethod.GET, null,
+            ResponseEntity<HomeworkDto> homework = restTemplate.exchange(uri, HttpMethod.GET, null,
                     new ParameterizedTypeReference<HomeworkDto>() {});
-            model.addAttribute("homework", homeworkPage.getBody());
-
-//            ResponseEntity<UserDto> student = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + student_id, HttpMethod.GET, null,
-//                    new ParameterizedTypeReference<UserDto>() {});
-//            model.addAttribute("student", student.getBody());
-//            model.addAttribute("course_id", course_id);
-
+            model.addAttribute("homework", homework.getBody());
         }
         catch (HttpClientErrorException.NotFound e) {
             throw new NotFoundException();
         }
-        return "homework";
+        return "homework-description";
+    }
+
+    @GetMapping("/student/{student_id}/course/{course_id}/homework/{homework_id}/problems/{problem_number}")
+    public String homeworkById_problems(
+            @PathVariable Long student_id,
+            @PathVariable Long course_id,
+            @PathVariable Long homework_id,
+            @PathVariable Long problem_number,
+            Model model,
+            @RequestParam(defaultValue = "1") String page) {
+        RestTemplate restTemplate = new RestTemplate();
+        String uri = "http://" + HOST + ":" + PORT +
+                "/api/student/" + student_id +
+                "/course/" + course_id.toString() +
+                "/homework/" + homework_id +
+                "/problems/" + problem_number;
+        try {
+            ResponseEntity<HomeworkProblemDto> problem = restTemplate.exchange(uri, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<HomeworkProblemDto>() {});
+            model.addAttribute("problemInfo", problem.getBody());
+
+            ResponseEntity<HomeworkDto> homework = restTemplate.exchange("http://" + HOST + ":" + PORT +
+                            "/api/student/" + student_id +
+                            "/course/" + course_id.toString() +
+                            "/homework/" + homework_id, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<HomeworkDto>() {});
+            model.addAttribute("homework", homework.getBody());
+        }
+        catch (HttpClientErrorException.NotFound e) {
+            throw new NotFoundException();
+        }
+        catch (HttpClientErrorException.BadRequest e) {
+            throw new BadRequestException();
+        }
+        return "homework-problems";
+    }
+
+    @GetMapping(value = "/student/{student_id}/course/{course_id}/homework/{homework_id}/problems")
+    public RedirectView getProblemsRedirect(
+            @PathVariable Long student_id,
+            @PathVariable Long course_id,
+            @PathVariable Long homework_id) {
+        String url = "/student/" + student_id +
+                "/course/" + course_id +
+                "/homework/" + homework_id + "/problems/1";
+        RedirectView redirectView = new RedirectView(url);
+        redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+
+        return redirectView;
+    }
+
+    @GetMapping(value = "/student/{student_id}/course/{course_id}/homework/{homework_id}/submissions")
+    public String getSubmissionsInHomework(
+            @PathVariable Long student_id,
+            @PathVariable Long course_id,
+            @PathVariable Long homework_id,
+            Model model) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<HomeworkDto> homework = restTemplate.exchange("http://" + HOST + ":" + PORT +
+                        "/api/student/" + student_id +
+                        "/course/" + course_id.toString() +
+                        "/homework/" + homework_id, HttpMethod.GET, null,
+                new ParameterizedTypeReference<HomeworkDto>() {});
+        model.addAttribute("homework", homework.getBody());
+        return "homework-submissions";
     }
 
 }

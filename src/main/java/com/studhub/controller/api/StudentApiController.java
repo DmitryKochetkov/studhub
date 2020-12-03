@@ -1,12 +1,10 @@
 package com.studhub.controller.api;
 
-import com.studhub.dto.CourseDto;
-import com.studhub.dto.HomeworkDto;
-import com.studhub.dto.PageDto;
-import com.studhub.dto.StudentDto;
+import com.studhub.dto.*;
 import com.studhub.entity.Course;
 import com.studhub.entity.Student;
 import com.studhub.entity.User;
+import com.studhub.exception.BadRequestException;
 import com.studhub.exception.NotFoundException;
 import com.studhub.service.CourseService;
 import com.studhub.service.HomeworkService;
@@ -27,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
  * */
 @RestController
 @RequestMapping("/api")
-@Api(tags = "Users", description = "Access registered users.")
+@Api(tags = "Student", description = "Access student info.")
 public class StudentApiController {
     @Autowired
     private UserService userService;
@@ -39,7 +37,7 @@ public class StudentApiController {
     private HomeworkService homeworkService;
 
     @GetMapping(value = "/student/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Get user by id")
+    @ApiOperation(value = "Get student by id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "Not found")
@@ -54,7 +52,7 @@ public class StudentApiController {
     }
 
     @GetMapping(value = "/student", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Get user by id")
+    @ApiOperation(value = "Get student by username")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "Not found")
@@ -137,6 +135,36 @@ public class StudentApiController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         HomeworkDto result = new HomeworkDto(homeworkService.getById(homework_id).orElseThrow(NotFoundException::new));
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(value = "/student/{user_id}/course/{course_id}/homework/{homework_id}/problems/{problem_number}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Get problem in homework")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found")
+    }
+    )
+    public ResponseEntity<HomeworkProblemDto> getProblemFromHomework(
+            @PathVariable Long user_id,
+            @PathVariable Long course_id,
+            @PathVariable Long homework_id,
+            @PathVariable Integer problem_number) {
+        User user = userService.getById(user_id);
+        if (user == null)
+            throw new NotFoundException();
+
+        Course course = courseService.getById(course_id).orElseThrow(IllegalArgumentException::new);
+        if (course == null)
+            throw new NotFoundException();
+
+        if (!course.getStudent().getId().equals(user_id))
+            throw new NotFoundException();
+
+        if (problem_number < 1)
+            throw new BadRequestException();
+
+        HomeworkProblemDto result = new HomeworkProblemDto(homeworkService.getProblemInHomework(homework_id, problem_number).orElseThrow(NotFoundException::new));
         return ResponseEntity.ok(result);
     }
 }

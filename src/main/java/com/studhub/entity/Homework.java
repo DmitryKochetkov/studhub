@@ -1,11 +1,13 @@
 package com.studhub.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "homework")
 @Data
@@ -24,7 +26,7 @@ public class Homework extends BaseEntity {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "problem")
+    @OneToMany(mappedBy = "homework", fetch = FetchType.EAGER)
     private List<HomeworkProblem> problems;
 
     //private List<Submission> submissions;

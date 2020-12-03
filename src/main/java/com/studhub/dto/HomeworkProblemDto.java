@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 public class HomeworkProblemDto {
 
     private Long homeworkId;
+    private Integer number;
     private boolean required;
     private Integer maxAttempts;
     private Integer usedAttempts;
@@ -20,5 +21,6 @@ public class HomeworkProblemDto {
         maxAttempts = homeworkProblem.getMaxAttempts();
         homeworkId = homeworkProblem.getHomework().getId();
         problem = new ProblemDto(homeworkProblem.getProblem());
+        number = homeworkProblem.getNumberInHomework();
     }
 }

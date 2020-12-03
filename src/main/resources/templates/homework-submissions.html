@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'StudHub:  Домашняя работа #' + ${homework.getId()}"></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css}">
+    <style>
+        .fa-question-circle:hover {color: blue; cursor: pointer;}
+    </style>
+</head>
+<body>
+    <header th:insert="common/header :: header"></header>
+    <div class="container">
+        <div>
+            <h2 class="font-weight-bold">Домашняя работа</h2>
+            <span>
+                <span class="font-weight-bold" th:text="'по курсу'"></span>
+                <a class="btn-link" th:text="${course_id}" th:href="'/student/' + ${student_id} + '/course/' + ${course_id}"></a>
+                <span class="font-weight-bold" th:text="'к уроку'"></span>
+                <a class="btn-link" th:text="${course_id}" th:href="'/student/' + ${student_id} + '/course/' + ${course_id} + '/lesson/' + ${homework.getLessonId()}"></a>
+            </span>
+        </div>
+
+        <div class="pt-3">
+            <span th:text="'Срок сдачи: ' + ${homework.getDeadline()} +
+            ', до дедлайна осталось ' + ${homework.getRemainingHours()} + ' минут'"></span>
+        </div>
+
+        <div class="pt-3 pb-2">
+            <ul class="nav nav-tabs" id="homework" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link" href="description">Описание</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="problems">Задачи</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="">Посылки</a>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="font-weight-bold">Посылки</h3>
+            <p>Посылок нет.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -79,10 +79,16 @@ INSERT INTO studhub.public.homework (id, created, last_modified, deadline, descr
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2020-01-07 12:00:00', 'Basics of linear algebra.', 1, 1);
 
 INSERT INTO studhub.public.abstract_problem (id, created, last_modified, formulation) VALUES
-(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find sum of 2 and 3.');
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find sum of 2 and 3.'),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find 10 modulo 3.'),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'What is the capital of Great Britain?');
 
 INSERT INTO studhub.public.short_answer_problem (id, answer) VALUES
-(1, 5);
+(1, '5'),
+(2, '1'),
+(3, 'London');
 
 INSERT INTO studhub.public.homework_problems (id, created, last_modified, homework_id, problem_id, number_in_homework, required, max_attempts, used_attempts) VALUES
-(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 1, 1, true, 2, 0);
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 1, 1, true, 2, 0),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 2, 2, true, 20, 0),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 3, 3, true, 100, 0);

@@ -15,6 +15,6 @@ public class ProblemDto extends BaseDto {
         super(problem);
         formulation = problem.getFormulation();
         if (problem instanceof ShortAnswerProblem)
-            type = "shortAnswer";
+            type = "shortAnswer"; //TODO: изменить стратегию наследования, хранить тип задачи как атрибут сущности в базе
     }
 }
