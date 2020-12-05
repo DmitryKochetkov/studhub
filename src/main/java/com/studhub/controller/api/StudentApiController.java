@@ -95,7 +95,10 @@ public class StudentApiController {
             @ApiResponse(code = 404, message = "Not Found")
     }
     )
-    public ResponseEntity<PageDto<HomeworkDto>> getAllHomeworkInCourse(@PathVariable Long user_id, @PathVariable Long course_id, @RequestParam(defaultValue = "1") Integer page) {
+    public ResponseEntity<PageDto<HomeworkDto>> getAllHomeworkInCourse(
+            @PathVariable Long user_id,
+            @PathVariable Long course_id,
+            @RequestParam(defaultValue = "1") Integer page) {
         User user = userService.getById(user_id);
         if (user == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

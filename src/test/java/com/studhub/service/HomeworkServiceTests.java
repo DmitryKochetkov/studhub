@@ -34,12 +34,12 @@ public class HomeworkServiceTests {
         Assert.assertNotNull(homework);
         Assert.assertEquals(1, homework.getId().longValue());
         Assert.assertEquals("petr", homework.getCourse().getStudent().getUsername());
-        Assert.assertEquals(3, homework.getProblems().size());
+        Assert.assertEquals(4, homework.getProblems().size());
     }
 
     @Test
     public void getProblemInHomework() {
-        for (int problemId = 1; problemId <= 3; problemId++) {
+        for (int problemId = 1; problemId <= 4; problemId++) {
             Optional<HomeworkProblem> abstractProblem = homeworkService.getProblemInHomework(1L, problemId);
             Assert.assertTrue(abstractProblem.isPresent());
         }

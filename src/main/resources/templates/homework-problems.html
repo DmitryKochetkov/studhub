@@ -5,8 +5,10 @@
     <title th:text="'StudHub:  Домашняя работа #' + ${homework.getId()}"></title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css}">
+
     <style>
         .fa-question-circle:hover {color: blue; cursor: pointer;}
     </style>
@@ -59,22 +61,38 @@
                     <h4 th:text="'Задача ' + ${problemInfo.getNumber()}" class="font-weight-bold pb-2">Условие</h4>
                     <p th:text="${problemInfo.getProblem().getFormulation()}"></p>
 
-                    <div class="font-weight-bold" th:if="${problemInfo.getProblem().getType().equals('shortAnswer')}">
-                        <span style="color: grey">Задание с кратким ответом</span>
+                    <div th:if="${problemInfo.getProblem().getType().equals('short_answer_problem')}">
+                        <span class="font-weight-bold" style="color: grey">Задание с кратким ответом</span>
                         <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ответом является строка или конечная десятичная дробь (через запятую)."></i>
+
+                        <form class="pt-2" action="">
+                            <label for="answer">Ответ</label>
+                            <input type="text" id="answer">
+
+                            <button type="submit" class="btn btn-primary">Отправить</button>
+                        </form>
                     </div>
 
-                    <form class="pt-2" action="">
-                        <label for="answer">Ответ</label>
-                        <input type="text" id="answer">
+                    <div  th:if="${problemInfo.getProblem().getType().equals('choice_problem')}">
+                        <span class="font-weight-bold" style="color: grey">Задание с вариантами ответа</span>
+                        <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ответом является один ответ из списка."></i>
 
-                        <button type="submit" class="btn btn-primary">Отправить</button>
-                    </form>
+                        <form class="pt-2" action="">
+                            <div id="answer_list">
+<!--                                React component here-->
+                            </div>
+                            <button type="submit" class="btn btn-primary">Отправить</button>
+                        </form>
+                    </div>
 
                     <p th:text="'Осталось попыток: ' + ${problemInfo.getMaxAttempts() - problemInfo.getUsedAttempts()}"></p>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script type="text/babel" th:src="|/js/answer_list.js|"></script>
 </body>
 </html>
