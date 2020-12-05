@@ -1,5 +1,6 @@
 package com.studhub.dto;
 
+import com.studhub.entity.ChoiceProblem;
 import com.studhub.entity.HomeworkProblem;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,9 @@ public class HomeworkProblemDto {
         maxAttempts = homeworkProblem.getMaxAttempts();
         homeworkId = homeworkProblem.getHomework().getId();
         problem = new ProblemDto(homeworkProblem.getProblem());
+        if (homeworkProblem.getProblem() instanceof ChoiceProblem)
+            problem = new ChoiceProblemDto((ChoiceProblem) homeworkProblem.getProblem());
+
         number = homeworkProblem.getNumberInHomework();
     }
 }

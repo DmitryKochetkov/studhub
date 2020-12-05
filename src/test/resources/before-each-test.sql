@@ -94,8 +94,8 @@ INSERT INTO studhub_test.public.homework (id, created, last_modified, deadline, 
 INSERT INTO studhub_test.public.abstract_problem (id, created, last_modified, formulation, problem_type) VALUES
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find sum of 2 and 3.', 'short_answer_problem'),
 (2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find 10 modulo 3.', 'short_answer_problem'),
-(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'What is the capital of Great Britain?', 'choice_problem'),
-(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Do you like this homework?', 'short_answer_problem');
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'What is the capital of Great Britain?', 'short_answer_problem'),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Какова алгоритмическая сложность алгоритма бинарного поиска?', 'choice_problem');
 
 INSERT INTO studhub_test.public.short_answer_problem (id, answer) VALUES
 (1, '5'),

@@ -82,7 +82,7 @@ INSERT INTO studhub.public.abstract_problem (id, created, last_modified, formula
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find sum of 2 and 3.', 'short_answer_problem'),
 (2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find 10 modulo 3.', 'short_answer_problem'),
 (3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'What is the capital of Great Britain?', 'short_answer_problem'),
-(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Do you like this homework?', 'choice_problem');
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Какова алгоритмическая сложность алгоритма бинарного поиска?', 'choice_problem');
 
 INSERT INTO studhub.public.short_answer_problem (id, answer) VALUES
 (1, '5'),
@@ -97,3 +97,9 @@ INSERT INTO studhub.public.homework_problems (id, created, last_modified, homewo
 (2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 2, 2, true, 20, 0),
 (3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 3, 3, true, 100, 0),
 (4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 4, 4, true, 1, 0);
+
+INSERT INTO studhub.public.choice_problem_answers (choice_problem_id, answers) VALUES
+(4, 'O(n)'),
+(4, 'O(log n)'),
+(4, 'O(n^2)'),
+(4, 'O(n!)');
