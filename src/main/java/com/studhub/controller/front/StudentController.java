@@ -162,12 +162,30 @@ public class StudentController {
             @PathVariable Long homework_id,
             Model model) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<HomeworkDto> homework = restTemplate.exchange("http://" + HOST + ":" + PORT +
-                        "/api/student/" + student_id +
-                        "/course/" + course_id.toString() +
-                        "/homework/" + homework_id, HttpMethod.GET, null,
-                new ParameterizedTypeReference<HomeworkDto>() {});
-        model.addAttribute("homework", homework.getBody());
+
+        try {
+            ResponseEntity<HomeworkDto> homework = restTemplate.exchange("http://" + HOST + ":" + PORT +
+                            "/api/student/" + student_id +
+                            "/course/" + course_id.toString() +
+                            "/homework/" + homework_id, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<HomeworkDto>() {
+                    });
+            model.addAttribute("homework", homework.getBody());
+
+            ResponseEntity<PageDto<SubmissionDto>> submissionsPage = restTemplate.exchange("http://" + HOST + ":" + PORT +
+                            "/api/student/" + student_id +
+                            "/course/" + course_id.toString() +
+                            "/homework/" + homework_id + "/submissions", HttpMethod.GET, null,
+                    new ParameterizedTypeReference<PageDto<SubmissionDto>>() {
+                    });
+            model.addAttribute("submissionsPage", submissionsPage.getBody());
+        }
+        catch (HttpClientErrorException.NotFound e) {
+            throw new NotFoundException();
+        }
+        catch (HttpClientErrorException.BadRequest e) {
+            throw new BadRequestException();
+        }
         return "homework-submissions";
     }
 

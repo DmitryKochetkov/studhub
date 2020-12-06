@@ -45,7 +45,36 @@
 
         <div>
             <h3 class="font-weight-bold">Посылки</h3>
-            <p>Посылок нет.</p>
+            <p th:if="${submissionsPage.getNumber() == 1 && submissionsPage.getContent().isEmpty()}">Посылок нет.</p>
+
+            <div class="homework_submissions_table" th:unless="${submissionsPage.getNumber() == 1 && submissionsPage.getContent().isEmpty()}">
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Время посылки</th>
+                        <th>Задача</th>
+                        <th>Ответ</th>
+                        <th>Вердикт</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="submission : ${submissionsPage.getContent()}">
+                        <td><span th:text="${submission.getId()}"></span></td>
+                        <td><span th:text="${submission.getCreated()}"></span></td>
+                        <td><a class="btn-link" th:text="${submission.getProblemId()}"></a></td>
+                        <td><span th:text="${submission.getAnswer()}"></span></td>
+                        <td><span th:text="${submission.getVerdict()}"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <ul class="pagination">
+                    <li class="page-item" th:each="i: ${#numbers.sequence(submissionsPage.getNumber()-5, submissionsPage.getNumber()+5)}" th:if="${i} > 0 and ${i} <= ${submissionsPage.getTotalPages()}">
+                        <a class="page-link" th:href="'/admin/users?page='+${i}" th:text="${i}">1</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </body>

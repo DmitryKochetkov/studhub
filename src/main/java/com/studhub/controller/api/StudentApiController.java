@@ -8,6 +8,7 @@ import com.studhub.exception.BadRequestException;
 import com.studhub.exception.NotFoundException;
 import com.studhub.service.CourseService;
 import com.studhub.service.HomeworkService;
+import com.studhub.service.SubmissionService;
 import com.studhub.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +36,9 @@ public class StudentApiController {
 
     @Autowired
     private HomeworkService homeworkService;
+
+    @Autowired
+    private SubmissionService submissionService;
 
     @GetMapping(value = "/student/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get student by id")
@@ -169,5 +173,32 @@ public class StudentApiController {
 
         HomeworkProblemDto result = new HomeworkProblemDto(homeworkService.getProblemInHomework(homework_id, problem_number).orElseThrow(NotFoundException::new));
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(value = "/student/{user_id}/course/{course_id}/homework/{homework_id}/submissions", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Get problem in homework")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found")
+    }
+    )
+    public ResponseEntity<PageDto<SubmissionDto>> getSubmissionsFromHomework(
+            @PathVariable Long user_id,
+            @PathVariable Long course_id,
+            @PathVariable Long homework_id,
+            @RequestParam(defaultValue = "1") Integer page) {
+        User user = userService.getById(user_id);
+        if (user == null)
+            throw new NotFoundException();
+
+        Course course = courseService.getById(course_id).orElseThrow(IllegalArgumentException::new);
+        if (course == null)
+            throw new NotFoundException();
+
+        if (!course.getStudent().getId().equals(user_id))
+            throw new NotFoundException();
+
+        Page<SubmissionDto> result = submissionService.getByHomeworkId(homework_id, page).map(SubmissionDto::new);
+        return ResponseEntity.ok(new PageDto<>(result));
     }
 }

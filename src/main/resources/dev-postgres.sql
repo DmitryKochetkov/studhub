@@ -103,3 +103,8 @@ INSERT INTO studhub.public.choice_problem_answers (choice_problem_id, answers) V
 (4, 'O(log n)'),
 (4, 'O(n^2)'),
 (4, 'O(n!)');
+
+INSERT INTO studhub.public.submissions (id, created, last_modified, answer, verdict, homework_problem_id) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 'WA', 1),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '1', 'WA', 1),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 'WA', 2);

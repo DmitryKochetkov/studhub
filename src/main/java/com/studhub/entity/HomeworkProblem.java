@@ -3,6 +3,7 @@ package com.studhub.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "homework_problems",
@@ -31,4 +32,7 @@ public class HomeworkProblem extends BaseEntity {
 
     @Column(name = "number_in_homework")
     private Integer numberInHomework; // номер задачи в домашней работе
+
+    @OneToMany
+    private List<Submission> submissions;
 }

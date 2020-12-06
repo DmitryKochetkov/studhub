@@ -28,6 +28,4 @@ public class Homework extends BaseEntity {
 
     @OneToMany(mappedBy = "homework", fetch = FetchType.EAGER)
     private List<HomeworkProblem> problems;
-
-    //private List<Submission> submissions;
 }
