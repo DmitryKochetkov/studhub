@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>StudHub: Вердикты</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css}">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+    <style>
+        .fa-question-circle:hover {color: blue; cursor: pointer;}
+    </style>
+</head>
+<body>
+    <header th:insert="common/header :: header"></header>
+    <div class="container">
+        <h2 class="font-weight-bold pb-2">Вердикты</h2>
+
+        <div class="verdicts_table">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Сокращение</th>
+                        <th>Транскрипция</th>
+                        <th>Значение</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="verdict : ${verdicts}">
+                        <td><span th:style="${verdict.getCode() == 'OK' ? 'color: green;' : 'color: red;'}" th:text="${verdict.getCode()}"></span></td>
+                        <td><span th:text="${verdict.getTranscription()}"></span></td>
+                        <td><span th:text="${verdict.getDescription()}"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

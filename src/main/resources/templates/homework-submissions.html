@@ -50,22 +50,22 @@
             <div class="homework_submissions_table" th:unless="${submissionsPage.getNumber() == 1 && submissionsPage.getContent().isEmpty()}">
                 <table class="table">
                     <thead class="thead-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>Время посылки</th>
-                        <th>Задача</th>
-                        <th>Ответ</th>
-                        <th>Вердикт</th>
-                    </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Время посылки</th>
+                            <th>Задача</th>
+                            <th>Ответ</th>
+                            <th>Вердикт <a href="/verdicts"><i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Для задания с соотвествующим номером при наведении выводится процент правильно решенных заданий в домашних работах."></i></a></th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="submission : ${submissionsPage.getContent()}">
-                        <td><span th:text="${submission.getId()}"></span></td>
-                        <td><span th:text="${submission.getCreated()}"></span></td>
-                        <td><a class="btn-link" th:text="${submission.getProblemId()}"></a></td>
-                        <td><span th:text="${submission.getAnswer()}"></span></td>
-                        <td><span th:style="${submission.getVerdict() == 'OK' ? 'color: green;' : 'color: red;'}" th:text="${submission.getVerdict()}"></span></td>
-                    </tr>
+                        <tr th:each="submission : ${submissionsPage.getContent()}">
+                            <td><span th:text="${submission.getId()}"></span></td>
+                            <td><span th:text="${submission.getCreated()}"></span></td>
+                            <td><a class="btn-link" th:text="${submission.getProblemId()}"></a></td>
+                            <td><span th:text="${submission.getAnswer()}"></span></td>
+                            <td><span th:style="${submission.getVerdict() == 'OK' ? 'color: green;' : 'color: red;'}" th:text="${submission.getVerdict()}"></span></td>
+                        </tr>
                     </tbody>
                 </table>
 
