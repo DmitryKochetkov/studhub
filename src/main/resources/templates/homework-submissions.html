@@ -64,7 +64,7 @@
                         <td><span th:text="${submission.getCreated()}"></span></td>
                         <td><a class="btn-link" th:text="${submission.getProblemId()}"></a></td>
                         <td><span th:text="${submission.getAnswer()}"></span></td>
-                        <td><span th:text="${submission.getVerdict()}"></span></td>
+                        <td><span th:style="${submission.getVerdict() == 'OK' ? 'color: green;' : 'color: red;'}" th:text="${submission.getVerdict()}"></span></td>
                     </tr>
                     </tbody>
                 </table>

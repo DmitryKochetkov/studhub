@@ -104,7 +104,16 @@ INSERT INTO studhub.public.choice_problem_answers (choice_problem_id, answers) V
 (4, 'O(n^2)'),
 (4, 'O(n!)');
 
-INSERT INTO studhub.public.submissions (id, created, last_modified, answer, verdict, homework_problem_id) VALUES
-(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 'WA', 1),
-(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '1', 'WA', 1),
-(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 'WA', 2);
+INSERT INTO studhub.public.ref_verdict (id, created, last_modified, code, transcription, description) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'OK', 'OK', 'Решение зачтено.'),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'WA', 'Wrong answer', 'Неверный ответ.'),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'CE', 'Compilation error', 'Ошибка компиляции.'),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'PE', 'Presentation error', 'Ошибка представления (ответ не соответствует запрашиваемому формату).'),
+(5, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'TL', 'Time limit', 'Превышен установленный лимит времени.'),
+(6, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'ML', 'Memory limit', 'Превышен установленный лимит памяти.'),
+(7, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'RE', 'Runtime error', 'Ошибка времени выполнения.');
+
+INSERT INTO studhub.public.submissions (id, created, last_modified, answer, verdict_id, homework_problem_id) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 2, 1),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '1', 2, 1),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 2, 2);

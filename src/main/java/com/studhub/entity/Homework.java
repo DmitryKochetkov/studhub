@@ -17,7 +17,7 @@ public class Homework extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false, updatable = false)
-    private Course course;
+    private Course course; //TODO: remove from here
 
     @ManyToOne
     @JoinColumn(name = "lesson_id", referencedColumnName = "id")
@@ -28,4 +28,12 @@ public class Homework extends BaseEntity {
 
     @OneToMany(mappedBy = "homework", fetch = FetchType.EAGER)
     private List<HomeworkProblem> problems;
+
+    @Override
+    public String toString() {
+        return "Homework{" +
+                "id='" + getId() + '\'' +
+                "description='" + description + '\'' +
+                '}';
+    }
 }

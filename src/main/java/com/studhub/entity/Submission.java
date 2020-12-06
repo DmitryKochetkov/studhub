@@ -11,10 +11,18 @@ public class Submission extends BaseEntity {
     @Column
     private String answer;
 
-    @Column
-    private String verdict;
+    @ManyToOne
+    @JoinColumn(name = "verdict_id", referencedColumnName = "id")
+    private Verdict verdict;
 
     @ManyToOne
     @JoinColumn(name = "homework_problem_id", referencedColumnName = "id")
     private HomeworkProblem homeworkProblem;
+
+    @Override
+    public String toString() {
+        return "Submission{" +
+                "id='" + getId() + '\'' +
+                '}';
+    }
 }
