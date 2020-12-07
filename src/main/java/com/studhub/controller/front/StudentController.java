@@ -192,7 +192,8 @@ public class StudentController {
             @PathVariable Long student_id,
             @PathVariable Long course_id,
             @PathVariable Long homework_id,
-            Model model) {
+            Model model,
+            @RequestParam(defaultValue = "1") Integer page) {
         RestTemplate restTemplate = new RestTemplate();
 
         try {
@@ -207,7 +208,7 @@ public class StudentController {
             ResponseEntity<PageDto<SubmissionDto>> submissionsPage = restTemplate.exchange("http://" + HOST + ":" + PORT +
                             "/api/student/" + student_id +
                             "/course/" + course_id.toString() +
-                            "/homework/" + homework_id + "/submissions", HttpMethod.GET, null,
+                            "/homework/" + homework_id + "/submissions" + "?page=" + page, HttpMethod.GET, null,
                     new ParameterizedTypeReference<PageDto<SubmissionDto>>() {
                     });
             model.addAttribute("submissionsPage", submissionsPage.getBody());

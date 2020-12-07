@@ -44,7 +44,8 @@
         </div>
 
         <div>
-            <h3 class="font-weight-bold">Посылки</h3>
+            <h3 class="font-weight-bold pb-2">Посылки</h3>
+            <p>Если указано, что ваше решение тестируется, для обновления результатов необходимо обновить страницу.</p>
             <p th:if="${submissionsPage.getNumber() == 1 && submissionsPage.getContent().isEmpty()}">Посылок нет.</p>
 
             <div class="homework_submissions_table" th:unless="${submissionsPage.getNumber() == 1 && submissionsPage.getContent().isEmpty()}">
@@ -64,14 +65,17 @@
                             <td><span th:text="${submission.getCreated()}"></span></td>
                             <td><a class="btn-link" th:text="${submission.getProblemId()}"></a></td>
                             <td><span th:text="${submission.getAnswer()}"></span></td>
-                            <td><span th:style="${submission.getVerdict() == 'OK' ? 'color: green;' : 'color: red;'}" th:text="${submission.getVerdict()}"></span></td>
+                            <td>
+                                <span th:unless="${submission.getVerdict() == null}" th:style="${submission.getVerdict() == 'OK' ? 'color: green;' : 'color: red;'}" th:text="${submission.getVerdict()}"></span>
+                                <span th:if="${submission.getVerdict() == null}" th:text="Тестируется..."></span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
 
                 <ul class="pagination">
                     <li class="page-item" th:each="i: ${#numbers.sequence(submissionsPage.getNumber()-5, submissionsPage.getNumber()+5)}" th:if="${i} > 0 and ${i} <= ${submissionsPage.getTotalPages()}">
-                        <a class="page-link" th:href="'/admin/users?page='+${i}" th:text="${i}">1</a>
+                        <a class="page-link" th:href="@{'' + '?page=' + ${i}}" th:text="${i}">1</a>
                     </li>
                 </ul>
             </div>
