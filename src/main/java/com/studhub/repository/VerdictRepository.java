@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VerdictRepository extends JpaRepository<Verdict, Long> {
 
+    Verdict findByCode(String code);
 }

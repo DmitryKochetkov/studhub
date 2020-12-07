@@ -3,9 +3,12 @@ package com.studhub.controller.api;
 import com.studhub.dto.*;
 import com.studhub.entity.Course;
 import com.studhub.entity.Student;
+import com.studhub.entity.Submission;
 import com.studhub.entity.User;
 import com.studhub.exception.BadRequestException;
+import com.studhub.exception.NotAcceptableException;
 import com.studhub.exception.NotFoundException;
+import com.studhub.payload.SubmissionRequest;
 import com.studhub.service.CourseService;
 import com.studhub.service.HomeworkService;
 import com.studhub.service.SubmissionService;
@@ -200,5 +203,40 @@ public class StudentApiController {
 
         Page<SubmissionDto> result = submissionService.getByHomeworkId(homework_id, page).map(SubmissionDto::new);
         return ResponseEntity.ok(new PageDto<>(result));
+    }
+
+    @PostMapping(value = "/student/{user_id}/course/{course_id}/homework/{homework_id}/problems/{problem_number}/submit", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Submit problem in homework")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 406, message = "Not Acceptable")
+    }
+    )
+    public ResponseEntity<SubmissionDto> submitProblemInHomework(
+            @PathVariable Long user_id,
+            @PathVariable Long course_id,
+            @PathVariable Long homework_id,
+            @PathVariable Integer problem_number,
+            @RequestBody SubmissionRequest submissionRequest) {
+        User user = userService.getById(user_id);
+        if (user == null)
+            throw new NotFoundException();
+
+        Course course = courseService.getById(course_id).orElseThrow(IllegalArgumentException::new);
+        if (course == null)
+            throw new NotFoundException();
+
+        if (!course.getStudent().getId().equals(user_id))
+            throw new NotFoundException();
+
+        submissionRequest.setHomeworkId(homework_id);
+        submissionRequest.setProblemNumber(problem_number);
+        try {
+            Submission created = submissionService.createSubmission(submissionRequest);
+            return new ResponseEntity<SubmissionDto>(new SubmissionDto(created), HttpStatus.CREATED);
+        }
+        catch (IllegalArgumentException e) {
+            throw new NotAcceptableException();
+        }
     }
 }

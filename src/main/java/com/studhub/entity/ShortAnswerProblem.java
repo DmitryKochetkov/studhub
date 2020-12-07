@@ -13,5 +13,5 @@ import javax.persistence.Table;
 @DiscriminatorValue("short_answer_problem")
 public class ShortAnswerProblem extends AbstractProblem {
     @Column
-    private String answer;
+    private String correctAnswer;
 }

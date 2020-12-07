@@ -16,5 +16,5 @@ public class ChoiceProblem extends AbstractProblem {
     private Boolean multiple = false;
 
     @ElementCollection
-    private List<String> answers;
+    private List<String> answers; //todo: column name should be "answer", and also not enough constraints and id
 }

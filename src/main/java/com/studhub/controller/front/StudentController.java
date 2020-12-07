@@ -2,17 +2,15 @@ package com.studhub.controller.front;
 
 import com.studhub.dto.*;
 import com.studhub.exception.BadRequestException;
+import com.studhub.exception.NotAcceptableException;
 import com.studhub.exception.NotFoundException;
+import com.studhub.payload.SubmissionRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
@@ -107,13 +105,13 @@ public class StudentController {
     }
 
     @GetMapping("/student/{student_id}/course/{course_id}/homework/{homework_id}/problems/{problem_number}")
-    public String homeworkById_problems(
+    public String getProblemInHomework(
             @PathVariable Long student_id,
             @PathVariable Long course_id,
             @PathVariable Long homework_id,
             @PathVariable Long problem_number,
-            Model model,
-            @RequestParam(defaultValue = "1") String page) {
+            Model model) {
+        model.addAttribute("submissionRequest", new SubmissionRequest());
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://" + HOST + ":" + PORT +
                 "/api/student/" + student_id +
@@ -139,6 +137,40 @@ public class StudentController {
             throw new BadRequestException();
         }
         return "homework-problems";
+    }
+
+    @PostMapping("/student/{student_id}/course/{course_id}/homework/{homework_id}/problems/{problem_number}/submit")
+    public RedirectView submitProblemInHomework(
+            @PathVariable Long student_id,
+            @PathVariable Long course_id,
+            @PathVariable Long homework_id,
+            @PathVariable Long problem_number,
+            @ModelAttribute SubmissionRequest submissionRequest) {
+        RedirectView redirectView = new RedirectView("/student/{student_id}/course/{course_id}/homework/{homework_id}/problems/{problem_number}");
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<SubmissionRequest> httpEntity = new HttpEntity<>(submissionRequest, headers);
+
+        String url = "http://" + HOST + ":" + PORT +
+                "/api/student/" + student_id +
+                "/course/" + course_id.toString() +
+                "/homework/" + homework_id +
+                "/problems/" + problem_number + "/submit";
+        try {
+            restTemplate.postForEntity(url, httpEntity, SubmissionDto.class);
+        }
+        catch (HttpClientErrorException.NotFound e) {
+            throw new NotFoundException();
+        }
+        catch (HttpClientErrorException.BadRequest e) {
+            throw new BadRequestException();
+        }
+        catch (HttpClientErrorException.NotAcceptable e) {
+            throw new NotAcceptableException();
+        }
+        return redirectView;
     }
 
     @GetMapping(value = "/student/{student_id}/course/{course_id}/homework/{homework_id}/problems")

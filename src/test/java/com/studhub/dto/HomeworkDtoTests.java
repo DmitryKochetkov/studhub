@@ -32,14 +32,12 @@ public class HomeworkDtoTests {
         HomeworkProblem homeworkProblem = new HomeworkProblem();
         ShortAnswerProblem problem = new ShortAnswerProblem();
         problem.setFormulation("Find a sum of 2 and 3.");
-//        problem.setRequired(true);
-        problem.setAnswer("5");
+        problem.setCorrectAnswer("5");
 
         homeworkProblem.setProblem(problem);
         homeworkProblem.setHomework(homework);
         homeworkProblem.setRequired(true);
         homeworkProblem.setMaxAttempts(100);
-        homeworkProblem.setUsedAttempts(0);
 
         ArrayList<HomeworkProblem> problems = new ArrayList<>();
         problems.add(homeworkProblem);

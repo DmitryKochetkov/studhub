@@ -39,15 +39,15 @@ public class AdminSignupApiController {
             @ApiResponse(code = 409, message = "Conflict")
         }
     )
-    public ResponseEntity<UserDto> signup(@RequestBody SignupRequest dto) {
-        User registered = userService.getUserByUsername(dto.getUsername());
+    public ResponseEntity<UserDto> signup(@RequestBody SignupRequest signupRequest) {
+        User registered = userService.getUserByUsername(signupRequest.getUsername());
         if (registered != null)
             return new ResponseEntity<>(HttpStatus.CONFLICT);
 
-        Role role = roleRepository.findByName("ROLE_" + dto.getRole());
+        Role role = roleRepository.findByName("ROLE_" + signupRequest.getRole());
         if (role == null)
             throw new BadRequestException();
 
-        return new ResponseEntity<UserDto>(new UserDto(userService.register(dto)), HttpStatus.CREATED);
+        return new ResponseEntity<UserDto>(new UserDto(userService.register(signupRequest)), HttpStatus.CREATED);
     }
 }

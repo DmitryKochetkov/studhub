@@ -17,6 +17,7 @@ public class SubmissionDto extends BaseDto {
         this.homeworkId = submission.getHomeworkProblem().getHomework().getId();
         this.problemId = submission.getHomeworkProblem().getProblem().getId();
         this.answer = submission.getAnswer();
-        this.verdict = submission.getVerdict().getCode();
+        if (submission.getVerdict() != null)
+            this.verdict = submission.getVerdict().getCode();
     }
 }

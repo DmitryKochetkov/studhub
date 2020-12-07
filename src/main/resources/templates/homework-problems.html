@@ -65,9 +65,9 @@
                         <span class="font-weight-bold" style="color: grey">Задание с кратким ответом</span>
                         <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ответом является строка или конечная десятичная дробь (через запятую)."></i>
 
-                        <form class="pt-2" action="">
+                        <form class="pt-2" th:object="${submissionRequest}" th:action="'/student/' + ${student_id} + '/course/' + ${course_id} + '/homework/' + ${homework_id} + '/problems/' + ${problem_number} + '/submit'" method="post">
                             <label for="answer">Ответ</label>
-                            <input type="text" id="answer">
+                            <input type="text" id="answer" autocomplete="off" th:field="*{answer}">
 
                             <button type="submit" class="btn btn-primary">Отправить</button>
                         </form>

@@ -2,7 +2,11 @@ package com.studhub.controller.front;
 
 import com.studhub.entity.User;
 import com.studhub.payload.SignupRequest;
-import org.springframework.http.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +24,12 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/admin/signup")
 public class AdminSignupController {
+    @Value("${server.address}")
+    public String HOST;
+
+    @Value("${server.port}")
+    public String PORT;
+
     @GetMapping
     public String signupPage(Model model) {
         model.addAttribute("form", new SignupRequest());
@@ -29,19 +39,19 @@ public class AdminSignupController {
     @PostMapping
     public RedirectView signupSubmit(
             Model model,
-            @ModelAttribute SignupRequest form,
+            @ModelAttribute SignupRequest signupRequest,
             RedirectAttributes redirectAttributes
     ) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String uri = "http://localhost:8081/api/admin/signup";
-        HttpEntity<SignupRequest> request = new HttpEntity<>(form, headers);
+        String uri = "http://" + HOST + ":" + PORT + "/api/admin/signup";
+        HttpEntity<SignupRequest> httpEntity = new HttpEntity<>(signupRequest, headers);
         RedirectView redirectView = new RedirectView("/users/signup");
         redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
 
         try {
-            ResponseEntity<User> response = restTemplate.postForEntity(uri, request, User.class);
+            restTemplate.postForEntity(uri, httpEntity, User.class); //todo: User -> UserDto
         }
         catch (HttpClientErrorException.Conflict e) {
             model.addAttribute("loginError", true);
