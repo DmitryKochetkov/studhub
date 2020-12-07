@@ -18,8 +18,9 @@ public class HomeworkProblemDto {
 
     public HomeworkProblemDto(HomeworkProblem homeworkProblem) {
         required = homeworkProblem.isRequired();
-        usedAttempts = homeworkProblem.getUsedAttempts();
         maxAttempts = homeworkProblem.getMaxAttempts();
+        usedAttempts = homeworkProblem.getSubmissions().size();
+
         homeworkId = homeworkProblem.getHomework().getId();
         problem = new ProblemDto(homeworkProblem.getProblem());
         if (homeworkProblem.getProblem() instanceof ChoiceProblem)

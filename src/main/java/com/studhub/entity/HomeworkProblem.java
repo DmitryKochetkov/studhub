@@ -27,12 +27,9 @@ public class HomeworkProblem extends BaseEntity {
     @Column(updatable = false)
     private Integer maxAttempts;
 
-    @Column
-    private Integer usedAttempts;
-
     @Column(name = "number_in_homework")
     private Integer numberInHomework; // номер задачи в домашней работе
 
-    @OneToMany
+    @OneToMany(mappedBy = "homeworkProblem")
     private List<Submission> submissions;
 }
