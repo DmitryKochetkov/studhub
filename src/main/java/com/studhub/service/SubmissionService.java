@@ -1,9 +1,6 @@
 package com.studhub.service;
 
-import com.studhub.entity.AbstractProblem;
-import com.studhub.entity.ShortAnswerProblem;
-import com.studhub.entity.Submission;
-import com.studhub.entity.Verdict;
+import com.studhub.entity.*;
 import com.studhub.payload.SubmissionRequest;
 import com.studhub.repository.HomeworkProblemRepository;
 import com.studhub.repository.SubmissionRepository;
@@ -36,12 +33,19 @@ public class SubmissionService {
     }
 
     public Submission createSubmission(SubmissionRequest submissionRequest) {
+        HomeworkProblem homeworkProblem = homeworkProblemRepository.findByHomework_IdAndNumberInHomework(
+                submissionRequest.getHomeworkId(),
+                submissionRequest.getProblemNumber()).orElseThrow(IllegalArgumentException::new);
+
+        if (homeworkProblem.getHomework().getDeadline().isBefore(LocalDateTime.now()))
+            throw new IllegalArgumentException();
+
+        if (homeworkProblem.getSubmissions().size() >= homeworkProblem.getMaxAttempts())
+            throw new IllegalArgumentException();
+
         Submission submission = new Submission();
         submission.setAnswer(submissionRequest.getAnswer());
-        submission.setHomeworkProblem(
-                homeworkProblemRepository.findByHomework_IdAndNumberInHomework(
-                    submissionRequest.getHomeworkId(),
-                    submissionRequest.getProblemNumber()).orElseThrow(IllegalArgumentException::new));
+        submission.setHomeworkProblem(homeworkProblem);
         submission.setCreated(LocalDateTime.now());
         submission.setLastModified(LocalDateTime.now());
         submission = submissionRepository.save(submission);
