@@ -97,7 +97,7 @@ INSERT INTO studhub_test.public.abstract_problem (id, created, last_modified, fo
 (3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'What is the capital of Great Britain?', 'short_answer_problem'),
 (4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Какова алгоритмическая сложность алгоритма бинарного поиска?', 'choice_problem');
 
-INSERT INTO studhub_test.public.short_answer_problem (id, answer) VALUES
+INSERT INTO studhub_test.public.short_answer_problem (id, correct_answer) VALUES
 (1, '5'),
 (2, '1'),
 (3, 'London');
@@ -105,8 +105,8 @@ INSERT INTO studhub_test.public.short_answer_problem (id, answer) VALUES
 INSERT INTO studhub_test.public.choice_problem (id, multiple) VALUES
 (4, false);
 
-INSERT INTO studhub_test.public.homework_problems (id, created, last_modified, homework_id, problem_id, number_in_homework, required, max_attempts, used_attempts) VALUES
-(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 1, 1, true, 2, 0),
-(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 2, 2, true, 20, 0),
-(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 3, 3, true, 100, 0),
-(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 4, 4, true, 1, 0);
+INSERT INTO studhub_test.public.homework_problems (id, created, last_modified, homework_id, problem_id, number_in_homework, required, max_attempts) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 1, 1, true, 2),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 2, 2, true, 20),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 3, 3, true, 100),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 4, 4, true, 1);

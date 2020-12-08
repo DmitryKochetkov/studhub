@@ -38,6 +38,7 @@ public class HomeworkDtoTests {
         homeworkProblem.setHomework(homework);
         homeworkProblem.setRequired(true);
         homeworkProblem.setMaxAttempts(100);
+        homeworkProblem.setSubmissions(new ArrayList<>());
 
         ArrayList<HomeworkProblem> problems = new ArrayList<>();
         problems.add(homeworkProblem);
