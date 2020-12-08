@@ -179,7 +179,7 @@ public class StudentApiController {
     }
 
     @GetMapping(value = "/student/{user_id}/course/{course_id}/homework/{homework_id}/submissions", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Get problem in homework")
+    @ApiOperation(value = "Get submissions in homework")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "Not Found")
