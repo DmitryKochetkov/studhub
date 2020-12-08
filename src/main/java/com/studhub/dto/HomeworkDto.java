@@ -6,13 +6,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalUnit;
 
 @Data
 @NoArgsConstructor
 public class HomeworkDto extends BaseDto {
     private LocalDateTime deadline;
-    private Long remainingHours;
+    private Long remainingSeconds;
     private Long courseId;
     private String description;
     private Long lessonId;
@@ -27,7 +26,13 @@ public class HomeworkDto extends BaseDto {
             lessonId = homework.getLesson().getId();
         description = homework.getDescription();
         totalProblemsCount = homework.getProblems().size();
-        remainingHours = Math.max(Duration.between(LocalDateTime.now(), deadline).toSeconds(), 0);
-        //solvedProblemsCount = homework.getSubmissions().stream().filter(submitted).distinct(by problem id).toList();
+        remainingSeconds = Math.max(Duration.between(LocalDateTime.now(), deadline).toSeconds(), 0);
+//        solvedProblemsCount = homework.getProblems()getSubmissions().stream().filter(submitted).distinct(by problem id).toList();
+        solvedProblemsCount = (int)homework.getProblems().stream().filter(
+                homeworkProblem -> homeworkProblem
+                        .getSubmissions()
+                        .stream()
+                        .anyMatch(s -> s.getVerdict().getCode().equals("OK")))
+            .count();
     }
 }
