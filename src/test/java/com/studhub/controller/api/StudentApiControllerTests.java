@@ -40,7 +40,7 @@ public class StudentApiControllerTests {
     }
 
     @Test
-    public void testGetUserById200() throws Exception {
+    public void testGetStudentById200() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/student/2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(9)))
@@ -55,7 +55,7 @@ public class StudentApiControllerTests {
     }
 
     @Test
-    public void testGetUserById400() throws Exception {
+    public void testGetStudentById400() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/student/string"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
@@ -65,7 +65,7 @@ public class StudentApiControllerTests {
     }
 
     @Test
-    public void testGetUserById404() throws Exception {
+    public void testGetStudentById404() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/student/100"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
@@ -99,6 +99,23 @@ public class StudentApiControllerTests {
                 .andExpect(jsonPath("$.hasPrevious").value(false))
                 .andExpect(jsonPath("$.totalPages").value(1))
                 .andExpect(jsonPath("$.number").value(1));
+    }
+
+    @Test
+    public void testGetHomeworkById() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/student/2/course/1/homework/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(10)))
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.created").exists())
+                .andExpect(jsonPath("$.lastModified").exists())
+                .andExpect(jsonPath("$.deadline").exists())
+                .andExpect(jsonPath("$.remainingSeconds").exists())
+                .andExpect(jsonPath("$.courseId").value(1))
+                .andExpect(jsonPath("$.lessonId").value(1))
+                .andExpect(jsonPath("$.description").exists())
+                .andExpect(jsonPath("$.totalProblemsCount").exists())
+                .andExpect(jsonPath("$.solvedProblemsCount").exists());
     }
 
 }

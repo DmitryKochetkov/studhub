@@ -16,8 +16,8 @@ public class Verdict extends BaseEntity {
     @Override
     public String toString() {
         return "Verdict{" +
-                "id='" + getId() + '\'' +
-                "code='" + code + '\'' +
+                "id=" + getId() +
+                ",code='" + code + '\'' +
                 '}';
     }
 }

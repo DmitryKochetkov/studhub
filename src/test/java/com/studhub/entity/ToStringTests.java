@@ -15,6 +15,7 @@ public class ToStringTests {
     private Student student;
     private Course course;
     private Lesson lesson;
+    private Verdict verdict;
 
     @BeforeEach
     public void setUp() {
@@ -37,6 +38,10 @@ public class ToStringTests {
         lesson.setId(1L);
         lesson.setCourse(course);
         lesson.setTopic("All calculus in 1 lesson.");
+
+        verdict = new Verdict();
+        verdict.setId(1L);
+        verdict.setCode("OK");
     }
 
     @Test
@@ -48,5 +53,6 @@ public class ToStringTests {
         Role role = new Role();
         role.setName("ADMIN");
         Assert.assertEquals("Role{ADMIN}", role.toString());
+        Assert.assertEquals("Verdict{id=1,code='OK'}", verdict.toString());
     }
 }
