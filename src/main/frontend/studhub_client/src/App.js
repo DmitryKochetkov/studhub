@@ -6,10 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "./Login";
 import ErrorPage from "./ErrorPage";
 import Header from "./Header";
+import AdminUsers from "./AdminUsers"
 
 class App extends Component {
     constructor(props) {
         super(props);
+        document.title = "StudHub";
     }
 
     render() {
@@ -22,6 +24,10 @@ class App extends Component {
                     </Route>
                     <Route exact path="/login">
                         <Login/>
+                    </Route>
+                    <Route exact path="/admin/users">
+                        <Header/>
+                        <AdminUsers/>
                     </Route>
                     <Route>
                         <ErrorPage code={404} description={"Страница не найдена."}/>

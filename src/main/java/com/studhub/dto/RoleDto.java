@@ -1,6 +1,5 @@
 package com.studhub.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.studhub.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -28,19 +27,5 @@ public class RoleDto extends BaseDto {
             return true;
 
         return ((RoleDto) obj).getName().equals(this.name);
-    }
-
-    @JsonIgnore
-    public String getAlias() {
-        if (name.equals("ROLE_USER"))
-            return "Пользователь";
-
-        if (name.equals("ROLE_STUDENT"))
-            return "Ученик";
-
-        if (name.equals("ROLE_ADMIN"))
-            return "Администратор";
-
-        return name;
     }
 }

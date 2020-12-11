@@ -8,6 +8,10 @@ class Login extends Component {
         super(props);
     }
 
+    componentDidMount() {
+        document.title = "StudHub: Sign in";
+    }
+
     render() {
         document.body.classList.add('form-signin-body');
         return (
