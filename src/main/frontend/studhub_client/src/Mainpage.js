@@ -1,8 +1,6 @@
 import './App.css';
 import React, {Component} from "react";
 
-// import './form-signin.css';
-
 class Mainpage extends Component {
     constructor(props) {
         super(props);

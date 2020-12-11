@@ -5,6 +5,7 @@ import Mainpage from "./Mainpage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "./Login";
 import ErrorPage from "./ErrorPage";
+import Header from "./Header";
 
 class App extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class App extends Component {
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/">
+                        <Header/>
                         <Mainpage/>
                     </Route>
                     <Route exact path="/login">

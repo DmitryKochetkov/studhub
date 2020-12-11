@@ -10,10 +10,6 @@ class Login extends Component {
 
     render() {
         document.body.classList.add('form-signin-body');
-        document.body.style.display = 'flex';
-        document.body.style.verticalAlign = 'center';
-        document.body.style.height = '100%';
-        // document.body.style.alignItems('center');
         return (
             <div className="text-center">
                 <h1 className="font-weight-bold">StudHub</h1>
