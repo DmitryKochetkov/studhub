@@ -2,6 +2,7 @@ import './App.css';
 import React, {Component} from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Mainpage from "./Mainpage";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "./Login";
 import ErrorPage from "./ErrorPage";
 

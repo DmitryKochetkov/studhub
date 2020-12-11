@@ -1,6 +1,5 @@
 import './App.css';
 import React, {Component} from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 class ErrorPage extends Component {
     constructor(props) {
