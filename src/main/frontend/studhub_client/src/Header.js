@@ -13,7 +13,7 @@ class Header extends Component {
                         <a className="p-2 text-dark" href="/admin/lessons">Уроки</a>
                         <a className="p-2 text-dark" href="/about-courses">О курсах</a>
                     </nav>
-                    <a className="btn btn-outline-primary" href="#">Выход</a>
+                    <a className="btn btn-outline-primary" href="/#">Выход</a>
                 </div>
             </div>
         );

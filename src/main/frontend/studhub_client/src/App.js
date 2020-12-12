@@ -7,6 +7,7 @@ import Login from "./Login";
 import ErrorPage from "./ErrorPage";
 import Header from "./Header";
 import AdminUsers from "./AdminUsers"
+import UserProfile from "./UserProfile";
 
 class App extends Component {
     constructor(props) {
@@ -24,6 +25,10 @@ class App extends Component {
                     </Route>
                     <Route exact path="/login">
                         <Login/>
+                    </Route>
+                    <Route exact path={"/user/:userId"}>
+                        <Header/>
+                        <UserProfile/>
                     </Route>
                     <Route exact path="/admin/users">
                         <Header/>

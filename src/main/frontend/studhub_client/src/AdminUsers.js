@@ -27,7 +27,7 @@ class AdminUsers extends Component {
         const userTable = users_page.content.map((user) =>
             <tr key={user.id}>
                 <td>{user.id}</td>
-                <td><a href={"/user/" + user.username}>{user.username}</a></td>
+                <td><a href={"/user/" + user.id}>{user.username}</a></td>
                 <td>{user.firstName + ' ' + user.lastName}</td>
                 <td>{user.roles.map((role) => this.rolesUI[role.name]).join(', ')}</td>
                 <td>{user.status}</td>

@@ -1,7 +1,6 @@
 package com.studhub.controller.front;
 
 import com.studhub.dto.CourseDto;
-import com.studhub.dto.PageDto;
 import com.studhub.dto.UserDto;
 import com.studhub.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,30 +24,6 @@ public class UserController {
 
     @Value("${server.port}")
     public String PORT;
-
-    @GetMapping("/user/{id}")
-    public String profile(@PathVariable Long id, Model model) {
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            ResponseEntity<UserDto> response = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + id.toString(), HttpMethod.GET, null,
-                    new ParameterizedTypeReference<UserDto>() {
-                    });
-            model.addAttribute("user", response.getBody());
-        } catch (HttpClientErrorException.NotFound e) {
-            throw new NotFoundException();
-        }
-
-        try {
-            ResponseEntity<PageDto<UserDto>> response = restTemplate.exchange("http://" + HOST + ":" + PORT + "/api/user/" + id.toString() + "/followers", HttpMethod.GET, null,
-                    new ParameterizedTypeReference<PageDto<UserDto>>() {
-                    });
-            model.addAttribute("following", response.getBody().getContent());
-            return "profile";
-        }
-        catch (HttpClientErrorException.NotFound e) {
-            throw new NotFoundException();
-        }
-    }
 
     @GetMapping("/student/{student_id}/course/{course_id}")
     public String course(@PathVariable Long student_id, @PathVariable Long course_id, Model model) {

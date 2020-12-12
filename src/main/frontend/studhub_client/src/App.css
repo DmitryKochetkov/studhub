@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.profile-username {
+  font-size: 30px;
+}
+
+.profile-name {
+  font-size: 40px;
+}
