@@ -3,6 +3,7 @@ package com.studhub.service;
 import com.studhub.entity.Student;
 import com.studhub.entity.User;
 import com.studhub.entity.UserStatus;
+import com.studhub.exception.NotFoundException;
 import com.studhub.payload.SignupRequest;
 import org.junit.Assert;
 import org.junit.Before;
@@ -98,7 +99,7 @@ public class UserServiceTests {
 
     @Test
     public void testGetById() {
-        User user = userService.getById(1L);
+        User user = userService.getById(1L).orElseThrow(NotFoundException::new);
         Assert.assertNotNull(user);
         Assert.assertEquals(1, user.getId().longValue());
         Assert.assertEquals("admin", user.getUsername());
@@ -109,7 +110,7 @@ public class UserServiceTests {
         Assert.assertNotNull(user.getFollowers());
 
         for (long i = 2; i < 14; i++) {
-            user = userService.getById(i);
+            user = userService.getById(i).orElseThrow(NotFoundException::new);
             Assert.assertNotNull(user);
         }
     }

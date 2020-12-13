@@ -8,37 +8,14 @@ class UserProfile extends Component {
         this.state = {
             user: null,
             followers: null,
-            followings: null
+            followings: null,
+            courses: null
         };
     }
 
     componentDidMount() {
-        // fetch('/api/user/4')
-        //     .then(res => res.json())
-        //     .then(
-        //         (result) => {
-        //             this.state.user = result;
-        //         }
-        //     );
-        //
-        // fetch('/api/user/4/following')
-        //     .then(res => res.json())
-        //     .then(
-        //         (result) => {
-        //             this.state.followings = result;
-        //         }
-        //     );
-        //
-        fetch('/api/user/4/followers')
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.state.followers = result;
-                }
-            );
-
         Promise.all([
-            fetch("/api/user/1"),
+            fetch("/api/user/2"),
             fetch("/api/user/2/followers"),
             fetch("/api/user/2/following")
         ]).then(result => Promise.all(result.map(v => v.json())))
@@ -52,9 +29,14 @@ class UserProfile extends Component {
     }
 
     rolesUI = {ROLE_USER: "Пользователь", ROLE_STUDENT: "Ученик", ROLE_ADMIN: "Администратор"};
+    courseStatusUI = {
+        ACTIVE: <span>Активен</span>,
+        COMPLETED: <span>Пройден</span>,
+        CANCELED: <span>Отменен</span>
+    };
 
     render() {
-        const {user, followers, followings } = this.state;
+        const {user, followers, followings} = this.state;
         if (user === null)
             return (<div>error</div>);
 
@@ -68,22 +50,15 @@ class UserProfile extends Component {
             <span><a href={'/api/user/' + follower.id}>{follower.username + ' [' + follower.firstName + ' ' + follower.lastName + ']'}</a>, </span>
         );
 
-
-        // const coursesTable = user.course.map((user) =>
-        //     <tr key={user.id}>
-        //         <td>{user.id}</td>
-        //         <td><a href={"/user/" + user.username}>{user.username}</a></td>
-        //         <td>{user.firstName + ' ' + user.lastName}</td>
-        //         <td>{user.roles.map((role) => this.rolesUI[role.name]).join(', ')}</td>
-        //         <td>{user.status}</td>
-        //     </tr>
-        // );
-
-        //
-        // const pagination = [];
-        // const x = Math.max(parseInt(users_page["number"]) - 5, 1);
-        // for (let i = x; i < x+10; i++)
-        //     pagination.push(<li className="page-item"><a className="page-link" href={"/admin/users?page=" + i}>{i}</a></li>);
+        const coursesTableBody = user.courses.map((course) =>
+            <tr key={course.id}>
+                <td>{course.id}</td>
+                <td>{course.title}</td>
+                <td>{this.courseStatusUI[course.status]}</td>
+                <td>{course.created}</td>
+                <td><a href={'/student/' + 2 + '/course/' + course.id}>Перейти</a></td>
+            </tr>
+        );
 
         return (
             <div className="container">
@@ -116,6 +91,20 @@ class UserProfile extends Component {
                     <span className="font-weight-bold">Подписчики: </span>
                     {followersSpan}
                 </div>
+
+                <h2 className="font-weight-bold">Курсы</h2>
+                <table className="table">
+                    <thead className="thead-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Предмет</th>
+                            <th>Статус</th>
+                            <th>Дата старта</th>
+                            <th/>
+                        </tr>
+                    </thead>
+                    <tbody>{coursesTableBody}</tbody>
+                </table>
             </div>
         );
     }
