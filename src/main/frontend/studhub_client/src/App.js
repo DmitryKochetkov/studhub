@@ -8,6 +8,7 @@ import ErrorPage from "./ErrorPage";
 import Header from "./Header";
 import AdminUsers from "./AdminUsers"
 import UserProfile from "./UserProfile";
+import AboutCourses from "./AboutCourses";
 
 class App extends Component {
     constructor(props) {
@@ -33,6 +34,10 @@ class App extends Component {
                     <Route exact path="/admin/users">
                         <Header/>
                         <AdminUsers/>
+                    </Route>
+                    <Route exact path="/about-courses">
+                        <Header/>
+                        <AboutCourses/>
                     </Route>
                     <Route>
                         <ErrorPage code={404} description={"Страница не найдена."}/>
