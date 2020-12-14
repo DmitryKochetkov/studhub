@@ -18,16 +18,14 @@ class AdminLessons extends Component {
 
     render() {
         document.title = "StudHub: Уроки";
-        const lessonsPage = this.state.lessonsPage;
-        // if (lessonsPage === null)
-        //     return (<div>error</div>);
+        const {lessonsPage, student} = this.state;
 
         try {
             const lessonsTable = lessonsPage.content.map((lesson) =>
                 <tr key={lesson.id}>
                     <td>{lesson.id}</td>
                     <td>{lesson.startDateTime}</td>
-                    <td>{lesson.firstName + ' ' + lesson.lastName}</td>
+                    {/*<td>{student.firstName + ' ' + student.lastName}</td>*/}
                     <td>{lesson.topic}</td>
                     <td>{lesson.status}</td>
                     <td><a href={'/lesson/' + 1}>Перейти</a></td>

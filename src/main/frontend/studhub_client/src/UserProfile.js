@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import profile_pic from './profile_pic.jpg';
 import './App.css';
+import App from "./App";
 
 class UserProfile extends Component {
     constructor(props) {
@@ -28,12 +29,8 @@ class UserProfile extends Component {
             });
     }
 
-    rolesUI = {ROLE_USER: "Пользователь", ROLE_STUDENT: "Ученик", ROLE_ADMIN: "Администратор"};
-    courseStatusUI = {
-        ACTIVE: <span>Активен</span>,
-        COMPLETED: <span>Пройден</span>,
-        CANCELED: <span>Отменен</span>
-    };
+    rolesUI = App.rolesUI;
+    courseStatusUI = App.courseStatusUI;
 
     render() {
         const {user, followers, followings} = this.state;

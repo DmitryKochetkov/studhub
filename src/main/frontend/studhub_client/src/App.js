@@ -10,12 +10,20 @@ import AdminUsers from "./AdminUsers"
 import UserProfile from "./UserProfile";
 import AboutCourses from "./AboutCourses";
 import AdminLessons from "./AdminLessons";
+import Course from "./Course";
 
 class App extends Component {
     constructor(props) {
         super(props);
         document.title = "StudHub";
     }
+
+    static rolesUI = {ROLE_USER: "Пользователь", ROLE_STUDENT: "Ученик", ROLE_ADMIN: "Администратор"};
+    static courseStatusUI = {
+        ACTIVE: <span>Активен</span>,
+        COMPLETED: <span>Пройден</span>,
+        CANCELED: <span>Отменен</span>
+    };
 
     render() {
         return (
@@ -40,6 +48,7 @@ class App extends Component {
                         <Header/>
                         <AdminLessons/>
                     </Route>
+                    <Route exact path="/student/:studentId/course/:courseId" component={Course}/>
                     <Route exact path="/about-courses">
                         <Header/>
                         <AboutCourses/>
