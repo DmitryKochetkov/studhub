@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import App from "./App";
 
 class AdminLessons extends Component {
     constructor(props) {
@@ -25,9 +26,9 @@ class AdminLessons extends Component {
                 <tr key={lesson.id}>
                     <td>{lesson.id}</td>
                     <td>{lesson.startDateTime}</td>
-                    {/*<td>{student.firstName + ' ' + student.lastName}</td>*/}
+                    <td>name</td>
                     <td>{lesson.topic}</td>
-                    <td>{lesson.status}</td>
+                    <td>{App.lessonStatusUI[lesson.status]}</td>
                     <td><a href={'/lesson/' + 1}>Перейти</a></td>
                 </tr>
             );
@@ -54,7 +55,7 @@ class AdminLessons extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {lessonsTable}
+                                {lessonsTable}
                             </tbody>
                         </table>
 
@@ -64,7 +65,7 @@ class AdminLessons extends Component {
                     </div>
 
                     <form action="/admin/lessons/new" method="get">
-                        <button type="submit" className="btn btn-primary">Создать пользователя</button>
+                        <button type="submit" className="btn btn-primary">Создать урок</button>
                     </form>
                 </div>
             );

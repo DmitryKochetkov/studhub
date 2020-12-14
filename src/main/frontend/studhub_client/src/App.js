@@ -11,6 +11,7 @@ import UserProfile from "./UserProfile";
 import AboutCourses from "./AboutCourses";
 import AdminLessons from "./AdminLessons";
 import Course from "./Course";
+import AdminCreateLesson from "./AdminCreateLesson";
 
 class App extends Component {
     constructor(props) {
@@ -24,6 +25,12 @@ class App extends Component {
         COMPLETED: <span>Пройден</span>,
         CANCELED: <span>Отменен</span>
     };
+    static lessonStatusUI = {
+        SCHEDULED: <span>Назначен</span>,
+        FINISHED: <span>Завершен</span>,
+        CANCELLED: <span>Отменен</span>,
+        UNKNOWN: <span>Неизвестен</span>,
+    }
 
     render() {
         return (
@@ -49,6 +56,7 @@ class App extends Component {
                         <AdminLessons/>
                     </Route>
                     <Route exact path="/student/:studentId/course/:courseId" component={Course}/>
+                    <Route exact path="/admin/lessons/new" component={AdminCreateLesson}/>
                     <Route exact path="/about-courses">
                         <Header/>
                         <AboutCourses/>
