@@ -4,6 +4,7 @@ import App from "./App";
 import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
+import Header from "./Header";
 
 class Course extends Component {
     constructor(props) {
@@ -90,87 +91,97 @@ class Course extends Component {
             </ResponsiveContainer>;
 
             return (
-                <div className="container">
-                    <h2 className="font-weight-bold pb-3">Курс #{course.id}: {course.title}</h2>
-                    <div>Ученик: <a href={'/user/' + 2}>login</a></div>
-                    <div class="font-weight-bold">Статус: {this.courseStatusUI[course.status]}</div>
+                <div>
+                    <Header/>
+                    <div className="container">
+                        <h2 className="font-weight-bold pb-3">Курс #{course.id}: {course.title}</h2>
+                        <div>Ученик: <a href={'/user/' + 2}>login</a></div>
+                        <div className="font-weight-bold">Статус: {this.courseStatusUI[course.status]}</div>
 
-                    <div className="row pt-3">
-                        <div className="col">
-                            <div className="font-weight-bold pb-3">Дедлайны / домашние задания</div>
-                            <table className="table small-font">
-                                <thead className="thead-light">
+                        <div className="row pt-3">
+                            <div className="col">
+                                <div className="font-weight-bold pb-3">Дедлайны / домашние задания</div>
+                                <table className="table small-font">
+                                    <thead className="thead-light">
                                     <tr>
                                         <th>Дата</th>
                                         <th>Разделы</th>
                                         <th>Заданий</th>
                                     </tr>
-                                </thead>
-                                <tbody>
+                                    </thead>
+                                    <tbody>
                                     <tr>
 
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                        <div className="col">
-                            <div className="font-weight-bold pb-3">Ближайшие занятия</div>
-                            <table className="table small-font">
-                                <thead className="thead-light">
-                                <tr>
-                                    <th>Дата</th>
-                                    <th>Тема</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                            <div className="col">
+                                <div className="font-weight-bold pb-3">Ближайшие занятия</div>
+                                <table className="table small-font">
+                                    <thead className="thead-light">
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Тема</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
                                     {comingLessons}
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div className="col">
-                            <div className="font-weight-bold pb-3">
-                                <span>Прогресс по заданиям </span>
-                                <FontAwesomeIcon icon={faQuestionCircle} data-toggle="tooltip" data-placement="top" title="Для задания с соотвествующим номером при наведении выводится процент правильно решенных заданий в домашних работах."/>
+                                    </tbody>
+                                </table>
                             </div>
 
-                            {progressTable}
-                        </div>
-                    </div>
+                            <div className="col">
+                                <div className="font-weight-bold pb-3">
+                                    <span>Прогресс по заданиям </span>
+                                    <FontAwesomeIcon icon={faQuestionCircle} data-toggle="tooltip" data-placement="top"
+                                                     title="Для задания с соотвествующим номером при наведении выводится процент правильно решенных заданий в домашних работах."/>
+                                </div>
 
-                    <div className="row">
-                        <div className={"text-center col"}>
-                            <a className="small-font" href={"/student/" + this.props.match.params.studentId + "/course/" + this.props.match.params.courseId + "/homework"}>Все домашние задания</a>
-                        </div>
-                        <div className={"text-center col"}>
-                            <a className="small-font" href={"/student/" + this.props.match.params.studentId + "/course/" + this.props.match.params.courseId + "/lessons"}>Все занятия</a>
-                        </div>
-                        <div className={"text-center col"}>
-                            <a className="small-font" href={"/student/" + this.props.match.params.studentId + "/course/" + this.props.match.params.courseId + "/lessons"}>Подробнее</a>
-                        </div>
-                    </div>
-
-                    <div className="row pt-4">
-                        <div className="col">
-                            <div className="pb-3">Средний процент выполнения домашних работ:</div>
-                            <div>
-                                {chart_avg_homework}
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="avg_homework">Промежуток:</label>
-                                <select name="avg_homework" id="avg_homework" className="form-control">
-                                    <option value="month">Месяц</option>
-                                    <option value="month3">3 месяца</option>
-                                    <option value="month6">Полгода</option>
-                                    <option value="year">Год</option>
-                                </select>
+                                {progressTable}
                             </div>
                         </div>
-                        <div className="col">
-                            <span>Средний балл ЕГЭ: </span>
-                            <span>нет данных </span>
-                            <FontAwesomeIcon icon={faQuestionCircle} data-toggle="tooltip" data-placement="top" title="Тестирования или домашние работы по полному варианту ЕГЭ еще не проводились."/>
+
+                        <div className="row">
+                            <div className={"text-center col"}>
+                                <a className="small-font"
+                                   href={"/student/" + this.props.match.params.studentId + "/course/" + this.props.match.params.courseId + "/homework"}>Все
+                                    домашние задания</a>
+                            </div>
+                            <div className={"text-center col"}>
+                                <a className="small-font"
+                                   href={"/student/" + this.props.match.params.studentId + "/course/" + this.props.match.params.courseId + "/lessons"}>Все
+                                    занятия</a>
+                            </div>
+                            <div className={"text-center col"}>
+                                <a className="small-font"
+                                   href={"/student/" + this.props.match.params.studentId + "/course/" + this.props.match.params.courseId + "/lessons"}>Подробнее</a>
+                            </div>
+                        </div>
+
+                        <div className="row pt-4">
+                            <div className="col">
+                                <div className="pb-3">Средний процент выполнения домашних работ:</div>
+                                <div>
+                                    {chart_avg_homework}
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="avg_homework">Промежуток:</label>
+                                    <select name="avg_homework" id="avg_homework" className="form-control">
+                                        <option value="month">Месяц</option>
+                                        <option value="month3">3 месяца</option>
+                                        <option value="month6">Полгода</option>
+                                        <option value="year">Год</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col">
+                                <span>Средний балл ЕГЭ: </span>
+                                <span>нет данных </span>
+                                <FontAwesomeIcon icon={faQuestionCircle} data-toggle="tooltip" data-placement="top"
+                                                 title="Тестирования или домашние работы по полному варианту ЕГЭ еще не проводились."/>
+                            </div>
                         </div>
                     </div>
                 </div>
