@@ -4,7 +4,7 @@ class AdminUsers extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            users_page: null
+            usersPage: null
         };
     }
 
@@ -13,18 +13,18 @@ class AdminUsers extends Component {
         fetch('/api/admin/users?page=1')
             .then(res => res.json())
             .then(
-                (result) => {this.setState({users_page: result})}
+                (result) => {this.setState({usersPage: result})}
                 );
     }
 
     rolesUI = {ROLE_USER: "Пользователь", ROLE_STUDENT: "Ученик", ROLE_ADMIN: "Администратор"}
 
     render() {
-        const users_page = this.state.users_page;
-        if (users_page === null)
+        const usersPage = this.state.usersPage;
+        if (usersPage === null)
             return (<div>error</div>);
 
-        const userTable = users_page.content.map((user) =>
+        const userTable = usersPage.content.map((user) =>
             <tr key={user.id}>
                 <td>{user.id}</td>
                 <td><a href={"/user/" + user.id}>{user.username}</a></td>
@@ -35,8 +35,8 @@ class AdminUsers extends Component {
         );
 
         const pagination = [];
-        const x = Math.max(parseInt(users_page["number"]) - 5, 1);
-        for (let i = x; i < x+10; i++)
+        const x = Math.max(parseInt(usersPage["number"]) - 5, 1);
+        for (let i = x; i < x + Math.min(10, usersPage.totalPages); i++)
             pagination.push(<li className="page-item"><a className="page-link" href={"/admin/users?page=" + i}>{i}</a></li>);
 
         return (

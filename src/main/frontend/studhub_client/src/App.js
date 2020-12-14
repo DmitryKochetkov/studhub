@@ -9,6 +9,7 @@ import Header from "./Header";
 import AdminUsers from "./AdminUsers"
 import UserProfile from "./UserProfile";
 import AboutCourses from "./AboutCourses";
+import AdminLessons from "./AdminLessons";
 
 class App extends Component {
     constructor(props) {
@@ -34,6 +35,10 @@ class App extends Component {
                     <Route exact path="/admin/users">
                         <Header/>
                         <AdminUsers/>
+                    </Route>
+                    <Route exact path="/admin/lessons">
+                        <Header/>
+                        <AdminLessons/>
                     </Route>
                     <Route exact path="/about-courses">
                         <Header/>
