@@ -14,6 +14,8 @@ import Course from "./Course";
 import AdminCreateLesson from "./AdminCreateLesson";
 import AdminSignup from "./AdminSignup";
 import VerdictsInfo from "./VerdictsInfo";
+import CourseHomework from "./CourseHomework";
+import Homework from "./Homework";
 
 class App extends Component {
     constructor(props) {
@@ -58,7 +60,7 @@ class App extends Component {
                         <AdminLessons/>
                     </Route>
                     <Route exact path="/verdicts">
-                        <Header/>
+                        <Header />
                         <VerdictsInfo/>
                     </Route>
                     <Route exact path="/student/:studentId/course/:courseId" component={Course}/>
@@ -68,6 +70,10 @@ class App extends Component {
                         <Header/>
                         <AboutCourses/>
                     </Route>
+
+                    <Route exact path="/student/:studentId/course/:courseId/homework/" component={CourseHomework}/>
+                    <Route exact path="/student/:studentId/course/:courseId/homework/:homeworkId" component={Homework}/>
+
                     <Route>
                         <ErrorPage code={404} description={"Страница не найдена."}/>
                     </Route>
