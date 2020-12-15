@@ -1,6 +1,8 @@
 package com.studhub.controller.api;
 
+import com.studhub.dto.StudentDto;
 import com.studhub.dto.UserDto;
+import com.studhub.entity.Student;
 import com.studhub.entity.User;
 import com.studhub.exception.NotFoundException;
 import com.studhub.service.CourseService;
@@ -36,9 +38,9 @@ public class UserApiController {
         }
     )
     public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
-        User user = userService.getById(id);
-        if (user == null)
-            throw new NotFoundException();
+        User user = userService.getById(id).orElseThrow(NotFoundException::new);
+        if (user instanceof Student)
+            return ResponseEntity.ok(new StudentDto((Student)user));
 
         return ResponseEntity.ok(new UserDto(user));
     }

@@ -51,11 +51,10 @@ public class StudentApiController {
         }
     )
     public ResponseEntity<StudentDto> getStudentById(@PathVariable Long id) {
-        User user = userService.getById(id);
-        if (!(user instanceof Student))
-            throw new NotFoundException();
-
-        return ResponseEntity.ok(new StudentDto((Student)user));
+        User user = userService.getById(id).orElseThrow(NotFoundException::new);
+        if (user instanceof Student)
+            return ResponseEntity.ok(new StudentDto((Student)user));
+        else throw new NotFoundException();
     }
 
     @GetMapping(value = "/student", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -81,9 +80,7 @@ public class StudentApiController {
     }
     )
     public ResponseEntity<CourseDto> getCourse(@PathVariable Long user_id, @PathVariable Long course_id) {
-        User user = userService.getById(user_id);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        userService.getById(user_id).orElseThrow(NotFoundException::new);
 
         Course course = courseService.getById(course_id).orElseThrow(IllegalArgumentException::new);
         if (course == null)
@@ -106,9 +103,7 @@ public class StudentApiController {
             @PathVariable Long user_id,
             @PathVariable Long course_id,
             @RequestParam(defaultValue = "1") Integer page) {
-        User user = userService.getById(user_id);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        userService.getById(user_id).orElseThrow(NotFoundException::new);
 
         Course course = courseService.getById(course_id).orElseThrow(IllegalArgumentException::new);
         if (course == null)
@@ -133,9 +128,7 @@ public class StudentApiController {
             @PathVariable Long course_id,
             @PathVariable Long homework_id,
             @RequestParam(defaultValue = "1") Integer page) {
-        User user = userService.getById(user_id);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        userService.getById(user_id).orElseThrow(NotFoundException::new);
 
         Course course = courseService.getById(course_id).orElseThrow(IllegalArgumentException::new);
         if (course == null)
@@ -160,9 +153,7 @@ public class StudentApiController {
             @PathVariable Long course_id,
             @PathVariable Long homework_id,
             @PathVariable Integer problem_number) {
-        User user = userService.getById(user_id);
-        if (user == null)
-            throw new NotFoundException();
+        userService.getById(user_id).orElseThrow(NotFoundException::new);
 
         Course course = courseService.getById(course_id).orElseThrow(IllegalArgumentException::new);
         if (course == null)
@@ -190,9 +181,7 @@ public class StudentApiController {
             @PathVariable Long course_id,
             @PathVariable Long homework_id,
             @RequestParam(defaultValue = "1") Integer page) {
-        User user = userService.getById(user_id);
-        if (user == null)
-            throw new NotFoundException();
+        userService.getById(user_id).orElseThrow(NotFoundException::new);
 
         Course course = courseService.getById(course_id).orElseThrow(IllegalArgumentException::new);
         if (course == null)
@@ -218,9 +207,7 @@ public class StudentApiController {
             @PathVariable Long homework_id,
             @PathVariable Integer problem_number,
             @RequestBody SubmissionRequest submissionRequest) {
-        User user = userService.getById(user_id);
-        if (user == null)
-            throw new NotFoundException();
+        userService.getById(user_id).orElseThrow(NotFoundException::new);
 
         Course course = courseService.getById(course_id).orElseThrow(IllegalArgumentException::new);
         if (course == null)
