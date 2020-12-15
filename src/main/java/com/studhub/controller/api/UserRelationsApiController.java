@@ -36,9 +36,7 @@ public class UserRelationsApiController {
     }
     )
     public ResponseEntity<PageDto<UserDto>> getFollowers(@PathVariable Long user_id, @RequestParam(defaultValue = "1") Integer page) {
-        User user = userService.getById(user_id);
-        if (user == null)
-            throw new NotFoundException();
+        User user = userService.getById(user_id).orElseThrow(NotFoundException::new);
 
         if (page - 1 < 0)
             throw new BadRequestException();
@@ -57,9 +55,7 @@ public class UserRelationsApiController {
     }
     )
     public ResponseEntity<PageDto<UserDto>> getUsersWhoAreFollowedByUser(@PathVariable Long user_id, @RequestParam(defaultValue = "1") Integer page) {
-        User user = userService.getById(user_id);
-        if (user == null)
-            throw new NotFoundException();
+        User user = userService.getById(user_id).orElseThrow(NotFoundException::new);
 
         if (page - 1 < 0)
             throw new BadRequestException();

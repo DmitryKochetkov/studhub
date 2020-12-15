@@ -1,6 +1,7 @@
 package com.studhub.dto;
 
 import com.studhub.entity.User;
+import com.studhub.exception.NotFoundException;
 import com.studhub.service.UserService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,7 +30,7 @@ public class UserDtoTests {
     @Test
     @Transactional
     public void testUserDtoConstructor() {
-        User user = userService.getById(2L);
+        User user = userService.getById(2L).orElseThrow(NotFoundException::new);
         UserDto userDto = new UserDto(user);
         Assert.assertEquals(user.getId(), userDto.getId());
         Assert.assertEquals(user.getFirstName(), userDto.getFirstName());

@@ -3,6 +3,7 @@ package com.studhub.dto;
 import com.studhub.entity.Course;
 import com.studhub.entity.CourseStatus;
 import com.studhub.entity.Student;
+import com.studhub.exception.NotFoundException;
 import com.studhub.service.UserService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ public class StudentDtoTests {
     @Test
     @Transactional
     public void testStudentDtoConstructor() {
-        Student student = (Student)userService.getById(2L);
+        Student student = (Student)userService.getById(2L).orElseThrow(NotFoundException::new);
         StudentDto studentDto = new StudentDto(student);
         Assert.assertEquals(student.getId(), studentDto.getId());
         Assert.assertEquals(student.getFirstName(), studentDto.getFirstName());

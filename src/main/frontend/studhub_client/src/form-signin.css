@@ -1,9 +1,11 @@
-html,
-body {
+body.form-signin-body {
 	height: 100%;
+	width: 100%;
+	position: absolute;
+	align-items: center;
 }
 
-body {
+.form-signin-body {
 	display: -ms-flexbox;
 	display: -webkit-box;
 	display: flex;

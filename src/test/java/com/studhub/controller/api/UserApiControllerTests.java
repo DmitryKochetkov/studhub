@@ -56,7 +56,7 @@ public class UserApiControllerTests {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/2"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(8)))
+                .andExpect(jsonPath("$[*]", hasSize(9)))
                 .andExpect(jsonPath("$.id").value(2))
                 .andExpect(jsonPath("$.created").exists())
                 .andExpect(jsonPath("$.lastModified").exists())
@@ -64,7 +64,8 @@ public class UserApiControllerTests {
                 .andExpect(jsonPath("$.lastName").value("Petrov"))
                 .andExpect(jsonPath("$.status").value("ENABLED"))
                 .andExpect(jsonPath("$.username").value("petr"))
-                .andExpect(jsonPath("$.roles").exists());
+                .andExpect(jsonPath("$.roles").exists())
+                .andExpect(jsonPath("$.courses").exists());
     }
 
     @Test

@@ -6,6 +6,7 @@ import com.studhub.entity.User;
 import com.studhub.entity.UserStatus;
 import com.studhub.payload.SignupRequest;
 import com.studhub.repository.RoleRepository;
+import com.studhub.repository.StudentRepository;
 import com.studhub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,14 +17,15 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-//    @Autowired
-//    private StudentRepository studentRepository;
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -65,8 +67,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public Optional<? extends User> getById(Long id) {
+        Optional<? extends User> result = studentRepository.findById(id);
+        if (!result.isPresent())
+            result = userRepository.findById(id);
+        return result;
     }
 
     public Page<User> getUsersWhoFollowUser(User user, Pageable pageable) {
