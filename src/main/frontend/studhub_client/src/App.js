@@ -12,6 +12,7 @@ import AboutCourses from "./AboutCourses";
 import AdminLessons from "./AdminLessons";
 import Course from "./Course";
 import AdminCreateLesson from "./AdminCreateLesson";
+import AdminSignup from "./AdminSignup";
 
 class App extends Component {
     constructor(props) {
@@ -57,6 +58,7 @@ class App extends Component {
                     </Route>
                     <Route exact path="/student/:studentId/course/:courseId" component={Course}/>
                     <Route exact path="/admin/lessons/new" component={AdminCreateLesson}/>
+                    <Route exact path="/admin/signup" component={AdminSignup}/>
                     <Route exact path="/about-courses">
                         <Header/>
                         <AboutCourses/>
