@@ -29,9 +29,15 @@ class Course extends Component {
 
         try {
             document.title = "StudHub: Курс " + course.id;
-            const comingLessons = course.comingLessons.map((lesson) => (<tr>
+            const comingLessons = course.comingLessons.map((lesson) => (<tr key={lesson.id}>
                 <td>{lesson.startDateTime}</td>
                 <td>{lesson.topic}</td>
+            </tr>));
+
+            const comingHomework = course.comingHomework.map((homework) => (<tr key={homework.id}>
+                <td>{homework.deadline}</td>
+                <td>{homework.description}</td>
+                <td>{homework.solvedProblemsCount}/{homework.totalProblemsCount}</td>
             </tr>));
 
             const progressTable = <table></table>;
@@ -100,7 +106,7 @@ class Course extends Component {
 
                         <div className="row pt-3">
                             <div className="col">
-                                <div className="font-weight-bold pb-3">Дедлайны / домашние задания</div>
+                                <div className="font-weight-bold pb-3">Ближайшие дедлайны</div>
                                 <table className="table small-font">
                                     <thead className="thead-light">
                                     <tr>
@@ -110,9 +116,7 @@ class Course extends Component {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-
-                                        </tr>
+                                    {comingHomework}
                                     </tbody>
                                 </table>
                             </div>

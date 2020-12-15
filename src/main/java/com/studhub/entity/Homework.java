@@ -31,7 +31,7 @@ public class Homework extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Homework{" +
+        return "CourseHomework{" +
                 "id='" + getId() + '\'' +
                 "description='" + description + '\'' +
                 '}';
