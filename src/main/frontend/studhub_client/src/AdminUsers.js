@@ -10,8 +10,8 @@ class AdminUsers extends Component {
 
     componentDidMount() {
         document.title = "StudHub: Пользователи";
-        fetch('/api/admin/users?page=1')
-            .then(res => res.json())
+        fetch("/api/admin/users?page=1")
+            .then((res) => res.json())
             .then(
                 (result) => {this.setState({usersPage: result})}
                 );
@@ -28,8 +28,8 @@ class AdminUsers extends Component {
             <tr key={user.id}>
                 <td>{user.id}</td>
                 <td><a href={"/user/" + user.id}>{user.username}</a></td>
-                <td>{user.firstName + ' ' + user.lastName}</td>
-                <td>{user.roles.map((role) => this.rolesUI[role.name]).join(', ')}</td>
+                <td>{user.firstName + " " + user.lastName}</td>
+                <td>{user.roles.map((role) => this.rolesUI[role.name]).join(", ")}</td>
                 <td>{user.status}</td>
             </tr>
         );

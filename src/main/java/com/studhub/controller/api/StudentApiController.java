@@ -68,7 +68,7 @@ public class StudentApiController {
     }
     )
     public ResponseEntity<CourseDto> getCourse(@PathVariable Long user_id, @PathVariable Long course_id) {
-        User user = userService.getById(user_id).orElseThrow(NotFoundException::new);
+        userService.getById(user_id).orElseThrow(NotFoundException::new);
 
         Course course = courseService.getById(course_id).orElseThrow(IllegalArgumentException::new);
         if (course == null)

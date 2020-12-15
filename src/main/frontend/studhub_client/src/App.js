@@ -1,12 +1,12 @@
-import './App.css';
+import "./App.css";
 import React, {Component} from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Mainpage from "./Mainpage";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./Login";
 import ErrorPage from "./ErrorPage";
 import Header from "./Header";
-import AdminUsers from "./AdminUsers"
+import AdminUsers from "./AdminUsers";
 import UserProfile from "./UserProfile";
 import AboutCourses from "./AboutCourses";
 import AdminLessons from "./AdminLessons";

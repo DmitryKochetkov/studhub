@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import profile_pic from './profile_pic.jpg';
-import './App.css';
+import profilePic from "./profilePic.jpg";
+import "./App.css";
 import App from "./App";
 
 class UserProfile extends Component {
@@ -19,8 +19,8 @@ class UserProfile extends Component {
             fetch("/api/user/2"),
             fetch("/api/user/2/followers"),
             fetch("/api/user/2/following")
-        ]).then(result => Promise.all(result.map(v => v.json())))
-            .then(result => {
+        ]).then((result) => Promise.all(result.map(v => v.json())))
+            .then((result) => {
                 this.setState({
                     user: result[0],
                     followers: result[1],
@@ -39,12 +39,12 @@ class UserProfile extends Component {
 
         document.title = "StudHub: Пользователь " + user.username;
 
-        const followingsSpan = followings['content'].map((following) =>
-            <span><a href={'/api/user/' + following.id}>{following.username + ' [' + following.firstName + ' ' + following.lastName + ']'}</a>, </span>
+        const followingsSpan = followings["content"].map((following) =>
+            <span><a href={"/api/user/" + following.id}>{following.username + " [" + following.firstName + " " + following.lastName + "]"}</a>, </span>
         );
 
-        const followersSpan = followers['content'].map((follower) =>
-            <span><a href={'/api/user/' + follower.id}>{follower.username + ' [' + follower.firstName + ' ' + follower.lastName + ']'}</a>, </span>
+        const followersSpan = followers["content"].map((follower) =>
+            <span><a href={"/api/user/" + follower.id}>{follower.username + " [" + follower.firstName + " " + follower.lastName + "]"}</a>, </span>
         );
 
         const coursesTableBody = user.courses.map((course) =>
@@ -53,7 +53,7 @@ class UserProfile extends Component {
                 <td>{course.title}</td>
                 <td>{this.courseStatusUI[course.status]}</td>
                 <td>{course.created}</td>
-                <td><a href={'/student/' + 2 + '/course/' + course.id}>Перейти</a></td>
+                <td><a href={"/student/" + 2 + "/course/" + course.id}>Перейти</a></td>
             </tr>
         );
 
@@ -62,21 +62,21 @@ class UserProfile extends Component {
                 <h1 className="font-weight-bold pb-3">Личный кабинет</h1>
                 <div className="row align-items-center">
                     <div className="col-md-2">
-                        <img src={profile_pic} className="img img-rounded img-fluid"/>
+                        <img src={profilePic} className="img img-rounded img-fluid"/>
                     </div>
                     <div className="col-md-10">
                         <div className="font-weight-bold profile-username">{user.username}</div>
-                        <div className="profile-name">{user.firstName + ' ' + user.lastName}</div>
+                        <div className="profile-name">{user.firstName + " " + user.lastName}</div>
                         <div>
                             <span className="font-weight-bold">Роль: </span>
-                            <span>{user.roles.map((role) => this.rolesUI[role.name]).join(', ')}</span>
+                            <span>{user.roles.map((role) => this.rolesUI[role.name]).join(", ")}</span>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <a href={'/user/' + user.id + '/settings'} className="btn btn-link">Изменить учетные данные</a>
-                    <a href={'/user/' + user.id + '/settings'} className="btn btn-link">Зачислить на курс</a>
+                    <a href={"/user/" + user.id + "/settings"} className="btn btn-link">Изменить учетные данные</a>
+                    <a href={"/user/" + user.id + "/settings"} className="btn btn-link">Зачислить на курс</a>
                 </div>
 
                 <div>

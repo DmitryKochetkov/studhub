@@ -1,7 +1,7 @@
-// import './App.css';
+// import "./App.css";
 import React, {Component} from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './form-signin.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./form-signin.css"
 
 class Login extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class Login extends Component {
     }
 
     render() {
-        document.body.classList.add('form-signin-body');
+        document.body.classList.add("form-signin-body");
         return (
             <div className="text-center">
                 <h1 className="font-weight-bold">StudHub</h1>

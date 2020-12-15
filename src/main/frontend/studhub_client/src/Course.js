@@ -1,9 +1,9 @@
 import React, {Component} from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App";
 import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
+import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import Header from "./Header";
 
 class Course extends Component {
@@ -11,12 +11,12 @@ class Course extends Component {
         super(props);
         this.state = {
             course: null
-        }
+        };
     }
 
     componentDidMount() {
-        fetch('/api/student/2/course/1')
-            .then(res => res.json())
+        fetch("/api/student/2/course/1")
+            .then((res) => res.json())
             .then(
                 (result) => {this.setState({course: result})}
             );
@@ -28,7 +28,7 @@ class Course extends Component {
         const {course} = this.state;
 
         try {
-            document.title = 'StudHub: Курс ' + course.id;
+            document.title = "StudHub: Курс " + course.id;
             const comingLessons = course.comingLessons.map((lesson) => (<tr>
                 <td>{lesson.startDateTime}</td>
                 <td>{lesson.topic}</td>
@@ -74,7 +74,7 @@ class Course extends Component {
                 }
             ];
 
-            const chart_avg_homework = <ResponsiveContainer width='100%' aspect={4.5/2.0}>
+            const chart_avg_homework = <ResponsiveContainer width="100%" aspect={4.5/2.0}>
                 <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                     <defs>
                         <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -95,7 +95,7 @@ class Course extends Component {
                     <Header/>
                     <div className="container">
                         <h2 className="font-weight-bold pb-3">Курс #{course.id}: {course.title}</h2>
-                        <div>Ученик: <a href={'/user/' + 2}>login</a></div>
+                        <div>Ученик: <a href={"/user/" + 2}>login</a></div>
                         <div className="font-weight-bold">Статус: {this.courseStatusUI[course.status]}</div>
 
                         <div className="row pt-3">

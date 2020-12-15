@@ -10,8 +10,8 @@ class AdminLessons extends Component {
     }
 
     componentDidMount() {
-        fetch('/api/admin/lessons?page=1')
-            .then(res => res.json())
+        fetch("/api/admin/lessons?page=1")
+            .then((res) => res.json())
             .then(
                 (result) => {this.setState({lessonsPage: result})}
                 );
@@ -29,7 +29,7 @@ class AdminLessons extends Component {
                     <td>name</td>
                     <td>{lesson.topic}</td>
                     <td>{App.lessonStatusUI[lesson.status]}</td>
-                    <td><a href={'/lesson/' + 1}>Перейти</a></td>
+                    <td><a href={"/lesson/" + 1}>Перейти</a></td>
                 </tr>
             );
 

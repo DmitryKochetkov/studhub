@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./Header";
 
 class AdminCreateLesson extends Component {
@@ -8,17 +8,16 @@ class AdminCreateLesson extends Component {
         this.state = {
             success: false,
             error: false
-        }
+        };
     }
 
     async onChange(e) {
-        let username = document.getElementById('studentUsername').value;
-        console.log(username);
-        let courses = document.getElementById('course');
+        let username = document.getElementById("studentUsername").value;
+        let courses = document.getElementById("course");
         let response = await fetch("/api/student?username=" + username);
         if (response.ok) {
-            e.target.setCustomValidity('');
-            courses.innerHTML = '';
+            e.target.setCustomValidity("");
+            courses.innerHTML = "";
             let student = await response.json();
             for (let course of student["courses"]) {
                 let opt = document.createElement("option");
@@ -29,7 +28,7 @@ class AdminCreateLesson extends Component {
             document.getElementById("course").disabled = false;
         } else {
             e.target.setCustomValidity("Ученик не найден.");
-            courses.innerHTML = '';
+            courses.innerHTML = "";
             courses.disabled = true;
         }
         e.target.reportValidity();
@@ -37,28 +36,30 @@ class AdminCreateLesson extends Component {
 
     async postAction() {
         const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                topic: document.getElementById('topic').value,
-                startDate: document.getElementById('startDate').value,
-                startTime: document.getElementById('startTime').value,
-                studentUsername: document.getElementById('studentUsername').value,
-                courseId: document.getElementById('course').value
+                topic: document.getElementById("topic").value,
+                startDate: document.getElementById("startDate").value,
+                startTime: document.getElementById("startTime").value,
+                studentUsername: document.getElementById("studentUsername").value,
+                courseId: document.getElementById("course").value
             })
         };
-        fetch('/api/admin/lessons/new', requestOptions)
+        fetch("/api/admin/lessons/new", requestOptions)
             .then((response) => {
                 if (response.status === 201) {
                     this.setState({success: true});
                 }
-                else this.setState({success: false});
+                else {
+                    this.setState({success: false});
+                }
             })
-            .then(response => response.json());
+            .then((response) => response.json());
     }
 
     render() {
-        document.title = 'StudHub: Новый урок';
+        document.title = "StudHub: Новый урок";
         return (
             <div>
                 <Header/>

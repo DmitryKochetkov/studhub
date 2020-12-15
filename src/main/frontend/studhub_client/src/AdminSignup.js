@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./Header";
 
 class AdminSignup extends Component {
@@ -24,28 +24,30 @@ class AdminSignup extends Component {
 
     async postAction() {
         const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value,
-                username: document.getElementById('username').value,
-                password: document.getElementById('password').value,
-                role: document.getElementById('role').value
+                firstName: document.getElementById("firstName").value,
+                lastName: document.getElementById("lastName").value,
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value,
+                role: document.getElementById("role").value
             })
         };
-        fetch('/api/admin/signup', requestOptions)
+        fetch("/api/admin/signup", requestOptions)
             .then((response) => {
                 if (response.status === 201) {
                     this.setState({success: true});
                 }
-                else this.setState({success: false});
+                else {
+                    this.setState({success: false});
+                }
             })
             .then(response => response.json());
     }
 
     render() {
-        document.title = 'StudHub: Создать пользователя';
+        document.title = "StudHub: Создать пользователя";
         return (
             <div>
                 <Header/>
@@ -58,14 +60,14 @@ class AdminSignup extends Component {
                                 <div className="form-group">
                                     <label htmlFor="firstName">Имя</label>
                                     <input type="text" id="firstName" placeholder="Имя"
-                                           className="form-control" required pattern="[A-ZА-ЯЁ][A-Za-zа-яё' -]+"/>
+                                           className="form-control" required pattern="[A-ZА-ЯЁ][A-Za-zа-яё-]+"/>
                                 </div>
                             </div>
                             <div className="col">
                                 <div className="form-group">
                                     <label htmlFor="lastName">Фамилия</label>
                                     <input type="text" id="lastName" placeholder="Фамилия"
-                                           className="form-control" required pattern="[A-ZА-ЯЁ][A-Za-zа-яё' -]+"/>
+                                           className="form-control" required pattern="[A-ZА-ЯЁ][A-Za-zа-яё-]+"/>
                                 </div>
                             </div>
                         </div>
