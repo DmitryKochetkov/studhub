@@ -88,11 +88,11 @@ class HomeworkProblems extends Component {
                 <FontAwesomeIcon icon={faQuestionCircle} data-toggle="tooltip" data-placement="top"
                                  title="Ответом является один ответ из списка."/>
                 <form autoComplete="off" className="p-2" onSubmit={this.submitProblem}>
-                    {problemInfo.problem.answers.map((answer, index) => <div>
-                        <input type="radio" id={"answer" + index} name={"answer" + index} className="mr-2"
+                    {problemInfo.problem.answers.map((answer, index) => (<div>
+                        <input type="radio" id={"answer" + index} name={"selectedAnswer"} className="mr-2"
                                disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}/>
                         <label htmlFor={"answer" + index}>{answer}</label>
-                    </div>)}
+                    </div>))}
                     <button type="submit" className="btn btn-primary ml-2"
                             disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}>Отправить</button>
                 </form>
