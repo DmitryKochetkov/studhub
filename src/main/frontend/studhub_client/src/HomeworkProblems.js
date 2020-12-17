@@ -86,7 +86,7 @@ class HomeworkProblems extends Component {
                 <form autoComplete="off" className="p-2" onSubmit={this.submitProblem}>
                     <div>
                         <label htmlFor="answer" className="pr-2">Ответ</label>
-                        <input type="text" id="radioButtonAnswer" autoComplete="off" disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}/>
+                        <input type="text" id="answer" autoComplete="off" disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}/>
                         <button type="submit" className="btn btn-primary ml-2"
                                 disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}>Отправить</button>
                     </div>
