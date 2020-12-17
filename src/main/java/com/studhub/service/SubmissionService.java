@@ -54,15 +54,23 @@ public class SubmissionService {
         Submission finalSubmission = submission; //???
         taskExecutor.execute(() -> {
             Verdict verdict = null;
+            String code = null;
             AbstractProblem abstractProblem = finalSubmission.getHomeworkProblem().getProblem();
             if (abstractProblem instanceof ShortAnswerProblem) {
                 ShortAnswerProblem problem = (ShortAnswerProblem) abstractProblem;
-                String code = problem.getCorrectAnswer().equals(finalSubmission.getAnswer()) ? "OK" : "WA";
-                verdict = verdictRepository.findByCode(code);
+                code = problem.getCorrectAnswer().equals(finalSubmission.getAnswer()) ? "OK" : "WA";
+            }
+            else if (abstractProblem instanceof ChoiceProblem) {
+                ChoiceProblem problem = (ChoiceProblem) abstractProblem;
+                code = problem.getAnswers().stream().anyMatch(answer -> answer.getText().equals(finalSubmission.getAnswer())) ? "OK" : "WA";
             }
 
+            verdict = verdictRepository.findByCode(code);
             finalSubmission.setVerdict(verdict);
             submissionRepository.save(finalSubmission);
+//            if (verdict == null) {
+//                throw new IllegalStateException("Verdict was null after performing submission validation.");
+//            }
         });
         return submission;
     }

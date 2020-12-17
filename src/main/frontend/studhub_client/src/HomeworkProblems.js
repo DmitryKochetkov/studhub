@@ -30,21 +30,32 @@ class HomeworkProblems extends Component {
     submitProblem() {
         console.log(this);
         const params = this.props.params;
+
+        const problem = this.state.problemInfo.problem;
+        let answer;
+        if (problem.type === "choice_problem") {
+            for (let i = 0; i < problem.answers.length; i++) {
+                if (document.getElementById("radioButtonAnswer" + i).checked)
+                    answer = document.getElementById("answer" + i).textContent;
+            }
+        }
+        else { answer = document.getElementById("answer").value };
+
         if (this.state.problemInfo.usedAttempts < this.state.problemInfo.maxAttempts) {
             const requestOptions = {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    answer: document.getElementById("answer").value
+                    answer: answer
                 })
             };
             fetch("/api/student/" + params.studentId + "/course/" + params.courseId + "/homework/" + params.homeworkId + "/problems/" + params.problemNumber + "/submit", requestOptions)
                 .then((response) => {
-                    // if (response.status === 200) {
-                    //     this.setState({success: true});
-                    // } else {
-                    //     this.setState({success: false});
-                    // }
+                    if (response.status === 200) {
+                        this.setState({success: true});
+                    } else {
+                        this.setState({success: false});
+                    }
                     console.log(response);
                 })
                 .then(response => response.json());
@@ -75,7 +86,7 @@ class HomeworkProblems extends Component {
                 <form autoComplete="off" className="p-2" onSubmit={this.submitProblem}>
                     <div>
                         <label htmlFor="answer" className="pr-2">Ответ</label>
-                        <input type="text" id="answer" autoComplete="off" disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}/>
+                        <input type="text" id="radioButtonAnswer" autoComplete="off" disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}/>
                         <button type="submit" className="btn btn-primary ml-2"
                                 disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}>Отправить</button>
                     </div>
@@ -89,9 +100,9 @@ class HomeworkProblems extends Component {
                                  title="Ответом является один ответ из списка."/>
                 <form autoComplete="off" className="p-2" onSubmit={this.submitProblem}>
                     {problemInfo.problem.answers.map((answer, index) => (<div>
-                        <input type="radio" id={"answer" + index} name={"selectedAnswer"} className="mr-2"
+                        <input type="radio" id={"radioButtonAnswer" + index} name={"answer"} className="mr-2"
                                disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}/>
-                        <label htmlFor={"answer" + index}>{answer}</label>
+                        <label htmlFor={"radioButtonAnswer" + index} id={"answer" + index}>{answer}</label>
                     </div>))}
                     <button type="submit" className="btn btn-primary ml-2"
                             disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}>Отправить</button>

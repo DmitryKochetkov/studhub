@@ -3,8 +3,8 @@ package com.studhub.entity;
 import lombok.Data;
 
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 
@@ -13,8 +13,6 @@ import java.util.List;
 @Data
 @DiscriminatorValue("choice_problem")
 public class ChoiceProblem extends AbstractProblem {
-    private Boolean multiple = false;
-
-    @ElementCollection
-    private List<String> answers; //todo: column name should be "answer", and also not enough constraints and id
+    @OneToMany(mappedBy = "choiceProblem")
+    private List<ChoiceProblemAnswer> answers;
 }

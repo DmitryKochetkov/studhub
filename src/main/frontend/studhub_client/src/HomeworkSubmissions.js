@@ -31,13 +31,33 @@ class HomeworkSubmissions extends Component {
         if (submissionsPage === null)
             return <div>error</div>;
 
-        const submissions = submissionsPage.content.map((submission) => <tr>
-            <td>{submission.id}</td>
-            <td>{submission.created}</td>
-            <td>{submission.problemId}</td>
-            <td>{submission.answer}</td>
-            <td style={submission.verdict === 'OK' ? {color: "green"} : {color: "red"}}>{submission.verdict}</td>
-        </tr>);
+
+
+        const submissions = submissionsPage.content.map((submission) => {
+            let verdictStyle;
+            switch (submission.verdict) {
+                case 'OK':
+                    verdictStyle = {color: "green"};
+                    break;
+
+                case null:
+                    verdictStyle = {color: "black"};
+                    break;
+
+                default:
+                    verdictStyle = {color: "red"};
+                    break;
+            }
+
+            return (
+                <tr>
+                    <td>{submission.id}</td>
+                    <td>{submission.created}</td>
+                    <td>{submission.problemId}</td>
+                    <td>{submission.answer}</td>
+                    <td style={verdictStyle}>{submission.verdict ? submission.verdict : "Тестируется..."}</td>
+                </tr>
+            )});
 
         return <div>
             <h3 className="font-weight-bold pb-2">Посылки</h3>
