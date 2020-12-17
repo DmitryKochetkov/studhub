@@ -72,7 +72,14 @@ class App extends Component {
                     </Route>
 
                     <Route exact path="/student/:studentId/course/:courseId/homework/" component={CourseHomework}/>
-                    <Route exact path="/student/:studentId/course/:courseId/homework/:homeworkId" component={Homework}/>
+                    <Route exact path="/student/:studentId/course/:courseId/homework/:homeworkId"
+                           render = {props => <Homework{...props} tab={"description"}/> }/>
+
+                    <Route exact path="/student/:studentId/course/:courseId/homework/:homeworkId/problems/:problemNumber"
+                           render = {props => <Homework{...props} tab={"problems"}/> }/>
+
+                    <Route exact path="/student/:studentId/course/:courseId/homework/:homeworkId/submissions"
+                           render = {props => <Homework{...props} tab={"submissions"}/> }/>
 
                     <Route>
                         <ErrorPage code={404} description={"Страница не найдена."}/>

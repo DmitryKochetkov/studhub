@@ -32,7 +32,7 @@ public class HomeworkDto extends BaseDto {
                 homeworkProblem -> homeworkProblem
                         .getSubmissions()
                         .stream()
-                        .anyMatch(s -> s.getVerdict().getCode().equals("OK")))
+                        .anyMatch(s -> (s.getVerdict() != null && s.getVerdict().getCode().equals("OK"))))
             .count();
     }
 }

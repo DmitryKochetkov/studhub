@@ -49,7 +49,7 @@ class CourseHomework extends Component {
                         <h2 className="font-weight-bold">Домашние работы</h2>
                         <span>
                             <span className="font-weight-bold">по курсу </span>
-                            <a className="btn-link" href={'/student/' + params.studentId + '/course/' + params.courseId + '/homework'}>#{params.courseId}</a>
+                            <a className="btn-link" href={'/student/' + params.studentId + '/course/' + params.courseId}>#{params.courseId}</a>
                         </span>
                     </div>
 
