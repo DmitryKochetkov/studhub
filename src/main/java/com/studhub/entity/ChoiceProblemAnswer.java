@@ -11,9 +11,12 @@ import javax.persistence.*;
 @Data
 public class ChoiceProblemAnswer extends BaseEntity {
     @Column
-    String text;
+    private String text;
 
     @ManyToOne
     @JoinColumn(name = "choice_problem_id", referencedColumnName = "id", nullable = false)
-    ChoiceProblem choiceProblem;
+    private ChoiceProblem choiceProblem;
+
+    @Column
+    private boolean correct = false;
 }

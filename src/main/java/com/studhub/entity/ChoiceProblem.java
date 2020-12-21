@@ -15,4 +15,11 @@ import java.util.List;
 public class ChoiceProblem extends AbstractProblem {
     @OneToMany(mappedBy = "choiceProblem")
     private List<ChoiceProblemAnswer> answers;
+
+    @Override
+    public String toString() {
+        return "ChoiceProblem{" +
+                "id=" + getId() +
+                "}";
+    }
 }

@@ -116,11 +116,11 @@ INSERT INTO studhub_test.public.homework_problems (id, created, last_modified, h
 (4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 4, 4, true, 1),
 (5, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 2, 4, 1, true, 1);
 
-INSERT INTO studhub_test.public.choice_problem_answers (id, created, last_modified, choice_problem_id, text) VALUES
-(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(n)'),
-(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(log n)'),
-(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(n^2)'),
-(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(n!)');
+INSERT INTO studhub_test.public.choice_problem_answers (id, created, last_modified, choice_problem_id, text, correct) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(n)', false),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(log n)', true),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(n^2)', false),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(n!)', false);
 
 INSERT INTO studhub_test.public.ref_verdict (id, created, last_modified, code, transcription, description) VALUES
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'OK', 'OK', 'Решение зачтено.'),

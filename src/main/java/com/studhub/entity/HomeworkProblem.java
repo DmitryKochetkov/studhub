@@ -32,4 +32,14 @@ public class HomeworkProblem extends BaseEntity {
 
     @OneToMany(mappedBy = "homeworkProblem")
     private List<Submission> submissions;
+
+    @Override
+    public String toString() {
+        return "HomeworkProblem{" +
+                "id=" + getId() +
+                "homework=" + homework.getId() +
+                ", problem=" + problem.getId() +
+                ", required=" + required +
+                '}';
+    }
 }
