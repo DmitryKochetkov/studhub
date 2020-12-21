@@ -118,4 +118,28 @@ public class StudentApiControllerTests {
                 .andExpect(jsonPath("$.solvedProblemsCount").exists());
     }
 
+    @Test
+    public void testGetProblemFromHomework() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/student/2/course/1/homework/1/problems/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(6)))
+                .andExpect(jsonPath("$.homeworkId").value(1))
+                .andExpect(jsonPath("$.number").exists())
+                .andExpect(jsonPath("$.required").exists())
+                .andExpect(jsonPath("$.maxAttempts").exists())
+                .andExpect(jsonPath("$.usedAttempts").exists())
+                .andExpect(jsonPath("$.problem.type").exists())
+                .andExpect(jsonPath("$.problem.formulation").exists());
+    }
+
+    @Test
+    public void testGetSubmissionsFromHomework() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/student/2/course/1/homework/1/submissions"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].answer").exists())
+                .andExpect(jsonPath("$.content[0].verdict").exists())
+                .andExpect(jsonPath("$.content[0].homeworkId").exists())
+                .andExpect(jsonPath("$.content[0].problemId").exists());
+    }
+
 }
