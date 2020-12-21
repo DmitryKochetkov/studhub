@@ -13,6 +13,9 @@ import AdminLessons from "./AdminLessons";
 import Course from "./Course";
 import AdminCreateLesson from "./AdminCreateLesson";
 import AdminSignup from "./AdminSignup";
+import VerdictsInfo from "./VerdictsInfo";
+import CourseHomework from "./CourseHomework";
+import Homework from "./Homework";
 
 class App extends Component {
     constructor(props) {
@@ -56,6 +59,10 @@ class App extends Component {
                         <Header/>
                         <AdminLessons/>
                     </Route>
+                    <Route exact path="/verdicts">
+                        <Header />
+                        <VerdictsInfo/>
+                    </Route>
                     <Route exact path="/student/:studentId/course/:courseId" component={Course}/>
                     <Route exact path="/admin/lessons/new" component={AdminCreateLesson}/>
                     <Route exact path="/admin/signup" component={AdminSignup}/>
@@ -63,6 +70,17 @@ class App extends Component {
                         <Header/>
                         <AboutCourses/>
                     </Route>
+
+                    <Route exact path="/student/:studentId/course/:courseId/homework/" component={CourseHomework}/>
+                    <Route exact path="/student/:studentId/course/:courseId/homework/:homeworkId"
+                           render = {props => <Homework{...props} tab={"description"}/> }/>
+
+                    <Route exact path="/student/:studentId/course/:courseId/homework/:homeworkId/problems/:problemNumber"
+                           render = {props => <Homework{...props} tab={"problems"}/> }/>
+
+                    <Route exact path="/student/:studentId/course/:courseId/homework/:homeworkId/submissions"
+                           render = {props => <Homework{...props} tab={"submissions"}/> }/>
+
                     <Route>
                         <ErrorPage code={404} description={"Страница не найдена."}/>
                     </Route>

@@ -45,7 +45,7 @@ public class UserApiController {
         return ResponseEntity.ok(new UserDto(user));
     }
 
-    @GetMapping(value = "/user")
+    @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get user by username")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),

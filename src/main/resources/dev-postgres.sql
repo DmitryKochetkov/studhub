@@ -74,3 +74,46 @@ INSERT INTO studhub.public.followers (user_id, follower_id) VALUES
 
 INSERT INTO studhub.public.lessons (id, created, last_modified, start_date_time, status, topic, course_id) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'SCHEDULED', 'Topic 1', 1);
+
+INSERT INTO studhub.public.homework (id, created, last_modified, deadline, description, course_id, lesson_id) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2021-02-01 12:00:00', 'Basics of linear algebra.', 1, 1);
+
+INSERT INTO studhub.public.abstract_problem (id, created, last_modified, formulation, problem_type) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find sum of 2 and 3.', 'short_answer_problem'),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find 10 modulo 3.', 'short_answer_problem'),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'What is the capital of Great Britain?', 'short_answer_problem'),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Какова алгоритмическая сложность алгоритма бинарного поиска?', 'choice_problem');
+
+INSERT INTO studhub.public.short_answer_problem (id, correct_answer) VALUES
+(1, '5'),
+(2, '1'),
+(3, 'London');
+
+INSERT INTO studhub.public.choice_problem (id) VALUES
+(4);
+
+INSERT INTO studhub.public.homework_problems (id, created, last_modified, homework_id, problem_id, number_in_homework, required, max_attempts) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 1, 1, true, 2),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 2, 2, true, 20),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 3, 3, true, 100),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 4, 4, true, 10);
+
+INSERT INTO studhub.public.choice_problem_answers (id, created, last_modified, choice_problem_id, text, correct) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(n)', false),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(log n)', true),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(n^2)', false),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(n!)', false);
+
+INSERT INTO studhub.public.ref_verdict (id, created, last_modified, code, transcription, description) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'OK', 'OK', 'Решение зачтено.'),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'WA', 'Wrong answer', 'Неверный ответ.'),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'CE', 'Compilation error', 'Ошибка компиляции.'),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'PE', 'Presentation error', 'Ошибка представления (ответ не соответствует запрашиваемому формату).'),
+(5, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'TL', 'Time limit', 'Превышен установленный лимит времени.'),
+(6, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'ML', 'Memory limit', 'Превышен установленный лимит памяти.'),
+(7, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'RE', 'Runtime error', 'Ошибка времени выполнения.');
+
+INSERT INTO studhub.public.submissions (id, created, last_modified, answer, verdict_id, homework_problem_id) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 2, 1),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '1', 2, 1),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 2, 2);

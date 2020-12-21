@@ -17,7 +17,6 @@ public class LessonDto extends BaseDto {
     private Long studentId;
     private LessonStatus status;
 
-//    @JsonFormat(pattern = "dd.MM.yyyy hh:mm")
     private LocalDateTime startDateTime;
 
     public LessonDto(Lesson lesson) {

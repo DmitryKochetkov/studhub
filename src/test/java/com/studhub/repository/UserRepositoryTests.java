@@ -17,9 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -34,15 +32,10 @@ public class UserRepositoryTests {
     @Autowired
     private RoleRepository roleRepository;
 
-    private final Date creation = Date.from(
-            LocalDateTime
-                    .of(2020, 1, 1, 12, 0, 0)
-                    .atZone(ZoneId.systemDefault()).
-                    toInstant()
-    );
+    private final LocalDateTime creation = LocalDateTime.of(2020, 1, 1, 12, 0, 0);
 
     @Test
-    public void testfindAll() {
+    public void testFindAll() {
         Pageable pageable = PageRequest.of(0, 3);
         Page<User> result = userRepository.findAll(pageable);
 

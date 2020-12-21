@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Service
 public class LessonService {
@@ -30,6 +29,10 @@ public class LessonService {
 
     public Lesson createLesson(CreateLessonRequest request) {
         Lesson lesson = new Lesson();
+        LocalDateTime date = LocalDateTime.now();
+        lesson.setCreated(date);
+        lesson.setLastModified(date);
+        
         LocalDateTime start = LocalDateTime.of(request.getStartDate(), request.getStartTime());
         if (start.isBefore(LocalDateTime.now()))
             throw new IllegalArgumentException();
@@ -37,11 +40,7 @@ public class LessonService {
         lesson.setStartDateTime(start);
         lesson.setTopic(request.getTopic());
         lesson.setStatus(LessonStatus.SCHEDULED);
-
-        Date date = new Date();
-        lesson.setCreated(date);
-        lesson.setLastModified(date);
-
+        
         Long courseId = request.getCourseId();
         if (courseId == null)
             throw new IllegalArgumentException();

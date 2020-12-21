@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,8 +17,9 @@ public class CourseDto extends BaseDto {
     private Long studentId;
     private String title;
     private CourseStatus status;
-    private Date startDate;
+    private LocalDateTime startDate;
     private List<LessonDto> comingLessons;
+    private List<HomeworkDto> comingHomework;
 
     public CourseDto(Course course) {
         super(course);
@@ -28,6 +29,8 @@ public class CourseDto extends BaseDto {
         this.status = course.getCourseStatus();
         this.startDate = course.getCreated();
         this.comingLessons = course.getLessons().stream().limit(3).map(LessonDto::new).collect(Collectors.toList());
+        this.comingHomework = course.
+                getHomework().stream().limit(3).map(HomeworkDto::new).collect(Collectors.toList());
     }
 
     public List<LessonDto> getComingLessons() {

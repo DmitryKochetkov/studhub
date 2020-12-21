@@ -29,7 +29,7 @@ public class AdminLessonApiController {
     @Autowired
     private LessonService lessonService;
 
-    @GetMapping("/lessons")
+    @GetMapping(value = "/lessons", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Get all lessons")
     public ResponseEntity<PageDto<LessonDto>> get(@RequestParam(defaultValue = "1") Integer page) {
         if (page - 1 < 0)

@@ -14,8 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +61,7 @@ public class UserService {
         user.setRoles(roles);
         user.setFollowers(new ArrayList<>());
         user.setFollowing(new ArrayList<>());
-        Date now = new Date();
+        LocalDateTime now = LocalDateTime.now();
         user.setCreated(now);
         user.setLastModified(now);
         return userRepository.save(user);
