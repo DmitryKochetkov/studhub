@@ -10,7 +10,8 @@ class Course extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            course: null
+            course: null,
+            statistics: null
         };
     }
 
@@ -19,6 +20,12 @@ class Course extends Component {
             .then((res) => res.json())
             .then(
                 (result) => {this.setState({course: result})}
+            );
+
+        fetch("/api/student/2/course/1/homework-statistics")
+            .then((res) => res.json())
+            .then(
+                (result) => {this.setState({course: this.state.course, statistics: result})}
             );
     }
 
@@ -42,57 +49,20 @@ class Course extends Component {
 
             const progressTable = <table></table>;
 
-            const data = [
-                {
-                    "name": "01.10.2020",
-                    "uv": 4000,
-                    "amt": 2400
-                },
-                {
-                    "name": "11.10.2020",
-                    "uv": 3000,
-                    "amt": 2210
-                },
-                {
-                    "name": "12.10.2020",
-                    "uv": 2000,
-                    "amt": 2290
-                },
-                {
-                    "name": "13.10.2020",
-                    "uv": 2780,
-                    "amt": 2000
-                },
-                {
-                    "name": "14.10.2020",
-                    "uv": 1890,
-                    "amt": 2181
-                },
-                {
-                    "name": "15.10.2020",
-                    "uv": 2390,
-                    "amt": 2500
-                },
-                {
-                    "name": "16.10.2020",
-                    "uv": 3490,
-                    "amt": 2100
-                }
-            ];
-
+            const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
             const chart_avg_homework = <ResponsiveContainer width="100%" aspect={4.5/2.0}>
-                <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <AreaChart data={this.state.statistics} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                     <defs>
                         <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
                             <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
                         </linearGradient>
                     </defs>
-                    <XAxis dataKey="name" interval={0} tick={{fontSize: 13}}/>
-                    <YAxis tick={{fontSize: 13}}/>
+                    <XAxis dataKey="date" interval={0} tick={{fontSize: 13}}/>
+                    <YAxis tick={{fontSize: 13}} tickFormatter={toPercent}/>
                     <CartesianGrid strokeDasharray="3 3" />
                     <Tooltip />
-                    <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+                    <Area type="monotone" dataKey="percentage" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
                 </AreaChart>
             </ResponsiveContainer>;
 
