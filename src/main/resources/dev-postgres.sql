@@ -76,18 +76,29 @@ INSERT INTO studhub.public.lessons (id, created, last_modified, start_date_time,
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'SCHEDULED', 'Topic 1', 1);
 
 INSERT INTO studhub.public.homework (id, created, last_modified, deadline, description, course_id, lesson_id) VALUES
-(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2021-02-01 12:00:00', 'Basics of linear algebra.', 1, 1);
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2021-02-01 12:00:00', 'Basics of linear algebra.', 1, 1),
+(2, '2020-01-01 13:00:00', '2020-07-01 13:00:00', '2021-02-07 12:00:00', 'Basics of linear algebra 2.', 1, 1),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2021-02-14 12:00:00', 'Basics of linear algebra 3.', 1, 1),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2021-02-21 12:00:00', 'Basics of linear algebra 4.', 1, 1),
+(5, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2021-02-28 12:00:00', 'Basics of linear algebra 5.', 1, 1),
+(6, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2021-03-10 12:00:00', 'Basics of linear algebra 6.', 1, 1);
 
 INSERT INTO studhub.public.abstract_problem (id, created, last_modified, formulation, problem_type) VALUES
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find sum of 2 and 3.', 'short_answer_problem'),
 (2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find 10 modulo 3.', 'short_answer_problem'),
 (3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'What is the capital of Great Britain?', 'short_answer_problem'),
-(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Какова алгоритмическая сложность алгоритма бинарного поиска?', 'choice_problem');
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Какова алгоритмическая сложность алгоритма бинарного поиска?', 'short_answer_problem'),
+(5, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '10^2?', 'short_answer_problem'),
+(6, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '11^2?', 'short_answer_problem'),
+(7, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '15^2 + 3?', 'short_answer_problem');
 
 INSERT INTO studhub.public.short_answer_problem (id, correct_answer) VALUES
 (1, '5'),
 (2, '1'),
-(3, 'London');
+(3, 'London'),
+(5, '100'),
+(6, '121'),
+(7, '228');
 
 INSERT INTO studhub.public.choice_problem (id) VALUES
 (4);
@@ -96,7 +107,9 @@ INSERT INTO studhub.public.homework_problems (id, created, last_modified, homewo
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 1, 1, true, 2),
 (2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 2, 2, true, 20),
 (3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 3, 3, true, 100),
-(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 4, 4, true, 10);
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 4, 4, true, 10),
+(5, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 2, 5, 1, true, 10),
+(6, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 2, 6, 2, true, 10);
 
 INSERT INTO studhub.public.choice_problem_answers (id, created, last_modified, choice_problem_id, text, correct) VALUES
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(n)', false),
@@ -116,4 +129,5 @@ INSERT INTO studhub.public.ref_verdict (id, created, last_modified, code, transc
 INSERT INTO studhub.public.submissions (id, created, last_modified, answer, verdict_id, homework_problem_id) VALUES
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 2, 1),
 (2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '1', 2, 1),
-(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 2, 2);
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 2, 2),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'London', 1, 3);

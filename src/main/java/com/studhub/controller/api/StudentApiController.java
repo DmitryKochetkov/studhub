@@ -1,10 +1,8 @@
 package com.studhub.controller.api;
 
 import com.studhub.dto.*;
-import com.studhub.entity.Course;
-import com.studhub.entity.Student;
-import com.studhub.entity.Submission;
-import com.studhub.entity.User;
+import com.studhub.entity.*;
+import com.studhub.enums.BusinessPeriod;
 import com.studhub.exception.BadRequestException;
 import com.studhub.exception.NotAcceptableException;
 import com.studhub.exception.NotFoundException;
@@ -23,6 +21,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *   Контроллер пользователей.
@@ -86,7 +87,7 @@ public class StudentApiController {
         if (course == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        if (course.getStudent().getId() != user_id)
+        if (!course.getStudent().getId().equals(user_id))
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         return ResponseEntity.ok(new CourseDto(course));
@@ -109,7 +110,7 @@ public class StudentApiController {
         if (course == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        if (course.getStudent().getId() != user_id)
+        if (!course.getStudent().getId().equals(user_id))
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         Page<HomeworkDto> result = homeworkService.getAllHomeworkInCourse(course, page).map(HomeworkDto::new);
@@ -134,7 +135,7 @@ public class StudentApiController {
         if (course == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        if (course.getStudent().getId() != user_id)
+        if (!course.getStudent().getId().equals(user_id))
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         HomeworkDto result = new HomeworkDto(homeworkService.getById(homework_id).orElseThrow(NotFoundException::new));
@@ -221,6 +222,32 @@ public class StudentApiController {
         try {
             Submission created = submissionService.createSubmission(submissionRequest);
             return new ResponseEntity<SubmissionDto>(new SubmissionDto(created), HttpStatus.CREATED);
+        }
+        catch (IllegalArgumentException e) {
+            throw new NotAcceptableException();
+        }
+    }
+
+    @GetMapping(value = "/student/{user_id}/course/{course_id}/homework-statistics", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Get percentage of successful submissions in all homeworks by period.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK")
+    }
+    )
+    public ResponseEntity<List<HomeworkStatDtoItem>> getCourseHomeworkStatistics(
+            @PathVariable Long user_id,
+            @PathVariable Long course_id,
+            @RequestParam(defaultValue = "MONTH") BusinessPeriod businessPeriod) {
+        userService.getById(user_id).orElseThrow(NotFoundException::new);
+
+        Course course = courseService.getById(course_id).orElseThrow(NotFoundException::new);
+
+        if (!course.getId().equals(course_id))
+            throw new NotFoundException();
+
+        try {
+            List<Homework> homeworkList = homeworkService.getAllHomeworkInCourseByBusinessPeriod(course, businessPeriod);
+            return ResponseEntity.ok(homeworkList.stream().map(HomeworkStatDtoItem::new).collect(Collectors.toList()));
         }
         catch (IllegalArgumentException e) {
             throw new NotAcceptableException();

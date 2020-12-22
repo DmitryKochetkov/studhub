@@ -3,6 +3,7 @@ package com.studhub.service;
 import com.studhub.entity.Course;
 import com.studhub.entity.Homework;
 import com.studhub.entity.HomeworkProblem;
+import com.studhub.enums.BusinessPeriod;
 import com.studhub.repository.HomeworkProblemRepository;
 import com.studhub.repository.HomeworkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,5 +39,10 @@ public class HomeworkService {
         if (homework == null)
             return Optional.empty();
         return Optional.ofNullable(homeworkProblemRepository.findByHomeworkAndNumberInHomework(homework, problemNumber));
+    }
+
+    public List<Homework> getAllHomeworkInCourseByBusinessPeriod(Course course, BusinessPeriod businessPeriod) {
+        LocalDateTime localDateTime = businessPeriod.getFirstDate();
+        return homeworkRepository.findByCourseAndDeadlineIsAfter(course, localDateTime);
     }
 }
