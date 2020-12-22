@@ -5,6 +5,8 @@ import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import Header from "./Header";
+import Moment from 'react-moment';
+import moment from 'moment';
 
 class Course extends Component {
     constructor(props) {
@@ -32,12 +34,13 @@ class Course extends Component {
     courseStatusUI = App.courseStatusUI;
 
     render() {
-        const {course} = this.state;
+        const {course, statistics} = this.state;
+        console.log(statistics);
 
         try {
             document.title = "StudHub: Курс " + course.id;
             const comingLessons = course.comingLessons.map((lesson) => (<tr key={lesson.id}>
-                <td>{lesson.startDateTime}</td>
+                <td><Moment format="DD.MM.YYYY">{lesson.startDateTime}</Moment></td>
                 <td>{lesson.topic}</td>
             </tr>));
 
@@ -58,7 +61,7 @@ class Course extends Component {
                             <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
                         </linearGradient>
                     </defs>
-                    <XAxis dataKey="date" interval={0} tick={{fontSize: 13}}/>
+                    <XAxis dataKey="date" interval={0} tick={{fontSize: 13}} tickFormatter={(periodDate) => moment(periodDate).format("DD.MM.YYYY")}/>
                     <YAxis tick={{fontSize: 13}} tickFormatter={toPercent}/>
                     <CartesianGrid strokeDasharray="3 3" />
                     <Tooltip />
