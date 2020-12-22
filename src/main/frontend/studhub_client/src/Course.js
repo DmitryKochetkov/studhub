@@ -35,7 +35,6 @@ class Course extends Component {
 
     render() {
         const {course, statistics} = this.state;
-        console.log(statistics);
 
         try {
             document.title = "StudHub: Курс " + course.id;
@@ -54,7 +53,7 @@ class Course extends Component {
 
             const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
             const chart_avg_homework = <ResponsiveContainer width="100%" aspect={4.5/2.0}>
-                <AreaChart data={this.state.statistics} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <AreaChart data={statistics} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                     <defs>
                         <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
