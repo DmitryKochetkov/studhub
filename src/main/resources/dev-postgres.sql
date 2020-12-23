@@ -88,7 +88,7 @@ INSERT INTO studhub.public.abstract_problem (id, created, last_modified, formula
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find sum of 2 and 3.', 'short_answer_problem'),
 (2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find 10 modulo 3.', 'short_answer_problem'),
 (3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'What is the capital of Great Britain?', 'short_answer_problem'),
-(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Какова алгоритмическая сложность алгоритма бинарного поиска?', 'short_answer_problem'),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Какова алгоритмическая сложность алгоритма бинарного поиска?', 'choice_problem'),
 (5, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '10^2?', 'short_answer_problem'),
 (6, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '11^2?', 'short_answer_problem'),
 (7, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '15^2 + 3?', 'short_answer_problem');
