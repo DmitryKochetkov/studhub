@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import "./App.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
+import Moment from "react-moment";
 
 class HomeworkSubmissions extends Component {
     constructor(props) {
@@ -31,8 +32,6 @@ class HomeworkSubmissions extends Component {
         if (submissionsPage === null)
             return <div>error</div>;
 
-
-
         const submissions = submissionsPage.content.map((submission) => {
             let verdictStyle;
             switch (submission.verdict) {
@@ -52,7 +51,7 @@ class HomeworkSubmissions extends Component {
             return (
                 <tr>
                     <td>{submission.id}</td>
-                    <td>{submission.created}</td>
+                    <td><Moment format="DD.MM.YYYY HH:mm:ss">{submission.created}</Moment></td>
                     <td>{submission.problemId}</td>
                     <td>{submission.answer}</td>
                     <td style={verdictStyle}>{submission.verdict ? submission.verdict : "Тестируется..."}</td>

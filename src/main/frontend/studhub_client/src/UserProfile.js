@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import profilePic from "./profilePic.jpg";
 import "./App.css";
 import App from "./App";
+import Moment from "react-moment";
 
 class UserProfile extends Component {
     constructor(props) {
@@ -52,7 +53,7 @@ class UserProfile extends Component {
                 <td>{course.id}</td>
                 <td>{course.title}</td>
                 <td>{this.courseStatusUI[course.status]}</td>
-                <td>{course.created}</td>
+                <td><Moment format="DD.MM.YYYY">{course.created}</Moment></td>
                 <td><a href={"/student/" + 2 + "/course/" + course.id}>Перейти</a></td>
             </tr>
         );

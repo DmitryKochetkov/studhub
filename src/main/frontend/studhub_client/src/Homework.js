@@ -3,6 +3,7 @@ import "./App.css";
 import Header from "./Header";
 import HomeworkProblems from "./HomeworkProblems";
 import HomeworkSubmissions from "./HomeworkSubmissions";
+import Moment from "react-moment";
 
 class Homework extends Component {
     constructor(props) {
@@ -64,7 +65,8 @@ class Homework extends Component {
                     </div>
 
                     <div className="pt-3">
-                        <span>Срок сдачи: {homework.deadline}, до дедлайна осталось {homework.remainingSeconds} секунд</span>
+                        <div>Срок сдачи: <Moment format="DD.MM.YYYY HH:mm">{homework.deadline}</Moment></div>
+                        <div>Осталось {homework.remainingSeconds} секунд</div>
                     </div>
 
                     <div className="pt-3 pb-2">
