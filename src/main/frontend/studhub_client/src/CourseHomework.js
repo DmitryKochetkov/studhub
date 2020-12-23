@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import "./App.css";
 import Header from "./Header";
+import Moment from "react-moment";
 
 class CourseHomework extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class CourseHomework extends Component {
         const homeworkList = courseHomeworkPage.content.map((homework) => <tr key={homework.id}>
             <td>{homework.description}</td>
             <td>{homework.lessonId}</td>
-            <td>{homework.deadline}</td>
+            <td><Moment format="DD.MM.YYYY HH:mm">{homework.deadline}</Moment></td>
             <td>{homework.solvedProblemsCount}/{homework.totalProblemsCount}</td>
             <td><a href={"/student/" + params.studentId + "/course/" + params.courseId + "/homework/" + homework.id}>Подробнее</a></td>
         </tr>);

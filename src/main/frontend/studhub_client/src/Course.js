@@ -40,12 +40,11 @@ class Course extends Component {
         try {
             document.title = "StudHub: Курс " + course.id;
             const comingLessons = course.comingLessons.map((lesson) => (<tr key={lesson.id}>
-                <td><Moment format="DD.MM.YYYY">{lesson.startDateTime}</Moment></td>
-                <td>{lesson.topic}</td>
+                <td><Moment format="DD.MM.YYYY HH:mm">{lesson.startDateTime}</Moment></td>
             </tr>));
 
             const comingHomework = course.comingHomework.map((homework) => (<tr key={homework.id}>
-                <td>{homework.deadline}</td>
+                <td><Moment format="DD.MM.YYYY HH:mm">{homework.deadline}</Moment></td>
                 <td>{homework.description}</td>
                 <td>{homework.solvedProblemsCount}/{homework.totalProblemsCount}</td>
             </tr>));
