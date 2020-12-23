@@ -64,7 +64,7 @@ class Course extends Component {
                     <XAxis dataKey="date" interval={0} tick={{fontSize: 13}} tickFormatter={(periodDate) => moment(periodDate).format("DD.MM.YYYY")}/>
                     <YAxis tick={{fontSize: 13}} tickFormatter={toPercent}/>
                     <CartesianGrid strokeDasharray="3 3"/>
-                    <Tooltip />
+                    <Tooltip separator=": "/>
                     <Bar type="monotone" dataKey="percentage" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)"/>
                 </BarChart>
             </ResponsiveContainer>;
