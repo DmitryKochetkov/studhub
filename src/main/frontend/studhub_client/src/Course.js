@@ -3,10 +3,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App";
 import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {Bar, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import Header from "./Header";
 import Moment from 'react-moment';
 import moment from 'moment';
+import BarChart from "recharts/lib/chart/BarChart";
 
 class Course extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ class Course extends Component {
                 (result) => {this.setState({course: result})}
             );
 
-        fetch("/api/student/2/course/1/homework-statistics")
+        fetch("/api/student/2/course/1/homework-statistics?businessPeriod=YEAR")
             .then((res) => res.json())
             .then(
                 (result) => {this.setState({course: this.state.course, statistics: result})}
@@ -53,7 +54,7 @@ class Course extends Component {
 
             const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
             const chart_avg_homework = <ResponsiveContainer width="100%" aspect={4.5/2.0}>
-                <AreaChart data={statistics} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <BarChart data={statistics} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                     <defs>
                         <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
@@ -62,10 +63,10 @@ class Course extends Component {
                     </defs>
                     <XAxis dataKey="date" interval={0} tick={{fontSize: 13}} tickFormatter={(periodDate) => moment(periodDate).format("DD.MM.YYYY")}/>
                     <YAxis tick={{fontSize: 13}} tickFormatter={toPercent}/>
-                    <CartesianGrid strokeDasharray="3 3" />
+                    <CartesianGrid strokeDasharray="3 3"/>
                     <Tooltip />
-                    <Area type="monotone" dataKey="percentage" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-                </AreaChart>
+                    <Bar type="monotone" dataKey="percentage" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)"/>
+                </BarChart>
             </ResponsiveContainer>;
 
             return (
@@ -138,17 +139,17 @@ class Course extends Component {
 
                         <div className="row pt-4">
                             <div className="col">
-                                <div className="pb-3">Средний процент выполнения домашних работ:</div>
+                                <div className="pb-3">Процент выполнения домашних работ:</div>
                                 <div>
                                     {chart_avg_homework}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="avg_homework">Промежуток:</label>
-                                    <select name="avg_homework" id="avg_homework" className="form-control">
-                                        <option value="month">Месяц</option>
-                                        <option value="month3">3 месяца</option>
-                                        <option value="month6">Полгода</option>
-                                        <option value="year">Год</option>
+                                    <select name="avg_homework" id="avg_homework" className="form-control">                                    }>
+                                        <option value="MONTH">Месяц</option>
+                                        <option value="THREE_MONTH">3 месяца</option>
+                                        <option value="SIX_MONTH">Полгода</option>
+                                        <option value="YEAR">Год</option>
                                     </select>
                                 </div>
                             </div>
