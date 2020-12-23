@@ -13,5 +13,5 @@ import java.util.List;
 @Repository
 public interface HomeworkRepository extends JpaRepository<Homework, Long> {
     Page<Homework> findByCourse(Course course, Pageable pageable);
-    List<Homework> findByCourseAndDeadlineIsAfter(Course course, LocalDateTime localDateTime);
+    List<Homework> findByCourseAndDeadlineIsBetween(Course course, LocalDateTime deadlineLowerBound, LocalDateTime deadlineUpperBound);
 }

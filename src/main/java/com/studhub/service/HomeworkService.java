@@ -43,6 +43,6 @@ public class HomeworkService {
 
     public List<Homework> getAllHomeworkInCourseByBusinessPeriod(Course course, BusinessPeriod businessPeriod) {
         LocalDateTime localDateTime = businessPeriod.getFirstDate();
-        return homeworkRepository.findByCourseAndDeadlineIsAfter(course, localDateTime);
+        return homeworkRepository.findByCourseAndDeadlineIsBetween(course, localDateTime, LocalDateTime.now());
     }
 }
