@@ -12,11 +12,11 @@ public class HomeworkStatDtoItem {
     Double percentage;
 
     public HomeworkStatDtoItem(Homework homework) {
-        date = homework.getCreated();
+        date = homework.getDeadline();
 
         int total = homework.getProblems().size();
         if (total == 0) {
-            percentage = 1.0;
+            percentage = 0.0;
             return;
         }
 
