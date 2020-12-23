@@ -5,6 +5,7 @@ import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import Header from "./Header";
+import Moment from "react-moment";
 
 class Course extends Component {
     constructor(props) {
@@ -30,12 +31,12 @@ class Course extends Component {
         try {
             document.title = "StudHub: Курс " + course.id;
             const comingLessons = course.comingLessons.map((lesson) => (<tr key={lesson.id}>
-                <td>{lesson.startDateTime}</td>
+                <td><Moment format="DD.MM.YYYY HH:mm">{lesson.startDateTime}</Moment></td>
                 <td>{lesson.topic}</td>
             </tr>));
 
             const comingHomework = course.comingHomework.map((homework) => (<tr key={homework.id}>
-                <td>{homework.deadline}</td>
+                <td><Moment format="DD.MM.YYYY HH:mm">{homework.deadline}</Moment></td>
                 <td>{homework.description}</td>
                 <td>{homework.solvedProblemsCount}/{homework.totalProblemsCount}</td>
             </tr>));

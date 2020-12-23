@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import App from "./App";
+import Moment from "react-moment";
 
 class AdminLessons extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class AdminLessons extends Component {
             const lessonsTable = lessonsPage.content.map((lesson) =>
                 <tr key={lesson.id}>
                     <td>{lesson.id}</td>
-                    <td>{lesson.startDateTime}</td>
+                    <td><Moment format="DD.MM.YYYY HH:mm">{lesson.startDateTime}</Moment></td>
                     <td><a href={"/user/" + lesson.studentId}>{lesson.studentId}</a></td>
                     <td>{lesson.topic}</td>
                     <td>{App.lessonStatusUI[lesson.status]}</td>
