@@ -26,7 +26,7 @@ public class HomeworkService {
     private HomeworkProblemRepository homeworkProblemRepository;
 
     public Page<Homework> getAllHomeworkInCourse(Course course, Integer page) {
-        Pageable pageable = PageRequest.of(page-1, 10, Sort.by(Sort.Order.desc("created")));
+        Pageable pageable = PageRequest.of(page-1, 10, Sort.by(Sort.Order.desc("deadline")));
         return homeworkRepository.findByCourse(course, pageable);
     }
 
