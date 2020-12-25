@@ -16,6 +16,7 @@ class Course extends Component {
             course: null,
             statistics: null
         };
+        this.onPeriodChange = this.onPeriodChange.bind(this);
     }
 
     componentDidMount() {
@@ -25,7 +26,7 @@ class Course extends Component {
                 (result) => {this.setState({course: result})}
             );
 
-        fetch("/api/student/2/course/1/homework-statistics?businessPeriod=YEAR")
+        fetch("/api/student/2/course/1/homework-statistics?businessPeriod=MONTH")
             .then((res) => res.json())
             .then(
                 (result) => {this.setState({course: this.state.course, statistics: result})}
@@ -33,6 +34,14 @@ class Course extends Component {
     }
 
     courseStatusUI = App.courseStatusUI;
+
+    async onPeriodChange(e) {
+        fetch("/api/student/2/course/1/homework-statistics?businessPeriod=" + document.getElementById("homework_stat_period").value)
+            .then((res) => res.json())
+            .then(
+                (result) => {this.setState({course: this.state.course, statistics: result})}
+            );
+    }
 
     render() {
         const {course, statistics} = this.state;
@@ -143,8 +152,8 @@ class Course extends Component {
                                     {chart_avg_homework}
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="avg_homework">Промежуток:</label>
-                                    <select name="avg_homework" id="avg_homework" className="form-control">                                    }>
+                                    <label htmlFor="homework_stat_period">Промежуток:</label>
+                                    <select name="homework_stat_period" id="homework_stat_period" className="form-control" onChange={this.onPeriodChange}>
                                         <option value="MONTH">Месяц</option>
                                         <option value="THREE_MONTH">3 месяца</option>
                                         <option value="SIX_MONTH">Полгода</option>
