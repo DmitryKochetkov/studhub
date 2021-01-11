@@ -9,10 +9,6 @@ class AboutCourses extends Component {
         };
     }
 
-    componentDidMount() {
-        // fetch("/api/aoub")
-    }
-
     render() {
         return (
             <div className="container">

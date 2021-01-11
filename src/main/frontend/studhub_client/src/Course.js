@@ -141,7 +141,7 @@ class Course extends Component {
                             </div>
                             <div className={"text-center col"}>
                                 <a className="small-font"
-                                   href={"/student/" + this.props.match.params.studentId + "/course/" + this.props.match.params.courseId + "/lessons"}>Подробнее</a>
+                                   href={"/about-statistics"}>Подробнее</a>
                             </div>
                         </div>
 

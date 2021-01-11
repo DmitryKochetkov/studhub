@@ -16,6 +16,7 @@ import AdminSignup from "./AdminSignup";
 import VerdictsInfo from "./VerdictsInfo";
 import CourseHomework from "./CourseHomework";
 import Homework from "./Homework";
+import AboutStatistics from "./AboutStatistics";
 
 class App extends Component {
     constructor(props) {
@@ -80,6 +81,8 @@ class App extends Component {
 
                     <Route exact path="/student/:studentId/course/:courseId/homework/:homeworkId/submissions"
                            render = {props => <Homework{...props} tab={"submissions"}/> }/>
+
+                    <Route exact path="/about-statistics" component={AboutStatistics}/>
 
                     <Route>
                         <ErrorPage code={404} description={"Страница не найдена."}/>
