@@ -7,10 +7,7 @@ import com.studhub.exception.BadRequestException;
 import com.studhub.exception.NotAcceptableException;
 import com.studhub.exception.NotFoundException;
 import com.studhub.payload.SubmissionRequest;
-import com.studhub.service.CourseService;
-import com.studhub.service.HomeworkService;
-import com.studhub.service.SubmissionService;
-import com.studhub.service.UserService;
+import com.studhub.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -43,6 +40,9 @@ public class StudentApiController {
 
     @Autowired
     private SubmissionService submissionService;
+
+    @Autowired
+    private ExamSpecificationService examSpecificationService;
 
     @GetMapping(value = "/student/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get student by id")
@@ -252,5 +252,17 @@ public class StudentApiController {
         catch (IllegalArgumentException e) {
             throw new NotAcceptableException();
         }
+    }
+
+    @GetMapping(value = "/exam-specification/{id}")
+    @ApiOperation(value = "Get specification by exam id.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found")
+    }
+    )
+    public ResponseEntity<ExamSpecificationDto> getExamSpecification(@PathVariable Long id) {
+        ExamSpecification examSpecification = examSpecificationService.getById(id).orElseThrow(NotFoundException::new);
+        return ResponseEntity.ok(new ExamSpecificationDto(examSpecification));
     }
 }

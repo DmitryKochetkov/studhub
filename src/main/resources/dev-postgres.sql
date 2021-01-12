@@ -84,14 +84,15 @@ INSERT INTO studhub.public.homework (id, created, last_modified, deadline, descr
 (6, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2020-11-12 12:00:00', 'Basics of linear algebra 5.', 1, 1),
 (7, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2020-11-28 12:00:00', 'Basics of linear algebra 6.', 1, 1);
 
-INSERT INTO studhub.public.abstract_problem (id, created, last_modified, formulation, problem_type) VALUES
+INSERT INTO studhub.public.problems (id, created, last_modified, formulation, problem_type) VALUES
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find sum of 2 and 3.', 'short_answer_problem'),
 (2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Find 10 modulo 3.', 'short_answer_problem'),
 (3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'What is the capital of Great Britain?', 'short_answer_problem'),
 (4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Какова алгоритмическая сложность алгоритма бинарного поиска?', 'choice_problem'),
 (5, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '10^2?', 'short_answer_problem'),
 (6, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '11^2?', 'short_answer_problem'),
-(7, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '15^2 + 3?', 'short_answer_problem');
+(7, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '15^2 + 3?', 'short_answer_problem'),
+(8, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Сколько единиц в двоичной записи числа 41?', 'short_answer_problem');
 
 INSERT INTO studhub.public.short_answer_problem (id, correct_answer) VALUES
 (1, '5'),
@@ -99,7 +100,8 @@ INSERT INTO studhub.public.short_answer_problem (id, correct_answer) VALUES
 (3, 'London'),
 (5, '100'),
 (6, '121'),
-(7, '228');
+(7, '228'),
+(8, '3');
 
 INSERT INTO studhub.public.choice_problem (id) VALUES
 (4);
@@ -140,3 +142,19 @@ INSERT INTO studhub.public.submissions (id, created, last_modified, answer, verd
 (6, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '111', 1, 7),
 (7, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '111', 1, 7),
 (8, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '111', 2, 5);
+
+INSERT INTO studhub.public.exam_specification (id, created, last_modified, title, start_year, end_year, ref_course_id) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Информатика ОГЭ до 2020', 2012, 2019, 7),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Информатика ОГЭ 2020', 2020, null, 7),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Информатика ЕГЭ до 2021', 2012, 2020, 5),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Информатика ЕГЭ 2021', 2021, null, 5);
+
+INSERT INTO studhub.public.problem_codes (id, created, last_modified, specification_id, number_in_specification, description) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 3, 1, 'Позиционные системы счисления'),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 3, 2, 'Таблицы истинности'),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 2, 'Таблицы истинности'),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 3, 3, 'Информационные модели (графы)'),
+(5, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 1, 'Информационные модели (графы)');
+
+INSERT INTO studhub.public.problem_code_mapping (problem_id, problem_code_id) VALUES
+(8, 1);
