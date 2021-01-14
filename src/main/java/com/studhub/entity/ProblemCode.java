@@ -9,13 +9,15 @@ import javax.persistence.*;
  * Сущность, описывающая тип задачи из спецификации
  */
 @Entity
-@Table(name = "problem_codes")
+@Table(name = "problem_codes", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"specification_id", "number_in_specification"}),
+})
 @Data
 public class ProblemCode extends BaseEntity {
     @Column
     private String description;
 
-    @Column
+    @Column(name = "number_in_specification")
     private Integer numberInSpecification;
 
     @ManyToOne

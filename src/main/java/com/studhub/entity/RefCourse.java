@@ -2,7 +2,10 @@ package com.studhub.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
@@ -17,7 +20,4 @@ public class RefCourse extends BaseEntity {
 
     @OneToMany(mappedBy = "refCourse")
     private List<ExamSpecification> examSpecifications; // возможные спецификации экзамена (если курс готовит к нему)
-
-    @OneToOne
-    private ExamSpecification currentExamSpecification; // актуальная спецификация, по которой ведется сбор статистики
 }

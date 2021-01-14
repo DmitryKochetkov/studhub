@@ -78,4 +78,8 @@ public class SubmissionService {
     public List<Submission> getByCourse(Course course) {
         return submissionRepository.findAllByHomeworkProblem_Homework_Course(course);
     }
+
+//    public List<Submission> getAllByCourseAndProblemCode(Course course, ProblemCode problemCode) {
+//        submissionRepository.findAllByCourseAndProblemCode(course, problemCode);
+//    }
 }

@@ -42,6 +42,9 @@ public class StudentApiController {
     private SubmissionService submissionService;
 
     @Autowired
+    private StatisticsService statisticsService;
+
+    @Autowired
     private ExamSpecificationService examSpecificationService;
 
     @GetMapping(value = "/student/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -264,5 +267,27 @@ public class StudentApiController {
     public ResponseEntity<ExamSpecificationDto> getExamSpecification(@PathVariable Long id) {
         ExamSpecification examSpecification = examSpecificationService.getById(id).orElseThrow(NotFoundException::new);
         return ResponseEntity.ok(new ExamSpecificationDto(examSpecification));
+    }
+
+    @GetMapping(value = "/student/{user_id}/course/{course_id}/exam-specification-statistics")
+    @ApiOperation(value = "Get statistics by active exam specification.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found")
+    }
+    )
+    public ResponseEntity<CourseStatisticsByExamSpecificationDto> getCourseStatisticsByActiveExamSpecification(
+            @PathVariable Long user_id,
+            @PathVariable Long course_id
+    ) {
+        userService.getById(user_id).orElseThrow(NotFoundException::new);
+        Course course = courseService.getById(course_id).orElseThrow(NotFoundException::new);
+
+        ExamSpecification examSpecification = course.getActiveExamSpecification();
+        if (examSpecification == null)
+            throw new BadRequestException(); //TODO: add message
+
+        CourseStatisticsByExamSpecificationDto courseStatisticsByExamSpecificationDto = statisticsService.getCourseStatisticsByExamSpecification(course, examSpecification);
+        return ResponseEntity.ok(courseStatisticsByExamSpecificationDto);
     }
 }

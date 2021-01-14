@@ -122,7 +122,8 @@ INSERT INTO studhub.public.homework_problems (id, created, last_modified, homewo
 (7, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 3, 6, 2, true, 10),
 (8, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 7, 2, true, 10),
 (9, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 5, 7, 2, true, 10),
-(10, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 6, 7, 2, true, 10);
+(10, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 6, 7, 2, true, 10),
+(11, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 1, 8, 5, true, 10);
 
 INSERT INTO studhub.public.choice_problem_answers (id, created, last_modified, choice_problem_id, text, correct) VALUES
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 'O(n)', false),
@@ -147,7 +148,9 @@ INSERT INTO studhub.public.submissions (id, created, last_modified, answer, verd
 (5, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '111', 1, 6),
 (6, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '111', 1, 7),
 (7, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '111', 1, 7),
-(8, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '111', 2, 5);
+(8, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '111', 2, 5),
+(9, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '33', 2, 11),
+(10, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 1, 11);
 
 INSERT INTO studhub.public.problem_codes (id, created, last_modified, specification_id, number_in_specification, description) VALUES
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 3, 1, 'Позиционные системы счисления'),
@@ -182,4 +185,5 @@ INSERT INTO studhub.public.problem_codes (id, created, last_modified, specificat
 (30, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 4, 27, 'Программирование: анализ числовых последовательностей');
 
 INSERT INTO studhub.public.problem_code_mapping (problem_id, problem_code_id) VALUES
-(8, 1);
+(8, 1),
+(8, 14);

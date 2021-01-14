@@ -27,6 +27,10 @@ public class Course extends BaseEntity {
 
     @OneToMany(mappedBy = "course")
     private List<Homework> homework;
+
+    @OneToOne
+    @JoinColumn(name = "active_specification_id", referencedColumnName = "id")
+    private ExamSpecification activeExamSpecification; // актуальная спецификация, по которой ведется сбор статистики
   
     @Override
     public String toString() {
