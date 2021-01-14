@@ -2,6 +2,7 @@ package com.studhub.dto;
 
 import com.studhub.entity.Course;
 import com.studhub.entity.CourseStatus;
+import com.studhub.entity.ExamSpecification;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class CourseDto extends BaseDto {
     private LocalDateTime startDate;
     private List<LessonDto> comingLessons;
     private List<HomeworkDto> comingHomework;
+    private Long examSpecificationId;
 
     public CourseDto(Course course) {
         super(course);
@@ -28,6 +30,11 @@ public class CourseDto extends BaseDto {
         this.title = course.getRefCourse().getTitle();
         this.status = course.getCourseStatus();
         this.startDate = course.getCreated();
+
+        ExamSpecification examSpecification = course.getActiveExamSpecification();
+        if (examSpecification != null)
+            this.examSpecificationId = examSpecification.getId();
+
         this.comingLessons = course.getLessons().stream().limit(3).map(LessonDto::new).collect(Collectors.toList());
         this.comingHomework = course.
                 getHomework().stream().limit(3).map(HomeworkDto::new).collect(Collectors.toList());

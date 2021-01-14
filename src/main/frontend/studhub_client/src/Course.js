@@ -14,7 +14,9 @@ class Course extends Component {
         super(props);
         this.state = {
             course: null,
-            statistics: null
+            homework_statistics: null,
+            specification: null,
+            specification_statistics: null
         };
         this.onPeriodChange = this.onPeriodChange.bind(this);
     }
@@ -29,7 +31,32 @@ class Course extends Component {
         fetch("/api/student/2/course/1/homework-statistics?businessPeriod=MONTH")
             .then((res) => res.json())
             .then(
-                (result) => {this.setState({course: this.state.course, statistics: result})}
+                (result) => {this.setState({course: this.state.course, homework_statistics: result})}
+            );
+
+        fetch("/api/exam-specification/4")
+            .then((res) => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        course: this.state.course,
+                        homework_statistics: this.state.homework_statistics,
+                        specification: result
+                    })
+                }
+            );
+
+        fetch("/api/student/2/course/1/exam-specification-statistics")
+            .then((res) => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        course: this.state.course,
+                        homework_statistics: this.state.homework_statistics,
+                        specification: this.state.specification,
+                        specification_statistics: result
+                    })
+                }
             );
     }
 
@@ -39,12 +66,12 @@ class Course extends Component {
         fetch("/api/student/2/course/1/homework-statistics?businessPeriod=" + document.getElementById("homework_stat_period").value)
             .then((res) => res.json())
             .then(
-                (result) => {this.setState({course: this.state.course, statistics: result})}
+                (result) => {this.setState({course: this.state.course, homework_statistics: result})}
             );
     }
 
     render() {
-        const {course, statistics} = this.state;
+        const {course, homework_statistics, specification, specification_statistics} = this.state;
 
         try {
             document.title = "StudHub: Курс " + course.id;
@@ -58,11 +85,20 @@ class Course extends Component {
                 <td>{homework.solvedProblemsCount}/{homework.totalProblemsCount}</td>
             </tr>));
 
-            const progressTable = <table></table>;
+            let progressTable = <div>Отсутствует спецификация.</div>
+            if (this.state.specification) {
+                progressTable = <table className={"specification-statistics-table"}>
+                    <tr>
+                    {specification.problemCodes.map((data, index) => {
+                        return (<td><span title={data.description + "\nУспешных попыток: 8/10 (80%)"}>{data.numberInSpecification}</span></td>);
+                    })}
+                    </tr>
+                </table>;
+            }
 
             const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
             const chart_avg_homework = <ResponsiveContainer width="100%" aspect={4.5/2.0}>
-                <BarChart data={statistics} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <BarChart data={homework_statistics} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                     <defs>
                         <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
@@ -116,16 +152,6 @@ class Course extends Component {
                                     </tbody>
                                 </table>
                             </div>
-
-                            <div className="col">
-                                <div className="font-weight-bold pb-3">
-                                    <span>Прогресс по заданиям </span>
-                                    <FontAwesomeIcon icon={faQuestionCircle} data-toggle="tooltip" data-placement="top"
-                                                     title="Для задания с соотвествующим номером при наведении выводится процент правильно решенных заданий в домашних работах."/>
-                                </div>
-
-                                {progressTable}
-                            </div>
                         </div>
 
                         <div className="row">
@@ -139,15 +165,11 @@ class Course extends Component {
                                    href={"/student/" + this.props.match.params.studentId + "/course/" + this.props.match.params.courseId + "/lessons"}>Все
                                     занятия</a>
                             </div>
-                            <div className={"text-center col"}>
-                                <a className="small-font"
-                                   href={"/about-statistics"}>Подробнее</a>
-                            </div>
                         </div>
 
                         <div className="row pt-4">
                             <div className="col">
-                                <div className="pb-3">Процент выполнения домашних работ:</div>
+                                <div className="pb-3">Динамика выполнения домашних работ:</div>
                                 <div>
                                     {chart_avg_homework}
                                 </div>
@@ -167,6 +189,21 @@ class Course extends Component {
                                 <FontAwesomeIcon icon={faQuestionCircle} data-toggle="tooltip" data-placement="top"
                                                  title="Тестирования или домашние работы по полному варианту ЕГЭ еще не проводились."/>
                             </div>
+                        </div>
+
+                        <div>
+                            <div className="font-weight-bold pb-3">
+                                <span>Прогресс по заданиям экзамена </span>
+                                <FontAwesomeIcon icon={faQuestionCircle} data-toggle="tooltip" data-placement="top"
+                                                 title="Для задания с соотвествующим номером при наведении выводится процент правильно решенных заданий в домашних работах."/>
+                            </div>
+
+                            {progressTable}
+                        </div>
+
+                        <div>
+                            <a className="small-font"
+                               href={"/about-statistics"}>Подробнее об оценивании и статистике</a>
                         </div>
                     </div>
                 </div>
