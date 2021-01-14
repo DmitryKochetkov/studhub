@@ -23,7 +23,7 @@ public class StatisticsService {
      *
      * @param course Курс, для которого считается статистика
      * @param examSpecification Спецификация для агрегации задач
-     * @return DTO с описанием количества посылок по каждому типу задачи спецификации
+     * @return CourseStatisticsByExamSpecificationDto с описанием количества посылок по каждому типу задачи спецификации
      */
     public CourseStatisticsByExamSpecificationDto getCourseStatisticsByExamSpecification(Course course, ExamSpecification examSpecification) {
         Session session = entityManager.unwrap(Session.class);
