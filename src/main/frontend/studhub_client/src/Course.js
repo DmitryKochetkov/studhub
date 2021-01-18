@@ -74,7 +74,7 @@ class Course extends Component {
         const {course, homework_statistics, specification, specification_statistics} = this.state;
 
         try {
-            document.title = "StudHub: Курс " + course.id;
+            document.title = "StudHub: Курс #" + course.id;
             const comingLessons = course.comingLessons.map((lesson) => (<tr key={lesson.id}>
                 <td><Moment format="DD.MM.YYYY HH:mm">{lesson.startDateTime}</Moment></td>
             </tr>));
@@ -85,14 +85,37 @@ class Course extends Component {
                 <td>{homework.solvedProblemsCount}/{homework.totalProblemsCount}</td>
             </tr>));
 
+            //TODO: вынести в отдельный компонент
             let progressTable = <div>Отсутствует спецификация.</div>
             if (this.state.specification) {
+                let problemCodesByIndex = new Map();
+                specification.problemCodes.map((data, index) => {problemCodesByIndex[data.id] = {
+                    specificationIndex: data.numberInSpecification,
+                    description: data.description,
+                    totalSubmissions: null,
+                    correctSubmissions: null
+                }});
+
+                specification_statistics.statistics.forEach(element => {
+                    problemCodesByIndex[element.problemCodeId].totalSubmissions = element.totalSubmissions;
+                    problemCodesByIndex[element.problemCodeId].correctSubmissions = element.correctSubmissions;
+                });
+
+                console.log(problemCodesByIndex);
+
                 progressTable = <table className={"specification-statistics-table"}>
-                    <tr>
-                    {specification.problemCodes.map((data, index) => {
-                        return (<td><span title={data.description + "\nУспешных попыток: 8/10 (80%)"}>{data.numberInSpecification}</span></td>);
-                    })}
-                    </tr>
+                    <tbody>
+                        <tr>
+                            {specification.problemCodes.map((data, index) => {
+                                let problemStatistics = problemCodesByIndex[data.id];
+                                let statisticsInfo = data.description;
+                                if (problemStatistics.totalSubmissions)
+                                    statisticsInfo += "\nУспешных попыток: " + problemStatistics.correctSubmissions + "/" + problemStatistics.totalSubmissions;
+                                else statisticsInfo += "\nНет посылок задач этого типа."
+                                return (<td><span title={statisticsInfo}>{data.numberInSpecification}</span></td>);
+                            })}
+                        </tr>
+                    </tbody>
                 </table>;
             }
 
@@ -209,7 +232,8 @@ class Course extends Component {
                 </div>
             );
         }
-        catch {
+        catch (e) {
+            console.error(e);
             return <div>Error</div>;
         }
     }
