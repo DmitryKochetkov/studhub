@@ -8,6 +8,7 @@ import Header from "./Header";
 import Moment from 'react-moment';
 import moment from 'moment';
 import BarChart from "recharts/lib/chart/BarChart";
+import SpecificationStatisticsTable from "./SpecificationStatisticsTable";
 
 class Course extends Component {
     constructor(props) {
@@ -84,53 +85,6 @@ class Course extends Component {
                 <td>{homework.description}</td>
                 <td>{homework.solvedProblemsCount}/{homework.totalProblemsCount}</td>
             </tr>));
-
-            //TODO: вынести в отдельный компонент
-            let progressTable = <div>Отсутствует спецификация.</div>
-            if (this.state.specification) {
-                let problemCodesByIndex = new Map();
-                specification.problemCodes.map((data, index) => {problemCodesByIndex[data.id] = {
-                    specificationIndex: data.numberInSpecification,
-                    description: data.description,
-                    totalSubmissions: null,
-                    correctSubmissions: null
-                }});
-
-                specification_statistics.statistics.forEach(element => {
-                    problemCodesByIndex[element.problemCodeId].totalSubmissions = element.totalSubmissions;
-                    problemCodesByIndex[element.problemCodeId].correctSubmissions = element.correctSubmissions;
-                });
-
-                progressTable = <table className={"specification-statistics-table"}>
-                    <tbody>
-                        <tr>
-                            {specification.problemCodes.map((data, index) => {
-                                let problemStatistics = problemCodesByIndex[data.id];
-                                let statisticsInfo = data.description;
-
-                                const {correctSubmissions, totalSubmissions} = problemStatistics;
-                                const percentage = (correctSubmissions / totalSubmissions) * 100;
-
-                                var r, g, b = 0;
-                                if (percentage < 50) {
-                                    r = 255;
-                                    g = Math.round(5.1 * percentage);
-                                }
-                                else {
-                                    g = 255;
-                                    r = Math.round(510 - 5.10 * percentage);
-                                }
-                                var h = r * 0x10000 + g * 0x100 + b * 0x1;
-
-                                if (problemStatistics.totalSubmissions)
-                                    statisticsInfo += "\nУспешных попыток: " + problemStatistics.correctSubmissions + "/" + problemStatistics.totalSubmissions;
-                                else statisticsInfo += "\nНет посылок задач этого типа."
-                                return (<td style={{backgroundColor: '#' + ('000000' + h.toString(16)).slice(-6)}}><span title={statisticsInfo}>{data.numberInSpecification}</span></td>);
-                            })}
-                        </tr>
-                    </tbody>
-                </table>;
-            }
 
             const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
             const chart_avg_homework = <ResponsiveContainer width="100%" aspect={4.5/2.0}>
@@ -234,7 +188,7 @@ class Course extends Component {
                                                  title="Для задания с соотвествующим номером при наведении выводится процент правильно решенных заданий в домашних работах."/>
                             </div>
 
-                            {progressTable}
+                            <SpecificationStatisticsTable specification={specification} specification_statistics={specification_statistics}/>
                         </div>
 
                         <div>
