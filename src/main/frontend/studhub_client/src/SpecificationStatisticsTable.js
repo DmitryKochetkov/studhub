@@ -7,7 +7,6 @@ class SpecificationStatisticsTable extends Component {
             specification: props.specification,
             specification_statistics: props.specification_statistics
         };
-        // this.onPeriodChange = this.onPeriodChange.bind(this);
     }
 
     render() {

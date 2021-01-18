@@ -17,8 +17,6 @@ DELETE FROM users cascade;
 DELETE FROM roles cascade;
 DELETE FROM ref_courses cascade;
 
--- noinspection SqlWithoutWhereForFile
-
 INSERT INTO studhub_test.public.roles (id, created, last_modified, name) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ROLE_USER'),
 (2, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ROLE_STUDENT'),
@@ -40,7 +38,7 @@ INSERT INTO studhub_test.public.users (id, created, last_modified, first_name, l
 (13, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Alan', 'Curtis', '1234', 'ENABLED', 'alan_curtis'),
 (14, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Robert', 'Shaw', '1234', 'ENABLED', 'robert_shaw');
 
-INSERT INTO students (id) VALUES
+INSERT INTO studhub_test.public.students (id) VALUES
 (2);
 
 INSERT INTO studhub_test.public.user_roles (user_id, role_id) VALUES

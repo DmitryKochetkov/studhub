@@ -35,7 +35,7 @@ public class SubmissionServiceTests {
         Page<Submission> page = submissionService.getByHomeworkId(1L, 1);
         Assert.assertNotNull(page);
         Assert.assertEquals(10, page.getSize());
-        Assert.assertEquals(3, page.getContent().size());
+        Assert.assertEquals(5, page.getContent().size());
     }
 
     @Test

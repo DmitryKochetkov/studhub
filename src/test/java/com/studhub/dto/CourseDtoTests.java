@@ -20,6 +20,7 @@ import javax.transaction.Transactional;
 @RunWith(SpringRunner.class)
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@org.springframework.transaction.annotation.Transactional
 public class CourseDtoTests {
     @Autowired
     private CourseService courseService;

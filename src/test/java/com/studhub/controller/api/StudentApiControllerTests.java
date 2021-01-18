@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -29,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Transactional
 public class StudentApiControllerTests {
     @Autowired
     private MockMvc mockMvc;
@@ -85,7 +87,7 @@ public class StudentApiControllerTests {
     public void testGetCourse() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/student/2/course/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(9)))
+                .andExpect(jsonPath("$[*]", hasSize(10)))
                 .andExpect(jsonPath("$.studentId").value(2))
                 .andExpect(jsonPath("$.id").value(1));
     }
