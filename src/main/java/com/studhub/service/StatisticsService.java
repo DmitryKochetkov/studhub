@@ -27,22 +27,20 @@ public class StatisticsService {
      */
     public CourseStatisticsByExamSpecificationDto getCourseStatisticsByExamSpecification(Course course, ExamSpecification examSpecification) {
         Session session = entityManager.unwrap(Session.class);
-        Query query = session.createSQLQuery("""
-            select distinct problem_code_id, count(problem_id) as all_cnt, count(case when verdict_id = 1 then 1 else null end) as ok_cnt
-            from(
-                select homework_problems.problem_id, code_mapping.problem_code_id, verdict_id
-                from homework_problems
-                inner join submissions on homework_problems.id = submissions.homework_problem_id
-                inner join problem_code_mapping code_mapping on homework_problems.problem_id = code_mapping.problem_id
-                inner join problem_codes code on code_mapping.problem_code_id = code.id
-                inner join homework h on homework_problems.homework_id = h.id
-                inner join courses c on c.id = h.course_id
-                where
-                      homework_id in (select id from homework where course_id = :course_id) and
-                      code.specification_id = c.active_specification_id
-                ) as selection
-            group by problem_code_id;
-            """)
+        Query query = session.createSQLQuery("select distinct problem_code_id, count(problem_id) as all_cnt, count(case when verdict_id = 1 then 1 else null end) as ok_cnt\n" +
+                "            from(\n" +
+                "                select homework_problems.problem_id, code_mapping.problem_code_id, verdict_id\n" +
+                "                from homework_problems\n" +
+                "                inner join submissions on homework_problems.id = submissions.homework_problem_id\n" +
+                "                inner join problem_code_mapping code_mapping on homework_problems.problem_id = code_mapping.problem_id\n" +
+                "                inner join problem_codes code on code_mapping.problem_code_id = code.id\n" +
+                "                inner join homework h on homework_problems.homework_id = h.id\n" +
+                "                inner join courses c on c.id = h.course_id\n" +
+                "                where\n" +
+                "                      homework_id in (select id from homework where course_id = :course_id) and\n" +
+                "                      code.specification_id = c.active_specification_id\n" +
+                "                ) as selection\n" +
+                "            group by problem_code_id;")
                 .unwrap(org.hibernate.query.Query.class)
                 .setResultTransformer(new ResultTransformer() {
                     @Override
