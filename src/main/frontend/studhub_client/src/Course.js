@@ -101,18 +101,31 @@ class Course extends Component {
                     problemCodesByIndex[element.problemCodeId].correctSubmissions = element.correctSubmissions;
                 });
 
-                console.log(problemCodesByIndex);
-
                 progressTable = <table className={"specification-statistics-table"}>
                     <tbody>
                         <tr>
                             {specification.problemCodes.map((data, index) => {
                                 let problemStatistics = problemCodesByIndex[data.id];
                                 let statisticsInfo = data.description;
+
+                                const {correctSubmissions, totalSubmissions} = problemStatistics;
+                                const percentage = (correctSubmissions / totalSubmissions) * 100;
+
+                                var r, g, b = 0;
+                                if (percentage < 50) {
+                                    r = 255;
+                                    g = Math.round(5.1 * percentage);
+                                }
+                                else {
+                                    g = 255;
+                                    r = Math.round(510 - 5.10 * percentage);
+                                }
+                                var h = r * 0x10000 + g * 0x100 + b * 0x1;
+
                                 if (problemStatistics.totalSubmissions)
                                     statisticsInfo += "\nУспешных попыток: " + problemStatistics.correctSubmissions + "/" + problemStatistics.totalSubmissions;
                                 else statisticsInfo += "\nНет посылок задач этого типа."
-                                return (<td><span title={statisticsInfo}>{data.numberInSpecification}</span></td>);
+                                return (<td style={{backgroundColor: '#' + ('000000' + h.toString(16)).slice(-6)}}><span title={statisticsInfo}>{data.numberInSpecification}</span></td>);
                             })}
                         </tr>
                     </tbody>
