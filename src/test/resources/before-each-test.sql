@@ -1,6 +1,7 @@
 -- noinspection SqlWithoutWhereForFile
 
 DELETE FROM submissions cascade;
+DELETE FROM problem_code_mapping cascade;
 DELETE FROM ref_verdict cascade;
 DELETE FROM homework_problems cascade;
 DELETE FROM choice_problem_answers cascade;
