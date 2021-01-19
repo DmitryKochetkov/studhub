@@ -15,7 +15,7 @@ public class SpecificationDto extends BaseDto {
     public SpecificationDto(Specification specification) {
         super(specification);
         title = specification.getTitle();
-        refCourseId = specification.getRefCourse().getId();
+        refCourseId = specification.getSubject().getId();
         problemCodes = specification.getProblemCodes().stream()
                 .map(ProblemCodeDto::new)
                 .collect(Collectors.toList());

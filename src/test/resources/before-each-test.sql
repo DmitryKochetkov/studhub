@@ -1,6 +1,7 @@
 -- noinspection SqlWithoutWhereForFile
 
 DELETE FROM submissions cascade;
+DELETE FROM specification cascade;
 DELETE FROM problem_code_mapping cascade;
 DELETE FROM ref_verdict cascade;
 DELETE FROM homework_problems cascade;
@@ -16,7 +17,7 @@ DELETE FROM courses cascade;
 DELETE FROM students cascade;
 DELETE FROM users cascade;
 DELETE FROM roles cascade;
-DELETE FROM ref_courses cascade;
+DELETE FROM subjects cascade;
 
 INSERT INTO studhub_test.public.roles (id, created, last_modified, name) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ROLE_USER'),
@@ -60,7 +61,7 @@ INSERT INTO studhub_test.public.user_roles (user_id, role_id) VALUES
 (13, 1),
 (14, 1);
 
-INSERT INTO studhub_test.public.ref_courses (id, created, last_modified, title) VALUES
+INSERT INTO studhub_test.public.subjects (id, created, last_modified, title) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на С++'),
 (2, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на Pascal'),
 (3, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на Java'),
@@ -72,7 +73,7 @@ INSERT INTO studhub_test.public.ref_courses (id, created, last_modified, title) 
 (9, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Математический анализ'),
 (10, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Линейная алгебра');
 
-INSERT INTO studhub_test.public.specification (id, created, last_modified, title, ref_course_id) VALUES
+INSERT INTO studhub_test.public.specification (id, created, last_modified, title, subject_id) VALUES
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Информатика ОГЭ до 2020', 7),
 (2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Информатика ОГЭ 2020', 7),
 (3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Информатика ЕГЭ до 2021', 5),

@@ -129,7 +129,7 @@ class Course extends Component {
                 <div>
                     <Header/>
                     <div className="container">
-                        <h2 className="font-weight-bold pb-3">Курс #{course.id}: {course.title}</h2>
+                        <h2 className="font-weight-bold pb-3">Курс #{course.id}: {course.subject.title}</h2>
                         <div>Ученик: <a href={"/user/" + 2}>login</a></div>
                         <div className="font-weight-bold">Статус: {this.courseStatusUI[course.status]}</div>
 

@@ -43,7 +43,7 @@ INSERT INTO studhub.public.user_roles (user_id, role_id) VALUES
 (13, 1),
 (14, 1);
 
-INSERT INTO studhub.public.ref_courses (id, created, last_modified, title) VALUES
+INSERT INTO studhub.public.subjects (id, created, last_modified, title) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на С++'),
 (2, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на Pascal'),
 (3, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на Java'),
@@ -55,7 +55,7 @@ INSERT INTO studhub.public.ref_courses (id, created, last_modified, title) VALUE
 (9, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Математический анализ'),
 (10, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Линейная алгебра');
 
-INSERT INTO studhub.public.specification (id, created, last_modified, title, ref_course_id) VALUES
+INSERT INTO studhub.public.specification (id, created, last_modified, title, subject_id) VALUES
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Информатика ОГЭ до 2020', 7),
 (2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Информатика ОГЭ 2020', 7),
 (3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Информатика ЕГЭ до 2021', 5),

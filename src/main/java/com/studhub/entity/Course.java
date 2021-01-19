@@ -17,7 +17,7 @@ public class Course extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "course_type", referencedColumnName = "id", nullable = false, updatable = false)
-    private RefCourse refCourse;
+    private Subject subject;
 
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;

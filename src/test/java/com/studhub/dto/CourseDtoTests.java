@@ -35,7 +35,7 @@ public class CourseDtoTests {
     @Transactional
     public void testCourseDtoConstructor() {
         CourseDto courseDto = new CourseDto(courseService.getById(1L).orElse(null));
-        Assert.assertEquals("Информатика (ЕГЭ)", courseDto.getTitle());
+        Assert.assertEquals("Информатика (ЕГЭ)", courseDto.getSubject().getTitle());
         Assert.assertEquals(2L, courseDto.getStudentId().longValue());
         Assert.assertEquals(CourseStatus.ACTIVE, courseDto.getStatus());
     }

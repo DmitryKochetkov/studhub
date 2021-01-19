@@ -16,8 +16,8 @@ public class Specification extends BaseEntity {
     private String title; // название - по умолчанию содержит название экзамена и год.
 
     @ManyToOne
-    @JoinColumn(name = "ref_course_id", referencedColumnName = "id")
-    private RefCourse refCourse;
+    @JoinColumn(name = "subject_id", referencedColumnName = "id")
+    private Subject subject;
 
     @OneToMany(mappedBy = "specification")
     private List<ProblemCode> problemCodes;

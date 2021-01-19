@@ -12,12 +12,12 @@ import java.util.List;
  * Предмет, по которому читается курс
  */
 @Entity
-@Table(name = "ref_courses")
+@Table(name = "subjects")
 @Data
-public class RefCourse extends BaseEntity {
+public class Subject extends BaseEntity {
     @Column
     private String title;
 
-    @OneToMany(mappedBy = "refCourse")
+    @OneToMany(mappedBy = "subject")
     private List<Specification> specifications; // возможные спецификации экзамена (если курс готовит к нему)
 }
