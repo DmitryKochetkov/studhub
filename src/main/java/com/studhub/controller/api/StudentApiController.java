@@ -257,18 +257,6 @@ public class StudentApiController {
         }
     }
 
-    @GetMapping(value = "/exam-specification/{id}")
-    @ApiOperation(value = "Get specification by exam id.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Not Found")
-    }
-    )
-    public ResponseEntity<ExamSpecificationDto> getExamSpecification(@PathVariable Long id) {
-        ExamSpecification examSpecification = examSpecificationService.getById(id).orElseThrow(NotFoundException::new);
-        return ResponseEntity.ok(new ExamSpecificationDto(examSpecification));
-    }
-
     @GetMapping(value = "/student/{user_id}/course/{course_id}/exam-specification-statistics")
     @ApiOperation(value = "Get statistics by active exam specification.")
     @ApiResponses(value = {
