@@ -15,9 +15,9 @@ class Course extends Component {
         super(props);
         this.state = {
             course: null,
-            homework_statistics: null,
+            homeworkStatistics: null,
             specification: null,
-            specification_statistics: null
+            specificationStatistics: null
         };
         this.onPeriodChange = this.onPeriodChange.bind(this);
     }
@@ -55,7 +55,7 @@ class Course extends Component {
                         course: this.state.course,
                         homework_statistics: this.state.homework_statistics,
                         specification: this.state.specification,
-                        specification_statistics: result
+                        specificationStatistics: result
                     })
                 }
             );
@@ -72,7 +72,7 @@ class Course extends Component {
     }
 
     render() {
-        const {course, homework_statistics, specification, specification_statistics} = this.state;
+        const {course, homework_statistics, specification, specificationStatistics} = this.state;
 
         try {
             document.title = "StudHub: Курс #" + course.id;
@@ -103,12 +103,9 @@ class Course extends Component {
                 </BarChart>
             </ResponsiveContainer>;
 
-            console.log(specification);
-            console.log(specification_statistics);
-
             let progressTable = "Загрузка...";
-            if (specification && specification_statistics) {
-                progressTable = <SpecificationStatisticsTable specification={specification} specification_statistics={specification_statistics}/>
+            if (specification && specificationStatistics) {
+                progressTable = <SpecificationStatisticsTable specification={specification} specificationStatistics={specificationStatistics}/>
             }
 
             return (

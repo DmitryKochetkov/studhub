@@ -5,7 +5,7 @@ class SpecificationStatisticsTable extends Component {
         super(props);
         this.state = {
             specification: props.specification,
-            specificationStatistics: props.specification_statistics
+            specificationStatistics: props.specificationStatistics
         };
     }
 
@@ -49,7 +49,7 @@ class SpecificationStatisticsTable extends Component {
                         var h = r * 0x10000 + g * 0x100 + b * 0x1;
 
                         if (problemStatistics.totalSubmissions)
-                            statisticsInfo += "\nУспешных попыток: " + problemStatistics.correctSubmissions + "/" + problemStatistics.totalSubmissions;
+                            statisticsInfo += "\nУспешных попыток: " + correctSubmissions + "/" + totalSubmissions + "(" + percentage +"%)";
                         else statisticsInfo += "\nНет посылок задач этого типа."
                         return (<td style={{backgroundColor: '#' + ('000000' + h.toString(16)).slice(-6)}}><span
                             title={statisticsInfo}>{data.numberInSpecification}</span></td>);
