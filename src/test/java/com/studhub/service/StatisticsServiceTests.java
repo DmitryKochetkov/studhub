@@ -1,6 +1,6 @@
 package com.studhub.service;
 
-import com.studhub.dto.CourseStatisticsByExamSpecificationDto;
+import com.studhub.dto.CourseStatisticsBySpecificationDto;
 import com.studhub.dto.ProblemCodeStatisticsDto;
 import com.studhub.entity.Course;
 import com.studhub.entity.Specification;
@@ -35,9 +35,9 @@ public class StatisticsServiceTests {
         Specification specification = new Specification();
         specification.setId(4L);
 
-        CourseStatisticsByExamSpecificationDto courseStatisticsByExamSpecificationDto = statisticsService.getCourseStatisticsBySpecification(course, specification);
-        Assert.assertEquals(4L, courseStatisticsByExamSpecificationDto.getSpecificationId().longValue());
-        Assert.assertEquals(1L, courseStatisticsByExamSpecificationDto.getCourseId().longValue());
+        CourseStatisticsBySpecificationDto courseStatisticsBySpecificationDto = statisticsService.getCourseStatisticsBySpecification(course, specification);
+        Assert.assertEquals(4L, courseStatisticsBySpecificationDto.getSpecificationId().longValue());
+        Assert.assertEquals(1L, courseStatisticsBySpecificationDto.getCourseId().longValue());
 
         List<ProblemCodeStatisticsDto> expectedStatistics = new ArrayList<>();
         ProblemCodeStatisticsDto problemCodeStatisticsDto = new ProblemCodeStatisticsDto();
@@ -46,6 +46,6 @@ public class StatisticsServiceTests {
         problemCodeStatisticsDto.setCorrectSubmissions(1);
         expectedStatistics.add(problemCodeStatisticsDto);
 
-        Assert.assertEquals(expectedStatistics, courseStatisticsByExamSpecificationDto.getStatistics());
+        Assert.assertEquals(expectedStatistics, courseStatisticsBySpecificationDto.getData());
     }
 }

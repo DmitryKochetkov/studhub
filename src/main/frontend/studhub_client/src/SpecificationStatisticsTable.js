@@ -16,14 +16,14 @@ class SpecificationStatisticsTable extends Component {
             let problemCodesByIndex = new Map();
             specification.problemCodes.map((data, index) => {
                 problemCodesByIndex[data.id] = {
-                    specificationIndex: data.numberInSpecification,
+                    specificationIndex: data.indexInSpecification,
                     description: data.description,
                     totalSubmissions: null,
                     correctSubmissions: null
                 }
             });
 
-            specificationStatistics.statistics.forEach(element => {
+            specificationStatistics.data.forEach(element => {
                 problemCodesByIndex[element.problemCodeId].totalSubmissions = element.totalSubmissions;
                 problemCodesByIndex[element.problemCodeId].correctSubmissions = element.correctSubmissions;
             });
@@ -49,10 +49,10 @@ class SpecificationStatisticsTable extends Component {
                         var h = r * 0x10000 + g * 0x100 + b * 0x1;
 
                         if (problemStatistics.totalSubmissions)
-                            statisticsInfo += "\nУспешных попыток: " + correctSubmissions + "/" + totalSubmissions + "(" + percentage +"%)";
+                            statisticsInfo += "\nУспешных попыток: " + correctSubmissions + "/" + totalSubmissions + " (" + percentage +"%)";
                         else statisticsInfo += "\nНет посылок задач этого типа."
                         return (<td style={{backgroundColor: '#' + ('000000' + h.toString(16)).slice(-6)}}><span
-                            title={statisticsInfo}>{data.numberInSpecification}</span></td>);
+                            title={statisticsInfo}>{data.indexInSpecification}</span></td>);
                     })}
                 </tr>
                 </tbody>

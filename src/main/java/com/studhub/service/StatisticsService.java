@@ -1,6 +1,6 @@
 package com.studhub.service;
 
-import com.studhub.dto.CourseStatisticsByExamSpecificationDto;
+import com.studhub.dto.CourseStatisticsBySpecificationDto;
 import com.studhub.dto.ProblemCodeStatisticsDto;
 import com.studhub.entity.Course;
 import com.studhub.entity.Specification;
@@ -25,7 +25,7 @@ public class StatisticsService {
      * @param specification Спецификация для агрегации задач
      * @return CourseStatisticsByExamSpecificationDto с описанием количества посылок по каждому типу задачи спецификации
      */
-    public CourseStatisticsByExamSpecificationDto getCourseStatisticsBySpecification(Course course, Specification specification) {
+    public CourseStatisticsBySpecificationDto getCourseStatisticsBySpecification(Course course, Specification specification) {
         Session session = entityManager.unwrap(Session.class);
         Query query = session.createSQLQuery("select distinct problem_code_id, count(problem_id) as all_cnt, count(case when verdict_id = 1 then 1 else null end) as ok_cnt\n" +
                 "            from(\n" +
@@ -62,11 +62,11 @@ public class StatisticsService {
 
         List<ProblemCodeStatisticsDto> statistics = query.getResultList();
 
-        CourseStatisticsByExamSpecificationDto courseStatisticsByExamSpecificationDto = new CourseStatisticsByExamSpecificationDto();
-        courseStatisticsByExamSpecificationDto.setStatistics(statistics);
-        courseStatisticsByExamSpecificationDto.setCourseId(course.getId());
-        courseStatisticsByExamSpecificationDto.setSpecificationId(specification.getId());
-        return courseStatisticsByExamSpecificationDto;
+        CourseStatisticsBySpecificationDto courseStatisticsBySpecificationDto = new CourseStatisticsBySpecificationDto();
+        courseStatisticsBySpecificationDto.setData(statistics);
+        courseStatisticsBySpecificationDto.setCourseId(course.getId());
+        courseStatisticsBySpecificationDto.setSpecificationId(specification.getId());
+        return courseStatisticsBySpecificationDto;
     }
 
     //TODO: вынести сюда статистику по домашним работам

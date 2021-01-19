@@ -169,7 +169,7 @@ INSERT INTO studhub_test.public.submissions (id, created, last_modified, answer,
 (9, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '33', 2, 11),
 (10, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '3', 1, 11);
 
-INSERT INTO studhub_test.public.problem_codes (id, created, last_modified, specification_id, number_in_specification, description) VALUES
+INSERT INTO studhub_test.public.problem_codes (id, created, last_modified, specification_id, index_in_specification, description) VALUES
 (1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 3, 1, 'Позиционные системы счисления'),
 (2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 3, 2, 'Таблицы истинности'),
 (3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 3, 3, 'Информационные модели (графы)'),

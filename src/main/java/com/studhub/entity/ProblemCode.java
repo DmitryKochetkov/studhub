@@ -10,15 +10,15 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "problem_codes", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"specification_id", "number_in_specification"}),
+        @UniqueConstraint(columnNames = {"specification_id", "index_in_specification"}),
 })
 @Data
 public class ProblemCode extends BaseEntity {
     @Column
     private String description;
 
-    @Column(name = "number_in_specification")
-    private Integer numberInSpecification;
+    @Column(name = "index_in_specification")
+    private Integer indexInSpecification;
 
     @ManyToOne
     @JoinColumn(name = "specification_id", referencedColumnName = "id", nullable = false)

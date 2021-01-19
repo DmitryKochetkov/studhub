@@ -32,7 +32,7 @@ class Course extends Component {
         fetch("/api/student/2/course/1/homework-statistics?businessPeriod=MONTH")
             .then((res) => res.json())
             .then(
-                (result) => {this.setState({course: this.state.course, homework_statistics: result})}
+                (result) => {this.setState({course: this.state.course, homeworkStatistics: result})}
             );
 
         fetch("/api/specification/4")
@@ -41,19 +41,19 @@ class Course extends Component {
                 (result) => {
                     this.setState({
                         course: this.state.course,
-                        homework_statistics: this.state.homework_statistics,
+                        homeworkStatistics: this.state.homeworkStatistics,
                         specification: result
                     })
                 }
             );
 
-        fetch("/api/student/2/course/1/exam-specification-statistics")
+        fetch("/api/student/2/course/1/specification-statistics")
             .then((res) => res.json())
             .then(
                 (result) => {
                     this.setState({
                         course: this.state.course,
-                        homework_statistics: this.state.homework_statistics,
+                        homeworkStatistics: this.state.homeworkStatistics,
                         specification: this.state.specification,
                         specificationStatistics: result
                     })
@@ -67,17 +67,18 @@ class Course extends Component {
         fetch("/api/student/2/course/1/homework-statistics?businessPeriod=" + document.getElementById("homework_stat_period").value)
             .then((res) => res.json())
             .then(
-                (result) => {this.setState({course: this.state.course, homework_statistics: result})}
+                (result) => {this.setState({course: this.state.course, homeworkStatistics: result})}
             );
     }
 
     render() {
-        const {course, homework_statistics, specification, specificationStatistics} = this.state;
+        const {course, homeworkStatistics, specification, specificationStatistics} = this.state;
 
         try {
             document.title = "StudHub: Курс #" + course.id;
             const comingLessons = course.comingLessons.map((lesson) => (<tr key={lesson.id}>
                 <td><Moment format="DD.MM.YYYY HH:mm">{lesson.startDateTime}</Moment></td>
+                <td>{lesson.topic}</td>
             </tr>));
 
             const comingHomework = course.comingHomework.map((homework) => (<tr key={homework.id}>
@@ -88,7 +89,7 @@ class Course extends Component {
 
             const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
             const chart_avg_homework = <ResponsiveContainer width="100%" aspect={4.5/2.0}>
-                <BarChart data={homework_statistics} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <BarChart data={homeworkStatistics} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                     <defs>
                         <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
@@ -122,7 +123,7 @@ class Course extends Component {
                                 <table className="table small-font">
                                     <thead className="thead-light">
                                     <tr>
-                                        <th>Дата</th>
+                                        <th>Срок сдачи</th>
                                         <th>Разделы</th>
                                         <th>Заданий</th>
                                     </tr>

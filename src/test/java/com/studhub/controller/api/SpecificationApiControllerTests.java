@@ -53,7 +53,7 @@ public class SpecificationApiControllerTests {
 
     @Test
     public void testGetUserById404() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/exam-specification/5"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/specification/5"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$.statusCode").value(404))

@@ -6,11 +6,11 @@ import lombok.Data;
 @Data
 public class ProblemCodeDto extends BaseDto {
     private String description;
-    private Integer numberInSpecification;
+    private Integer indexInSpecification;
 
     public ProblemCodeDto(ProblemCode problemCode) {
         super(problemCode);
         description = problemCode.getDescription();
-        numberInSpecification = problemCode.getNumberInSpecification();
+        indexInSpecification = problemCode.getIndexInSpecification();
     }
 }

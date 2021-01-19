@@ -257,14 +257,14 @@ public class StudentApiController {
         }
     }
 
-    @GetMapping(value = "/student/{user_id}/course/{course_id}/exam-specification-statistics")
+    @GetMapping(value = "/student/{user_id}/course/{course_id}/specification-statistics")
     @ApiOperation(value = "Get statistics by active exam specification.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "Not Found")
     }
     )
-    public ResponseEntity<CourseStatisticsByExamSpecificationDto> getCourseStatisticsByActiveExamSpecification(
+    public ResponseEntity<CourseStatisticsBySpecificationDto> getCourseStatisticsByActiveExamSpecification(
             @PathVariable Long user_id,
             @PathVariable Long course_id
     ) {
@@ -275,7 +275,7 @@ public class StudentApiController {
         if (specification == null)
             throw new BadRequestException(); //TODO: add message
 
-        CourseStatisticsByExamSpecificationDto courseStatisticsByExamSpecificationDto = statisticsService.getCourseStatisticsBySpecification(course, specification);
-        return ResponseEntity.ok(courseStatisticsByExamSpecificationDto);
+        CourseStatisticsBySpecificationDto courseStatisticsBySpecificationDto = statisticsService.getCourseStatisticsBySpecification(course, specification);
+        return ResponseEntity.ok(courseStatisticsBySpecificationDto);
     }
 }
