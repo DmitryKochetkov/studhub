@@ -9,6 +9,7 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import BarChart from "recharts/lib/chart/BarChart";
 import SpecificationStatisticsTable from "./SpecificationStatisticsTable";
+import ErrorPage from "./ErrorPage";
 
 class Course extends Component {
     constructor(props) {
@@ -17,7 +18,8 @@ class Course extends Component {
             course: null,
             homeworkStatistics: null,
             specification: null,
-            specificationStatistics: null
+            specificationStatistics: null,
+            hasError: false
         };
         this.onPeriodChange = this.onPeriodChange.bind(this);
     }
@@ -55,7 +57,17 @@ class Course extends Component {
                         course: this.state.course,
                         homeworkStatistics: this.state.homeworkStatistics,
                         specification: this.state.specification,
-                        specificationStatistics: result
+                        specificationStatistics: result,
+                        specificationStatisticsLoaded: true
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        course: this.state.course,
+                        homeworkStatistics: this.state.homeworkStatistics,
+                        specification: this.state.specification,
+                        specificationStatistics: null,
+                        hasError: true
                     })
                 }
             );
@@ -72,6 +84,10 @@ class Course extends Component {
     }
 
     render() {
+        if (this.state.hasError) {
+            return <ErrorPage code={"500"} description={"Internal Server Error"}/>
+        }
+
         const {course, homeworkStatistics, specification, specificationStatistics} = this.state;
 
         try {
@@ -105,7 +121,7 @@ class Course extends Component {
             </ResponsiveContainer>;
 
             let progressTable = "Загрузка...";
-            if (specification && specificationStatistics) {
+            if (this.state.specificationStatisticsLoaded) {
                 progressTable = <SpecificationStatisticsTable specification={specification} specificationStatistics={specificationStatistics}/>
             }
 
