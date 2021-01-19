@@ -19,5 +19,5 @@ public class RefCourse extends BaseEntity {
     private String title;
 
     @OneToMany(mappedBy = "refCourse")
-    private List<ExamSpecification> examSpecifications; // возможные спецификации экзамена (если курс готовит к нему)
+    private List<Specification> specifications; // возможные спецификации экзамена (если курс готовит к нему)
 }

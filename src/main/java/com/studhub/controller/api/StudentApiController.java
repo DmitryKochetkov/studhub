@@ -271,11 +271,11 @@ public class StudentApiController {
         userService.getById(user_id).orElseThrow(NotFoundException::new);
         Course course = courseService.getById(course_id).orElseThrow(NotFoundException::new);
 
-        ExamSpecification examSpecification = course.getActiveExamSpecification();
-        if (examSpecification == null)
+        Specification specification = course.getActiveSpecification();
+        if (specification == null)
             throw new BadRequestException(); //TODO: add message
 
-        CourseStatisticsByExamSpecificationDto courseStatisticsByExamSpecificationDto = statisticsService.getCourseStatisticsByExamSpecification(course, examSpecification);
+        CourseStatisticsByExamSpecificationDto courseStatisticsByExamSpecificationDto = statisticsService.getCourseStatisticsBySpecification(course, specification);
         return ResponseEntity.ok(courseStatisticsByExamSpecificationDto);
     }
 }

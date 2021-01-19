@@ -35,7 +35,7 @@ class Course extends Component {
                 (result) => {this.setState({course: this.state.course, homework_statistics: result})}
             );
 
-        fetch("/api/exam-specification/4")
+        fetch("/api/specification/4")
             .then((res) => res.json())
             .then(
                 (result) => {
@@ -102,6 +102,14 @@ class Course extends Component {
                     <Bar type="monotone" dataKey="percentage" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)"/>
                 </BarChart>
             </ResponsiveContainer>;
+
+            console.log(specification);
+            console.log(specification_statistics);
+
+            let progressTable = "Загрузка...";
+            if (specification && specification_statistics) {
+                progressTable = <SpecificationStatisticsTable specification={specification} specification_statistics={specification_statistics}/>
+            }
 
             return (
                 <div>
@@ -188,7 +196,7 @@ class Course extends Component {
                                                  title="Для задания с соотвествующим номером при наведении выводится процент правильно решенных заданий в домашних работах."/>
                             </div>
 
-                            <SpecificationStatisticsTable specification={specification} specification_statistics={specification_statistics}/>
+                            {progressTable}
                         </div>
 
                         <div>

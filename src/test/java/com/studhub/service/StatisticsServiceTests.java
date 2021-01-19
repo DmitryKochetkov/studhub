@@ -3,7 +3,7 @@ package com.studhub.service;
 import com.studhub.dto.CourseStatisticsByExamSpecificationDto;
 import com.studhub.dto.ProblemCodeStatisticsDto;
 import com.studhub.entity.Course;
-import com.studhub.entity.ExamSpecification;
+import com.studhub.entity.Specification;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,10 +32,10 @@ public class StatisticsServiceTests {
         Course course = new Course();
         course.setId(1L);
 
-        ExamSpecification examSpecification = new ExamSpecification();
-        examSpecification.setId(4L);
+        Specification specification = new Specification();
+        specification.setId(4L);
 
-        CourseStatisticsByExamSpecificationDto courseStatisticsByExamSpecificationDto = statisticsService.getCourseStatisticsByExamSpecification(course, examSpecification);
+        CourseStatisticsByExamSpecificationDto courseStatisticsByExamSpecificationDto = statisticsService.getCourseStatisticsBySpecification(course, specification);
         Assert.assertEquals(4L, courseStatisticsByExamSpecificationDto.getSpecificationId().longValue());
         Assert.assertEquals(1L, courseStatisticsByExamSpecificationDto.getCourseId().longValue());
 

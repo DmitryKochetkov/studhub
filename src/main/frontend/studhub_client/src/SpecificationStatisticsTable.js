@@ -5,15 +5,14 @@ class SpecificationStatisticsTable extends Component {
         super(props);
         this.state = {
             specification: props.specification,
-            specification_statistics: props.specification_statistics
+            specificationStatistics: props.specification_statistics
         };
     }
 
     render() {
-        const {specification, specification_statistics} = this.state;
+        const {specification, specificationStatistics} = this.state;
 
-        let progressTable = <div>Отсутствует спецификация.</div>
-        if (specification) {
+        if (specification && specificationStatistics) {
             let problemCodesByIndex = new Map();
             specification.problemCodes.map((data, index) => {
                 problemCodesByIndex[data.id] = {
@@ -24,14 +23,10 @@ class SpecificationStatisticsTable extends Component {
                 }
             });
 
-            specification_statistics.statistics.forEach(element => {
+            specificationStatistics.statistics.forEach(element => {
                 problemCodesByIndex[element.problemCodeId].totalSubmissions = element.totalSubmissions;
                 problemCodesByIndex[element.problemCodeId].correctSubmissions = element.correctSubmissions;
             });
-
-            progressTable = <SpecificationStatisticsTable specification={specification}
-                                                          specification_statistics={specification_statistics}/>
-
 
             return <table className={"specification-statistics-table"}>
                 <tbody>

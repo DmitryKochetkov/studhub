@@ -3,7 +3,7 @@ package com.studhub.service;
 import com.studhub.dto.CourseStatisticsByExamSpecificationDto;
 import com.studhub.dto.ProblemCodeStatisticsDto;
 import com.studhub.entity.Course;
-import com.studhub.entity.ExamSpecification;
+import com.studhub.entity.Specification;
 import org.hibernate.Session;
 import org.hibernate.transform.ResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ public class StatisticsService {
     /**
      *
      * @param course Курс, для которого считается статистика
-     * @param examSpecification Спецификация для агрегации задач
+     * @param specification Спецификация для агрегации задач
      * @return CourseStatisticsByExamSpecificationDto с описанием количества посылок по каждому типу задачи спецификации
      */
-    public CourseStatisticsByExamSpecificationDto getCourseStatisticsByExamSpecification(Course course, ExamSpecification examSpecification) {
+    public CourseStatisticsByExamSpecificationDto getCourseStatisticsBySpecification(Course course, Specification specification) {
         Session session = entityManager.unwrap(Session.class);
         Query query = session.createSQLQuery("select distinct problem_code_id, count(problem_id) as all_cnt, count(case when verdict_id = 1 then 1 else null end) as ok_cnt\n" +
                 "            from(\n" +
@@ -65,7 +65,7 @@ public class StatisticsService {
         CourseStatisticsByExamSpecificationDto courseStatisticsByExamSpecificationDto = new CourseStatisticsByExamSpecificationDto();
         courseStatisticsByExamSpecificationDto.setStatistics(statistics);
         courseStatisticsByExamSpecificationDto.setCourseId(course.getId());
-        courseStatisticsByExamSpecificationDto.setSpecificationId(examSpecification.getId());
+        courseStatisticsByExamSpecificationDto.setSpecificationId(specification.getId());
         return courseStatisticsByExamSpecificationDto;
     }
 

@@ -2,7 +2,7 @@ package com.studhub.dto;
 
 import com.studhub.entity.Course;
 import com.studhub.entity.CourseStatus;
-import com.studhub.entity.ExamSpecification;
+import com.studhub.entity.Specification;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -31,9 +31,9 @@ public class CourseDto extends BaseDto {
         this.status = course.getCourseStatus();
         this.startDate = course.getCreated();
 
-        ExamSpecification examSpecification = course.getActiveExamSpecification();
-        if (examSpecification != null)
-            this.examSpecificationId = examSpecification.getId();
+        Specification specification = course.getActiveSpecification();
+        if (specification != null)
+            this.examSpecificationId = specification.getId();
 
         this.comingLessons = course.getLessons().stream().limit(3).map(LessonDto::new).collect(Collectors.toList());
         this.comingHomework = course.

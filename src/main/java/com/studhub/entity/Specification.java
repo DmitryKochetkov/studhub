@@ -11,20 +11,14 @@ import java.util.List;
 @Entity
 @Table
 @Data
-public class ExamSpecification extends BaseEntity {
+public class Specification extends BaseEntity {
     @Column
     private String title; // название - по умолчанию содержит название экзамена и год.
-
-    @Column
-    private Integer startYear; // год, в котором введена
-
-    @Column
-    private Integer endYear; // год, в котором упразднена
 
     @ManyToOne
     @JoinColumn(name = "ref_course_id", referencedColumnName = "id")
     private RefCourse refCourse;
 
-    @OneToMany(mappedBy = "examSpecification")
+    @OneToMany(mappedBy = "specification")
     private List<ProblemCode> problemCodes;
 }

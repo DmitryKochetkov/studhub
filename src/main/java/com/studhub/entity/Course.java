@@ -30,7 +30,7 @@ public class Course extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "active_specification_id", referencedColumnName = "id")
-    private ExamSpecification activeExamSpecification; // актуальная спецификация, по которой ведется сбор статистики
+    private Specification activeSpecification; // актуальная спецификация, по которой ведется сбор статистики
   
     @Override
     public String toString() {

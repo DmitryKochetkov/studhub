@@ -22,5 +22,5 @@ public class ProblemCode extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "specification_id", referencedColumnName = "id", nullable = false)
-    private ExamSpecification examSpecification;
+    private Specification specification;
 }

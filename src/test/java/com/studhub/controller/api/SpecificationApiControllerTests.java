@@ -40,16 +40,14 @@ public class SpecificationApiControllerTests {
 
     @Test
     public void testGetUserById200() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/exam-specification/4"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/specification/4"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(8)))
+                .andExpect(jsonPath("$[*]", hasSize(6)))
                 .andExpect(jsonPath("$.id").value(4))
                 .andExpect(jsonPath("$.created").exists())
                 .andExpect(jsonPath("$.lastModified").exists())
                 .andExpect(jsonPath("$.title").value("Информатика ЕГЭ 2021"))
-                .andExpect(jsonPath("$.startYear").value("2021"))
                 .andExpect(jsonPath("$.problemCodes").exists())
-                .andExpect(jsonPath("$.endYear").isEmpty())
                 .andReturn();
     }
 
