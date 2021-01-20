@@ -51,7 +51,7 @@ class UserProfile extends Component {
         const coursesTableBody = user.courses.map((course) =>
             <tr key={course.id}>
                 <td>{course.id}</td>
-                <td>{course.title}</td>
+                <td>{course.subject.title}</td>
                 <td>{this.courseStatusUI[course.status]}</td>
                 <td><Moment format="DD.MM.YYYY">{course.created}</Moment></td>
                 <td><a href={"/student/" + 2 + "/course/" + course.id}>Перейти</a></td>
