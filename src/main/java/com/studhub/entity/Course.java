@@ -31,6 +31,9 @@ public class Course extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "active_specification_id", referencedColumnName = "id")
     private Specification activeSpecification; // актуальная спецификация, по которой ведется сбор статистики
+
+    @OneToMany(mappedBy = "course")
+    private List<Ticket> tickets;
   
     @Override
     public String toString() {

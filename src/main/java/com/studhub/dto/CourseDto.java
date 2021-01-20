@@ -22,6 +22,7 @@ public class CourseDto extends BaseDto {
     private List<LessonDto> comingLessons;
     private List<HomeworkDto> comingHomework;
     private Long activeSpecificationId;
+    private List<TicketDto> lastTickets;
 
     public CourseDto(Course course) {
         super(course);

@@ -66,3 +66,35 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
   border: 2px solid black;
 }
+
+.box {
+  border: 1px solid black;
+  border-radius: 6px;
+  width: 100%;
+  display: block;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  /*padding: 10px;*/
+}
+
+.box {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.box > li {
+  border-top: 1px solid;
+  padding: 5px;
+  margin-top: -1px;
+  width: 100%;
+  display: block;
+}
+
+.box > li:first-child {
+  border-top: none
+}
+
+.ticket-caption {
+  font-size: 13px;
+}
