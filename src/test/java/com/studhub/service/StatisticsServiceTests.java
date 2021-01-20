@@ -14,9 +14,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("/application-test.properties")
@@ -39,13 +36,20 @@ public class StatisticsServiceTests {
         Assert.assertEquals(4L, courseStatisticsBySpecificationDto.getSpecificationId().longValue());
         Assert.assertEquals(1L, courseStatisticsBySpecificationDto.getCourseId().longValue());
 
-        List<ProblemCodeStatisticsDto> expectedStatistics = new ArrayList<>();
-        ProblemCodeStatisticsDto problemCodeStatisticsDto = new ProblemCodeStatisticsDto();
-        problemCodeStatisticsDto.setProblemCodeId(14);
-        problemCodeStatisticsDto.setTotalSubmissions(2);
-        problemCodeStatisticsDto.setCorrectSubmissions(1);
-        expectedStatistics.add(problemCodeStatisticsDto);
+        ProblemCodeStatisticsDto expectedProblemCodeStatisticsDto = new ProblemCodeStatisticsDto();
+        expectedProblemCodeStatisticsDto.setProblemCodeId(14);
+        expectedProblemCodeStatisticsDto.setIndexInSpecification(11);
+        expectedProblemCodeStatisticsDto.setTotalSubmissions(2);
+        expectedProblemCodeStatisticsDto.setCorrectSubmissions(1);
 
-        Assert.assertEquals(expectedStatistics, courseStatisticsBySpecificationDto.getData());
+        for (ProblemCodeStatisticsDto element: courseStatisticsBySpecificationDto.getData()) {
+            if (element.getProblemCodeId().equals(expectedProblemCodeStatisticsDto.getProblemCodeId())) {
+                Assert.assertEquals(expectedProblemCodeStatisticsDto, element);
+            }
+            else {
+                Assert.assertEquals(0, element.getTotalSubmissions().intValue());
+                Assert.assertEquals(0, element.getCorrectSubmissions().intValue());
+            }
+        }
     }
 }
