@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,6 +21,7 @@ import java.time.LocalTime;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Transactional
 public class LessonServiceTests {
     @Autowired
     private LessonService lessonService;
@@ -47,7 +49,7 @@ public class LessonServiceTests {
         CreateLessonRequest request = new CreateLessonRequest();
         request.setCourseId(1L);
         request.setTopic("Test topic");
-        request.setStartDate(LocalDate.of(2020, 12, 31));
+        request.setStartDate(LocalDate.of(2021, 12, 31));
         request.setStartTime(LocalTime.of(15, 0));
         lessonService.createLesson(request);
     }

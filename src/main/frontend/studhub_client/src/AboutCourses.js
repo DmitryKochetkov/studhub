@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, {Component} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class AboutCourses extends Component {
     constructor(props) {
@@ -9,14 +9,10 @@ class AboutCourses extends Component {
         };
     }
 
-    componentDidMount() {
-        // fetch("/api/aoub")
-    }
-
     render() {
         return (
-            <div className="container">
-                <h1 className="font-weight-bold pb-3">Курсы</h1>
+            <div className='container'>
+                <h1 className='font-weight-bold pb-3'>Курсы</h1>
                 <p>Я преподаю следующие курсы:</p>
                 <ul>
                     <li>Программирование на C++</li>

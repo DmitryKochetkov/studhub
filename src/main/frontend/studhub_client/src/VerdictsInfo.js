@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import "./App.css";
+import React, {Component} from 'react';
+import './App.css';
 
 class VerdictsInfo extends Component {
     constructor(props) {
@@ -10,7 +10,7 @@ class VerdictsInfo extends Component {
     }
 
     componentDidMount() {
-        fetch("/api/verdicts")
+        fetch('/api/verdicts')
             .then((res) => res.json())
             .then((result) => {
                 this.setState({
@@ -24,23 +24,23 @@ class VerdictsInfo extends Component {
         if (verdicts === null)
             return (<div>error</div>);
 
-        document.title = "StudHub: Вердикты решений";
+        document.title = 'StudHub: Вердикты решений';
 
         const verdictsTableBody = verdicts.map((verdict) =>
             <tr>
-                <td style={verdict.code === "OK" ? {color: "green"} : {color: "red"}}>{verdict.code}</td>
+                <td style={verdict.code === 'OK' ? {color: 'green'} : {color: 'red'}}>{verdict.code}</td>
                 <td>{verdict.transcription}</td>
                 <td>{verdict.description}</td>
             </tr>
         );
 
         return (
-            <div className="container">
-                <h2 className="font-weight-bold pb-2">Вердикты</h2>
+            <div className='container'>
+                <h2 className='font-weight-bold pb-2'>Вердикты</h2>
 
-                <div className="verdicts_table">
-                    <table className="table">
-                        <thead className="thead-light">
+                <div className='verdicts_table'>
+                    <table className='table'>
+                        <thead className='thead-light'>
                         <tr>
                             <th>Сокращение</th>
                             <th>Транскрипция</th>

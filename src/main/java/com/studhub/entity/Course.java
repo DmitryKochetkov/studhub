@@ -17,7 +17,7 @@ public class Course extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "course_type", referencedColumnName = "id", nullable = false, updatable = false)
-    private RefCourse refCourse;
+    private Subject subject;
 
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;
@@ -27,6 +27,10 @@ public class Course extends BaseEntity {
 
     @OneToMany(mappedBy = "course")
     private List<Homework> homework;
+
+    @OneToOne
+    @JoinColumn(name = "active_specification_id", referencedColumnName = "id")
+    private Specification activeSpecification; // актуальная спецификация, по которой ведется сбор статистики
   
     @Override
     public String toString() {

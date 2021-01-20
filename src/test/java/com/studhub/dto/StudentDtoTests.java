@@ -20,6 +20,7 @@ import java.util.List;
 @WebAppConfiguration
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Transactional
 public class StudentDtoTests {
     @Autowired
     private UserService userService;

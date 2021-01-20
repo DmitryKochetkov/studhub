@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class SubmissionService {
@@ -73,4 +74,12 @@ public class SubmissionService {
         }
         return finalSubmission;
     }
+
+    public List<Submission> getByCourse(Course course) {
+        return submissionRepository.findAllByHomeworkProblem_Homework_Course(course);
+    }
+
+//    public List<Submission> getAllByCourseAndProblemCode(Course course, ProblemCode problemCode) {
+//        submissionRepository.findAllByCourseAndProblemCode(course, problemCode);
+//    }
 }
