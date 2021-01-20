@@ -26,7 +26,9 @@ public enum BusinessPeriod {
 
             case YEAR:
                 return localDateTime.minusYears(1);
+
+            default:
+                return null;
         }
-        return localDateTime;
     }
 }

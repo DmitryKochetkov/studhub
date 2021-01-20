@@ -1,8 +1,8 @@
-import React, {Component} from "react";
-import "./App.css";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
-import Moment from "react-moment";
+import React, {Component} from 'react';
+import './App.css';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faQuestionCircle} from '@fortawesome/free-solid-svg-icons';
+import Moment from 'react-moment';
 
 class HomeworkSubmissions extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class HomeworkSubmissions extends Component {
 
     componentDidMount() {
         const params = this.props.params;
-        fetch("/api/student/" + params.studentId + "/course/" + params.courseId + "/homework/" + params.homeworkId + "/submissions")
+        fetch('/api/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + params.homeworkId + '/submissions')
             .then((res) => res.json())
             .then((result) => {
                 this.setState({
@@ -36,34 +36,34 @@ class HomeworkSubmissions extends Component {
             let verdictStyle;
             switch (submission.verdict) {
                 case 'OK':
-                    verdictStyle = {color: "green"};
+                    verdictStyle = {color: 'green'};
                     break;
 
                 case null:
-                    verdictStyle = {color: "black"};
+                    verdictStyle = {color: 'black'};
                     break;
 
                 default:
-                    verdictStyle = {color: "red"};
+                    verdictStyle = {color: 'red'};
                     break;
             }
 
             return (
                 <tr>
                     <td>{submission.id}</td>
-                    <td><Moment format="DD.MM.YYYY HH:mm:ss">{submission.created}</Moment></td>
+                    <td><Moment format='DD.MM.YYYY HH:mm:ss'>{submission.created}</Moment></td>
                     <td>{submission.problemId}</td>
                     <td>{submission.answer}</td>
-                    <td style={verdictStyle}>{submission.verdict ? submission.verdict : "Тестируется..."}</td>
+                    <td style={verdictStyle}>{submission.verdict ? submission.verdict : 'Тестируется...'}</td>
                 </tr>
             )});
 
         return <div>
-            <h3 className="font-weight-bold pb-2">Посылки</h3>
+            <h3 className='font-weight-bold pb-2'>Посылки</h3>
             <p>Если указано, что ваше решение тестируется, для обновления результатов необходимо обновить страницу.</p>
 
-            <table className="table">
-                <thead className="thead-light">
+            <table className='table'>
+                <thead className='thead-light'>
                     <tr>
                         <th>ID</th>
                         <th>Время посылки</th>
@@ -71,8 +71,8 @@ class HomeworkSubmissions extends Component {
                         <th>Ответ</th>
                         <th>
                             <span>Вердикт </span>
-                            <a href="/verdicts">
-                                <FontAwesomeIcon icon={faQuestionCircle} data-toggle="tooltip" data-placement="top"/>
+                            <a href='/verdicts'>
+                                <FontAwesomeIcon icon={faQuestionCircle} data-toggle='tooltip' data-placement='top'/>
                             </a>
                         </th>
                     </tr>

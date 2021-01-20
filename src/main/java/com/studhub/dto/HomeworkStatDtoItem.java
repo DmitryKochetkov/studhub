@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 
 @Data
 public class HomeworkStatDtoItem {
-    LocalDateTime date;
-    Double percentage;
+    private LocalDateTime date;
+    private Double percentage;
 
     public HomeworkStatDtoItem(Homework homework) {
         date = homework.getDeadline();

@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component} from 'react';
 
 class SpecificationStatisticsTable extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class SpecificationStatisticsTable extends Component {
                 problemCodesByIndex[element.problemCodeId].correctSubmissions = element.correctSubmissions;
             });
 
-            return <table className={"specification-statistics-table"}>
+            return <table className={'specification-statistics-table'}>
                 <tbody>
                 <tr>
                     {specification.problemCodes.map((data, index) => {
@@ -49,16 +49,18 @@ class SpecificationStatisticsTable extends Component {
                         var h = r * 0x10000 + g * 0x100 + b * 0x1;
 
                         if (problemStatistics.totalSubmissions)
-                            statisticsInfo += "\nУспешных попыток: " + correctSubmissions + "/" + totalSubmissions + " (" + percentage +"%)";
-                        else statisticsInfo += "\nНет посылок задач этого типа."
-                        return (<td style={{backgroundColor: '#' + ('000000' + h.toString(16)).slice(-6)}}><span
-                            title={statisticsInfo}>{data.indexInSpecification}</span></td>);
+                            statisticsInfo += '\nУспешных попыток: ' + correctSubmissions + '/' + totalSubmissions + ' (' + percentage +'%)';
+                        else statisticsInfo += '\nНет посылок задач этого типа.';
+                        return (
+                            <td style={{backgroundColor: '#' + ('000000' + h.toString(16)).slice(-6)}}>
+                                <span title={statisticsInfo}>{data.indexInSpecification}</span>
+                            </td>);
                     })}
                 </tr>
                 </tbody>
             </table>;
         }
-        else return "Отсутствует спецификация";
+        else return 'Отсутствует спецификация';
     }
 }
 

@@ -1,7 +1,7 @@
-import React, {Component} from "react";
-import "./App.css";
-import Header from "./Header";
-import Moment from "react-moment";
+import React, {Component} from 'react';
+import './App.css';
+import Header from './Header';
+import Moment from 'react-moment';
 
 class CourseHomework extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class CourseHomework extends Component {
 
     componentDidMount() {
         const params = this.props.match.params;
-        fetch("/api/student/" + params.studentId + "/course/" + params.courseId + "/homework/")
+        fetch('/api/student/' + params.studentId + '/course/' + params.courseId + '/homework/')
             .then((res) => res.json())
             .then((result) => {
                 this.setState({
@@ -28,35 +28,35 @@ class CourseHomework extends Component {
         if (courseHomeworkPage === null)
             return (<div>error</div>);
 
-        document.title = "StudHub: Домашние работы по курсу #" + params.courseId;
+        document.title = 'StudHub: Домашние работы по курсу #' + params.courseId;
         const homeworkList = courseHomeworkPage.content.map((homework) => <tr key={homework.id}>
             <td>{homework.description}</td>
             <td>{homework.lessonId}</td>
-            <td><Moment format="DD.MM.YYYY HH:mm">{homework.deadline}</Moment></td>
+            <td><Moment format='DD.MM.YYYY HH:mm'>{homework.deadline}</Moment></td>
             <td>{homework.solvedProblemsCount}/{homework.totalProblemsCount}</td>
-            <td><a href={"/student/" + params.studentId + "/course/" + params.courseId + "/homework/" + homework.id}>Подробнее</a></td>
+            <td><a href={'/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + homework.id}>Подробнее</a></td>
         </tr>);
 
         const pagination = [];
-        const x = Math.max(parseInt(courseHomeworkPage["number"]) - 5, 1);
+        const x = Math.max(parseInt(courseHomeworkPage['number']) - 5, 1);
         for (let i = x; i < x + Math.min(10, courseHomeworkPage.totalPages); i++)
-            pagination.push(<li className="page-item"><a className="page-link" href={"/student/" + params.studentId + "/course/" + params.courseId + "/homework?page=" + i.valueOf()}>{i}</a></li>);
+            pagination.push(<li className='page-item'><a className='page-link' href={'/student/' + params.studentId + '/course/' + params.courseId + '/homework?page=' + i.valueOf()}>{i}</a></li>);
 
         return (
             <div>
                 <Header/>
-                <div className="container">
+                <div className='container'>
                     <div>
-                        <h2 className="font-weight-bold">Домашние работы</h2>
+                        <h2 className='font-weight-bold'>Домашние работы</h2>
                         <span>
-                            <span className="font-weight-bold">по курсу </span>
-                            <a className="btn-link" href={'/student/' + params.studentId + '/course/' + params.courseId}>#{params.courseId}</a>
+                            <span className='font-weight-bold'>по курсу </span>
+                            <a className='btn-link' href={'/student/' + params.studentId + '/course/' + params.courseId}>#{params.courseId}</a>
                         </span>
                     </div>
 
-                    <div className="pt-3">
-                        <table className="table small-font">
-                            <thead className="thead-light">
+                    <div className='pt-3'>
+                        <table className='table small-font'>
+                            <thead className='thead-light'>
                             <tr>
                                 <th>Тема</th>
                                 <th>Занятие</th>
@@ -70,7 +70,7 @@ class CourseHomework extends Component {
                             </tbody>
                         </table>
 
-                        <ul className="pagination">
+                        <ul className='pagination'>
                             {pagination}
                         </ul>
                     </div>

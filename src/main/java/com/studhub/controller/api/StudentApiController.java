@@ -44,9 +44,6 @@ public class StudentApiController {
     @Autowired
     private StatisticsService statisticsService;
 
-    @Autowired
-    private ExamSpecificationService examSpecificationService;
-
     @GetMapping(value = "/student/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get student by id")
     @ApiResponses(value = {
