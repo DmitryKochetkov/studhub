@@ -211,8 +211,7 @@ class Course extends Component {
                                 <span className="font-weight-bold">Последние тикеты </span>
                                 <div className="mt-3">
                                     <ul className="box">
-                                        <TicketTableRow ticket={ticket}/>
-                                        <TicketTableRow ticket={ticket}/>
+                                        {course.lastTickets.map((ticket) => {return <TicketTableRow ticket={ticket}/>})}
                                     </ul>
                                 </div>
                             </div>

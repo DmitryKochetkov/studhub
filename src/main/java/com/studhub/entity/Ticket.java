@@ -15,6 +15,7 @@ uniqueConstraints = {
 })
 @Data
 public class Ticket extends BaseEntity {
+    @Column
     private Integer index; // номер в курсе
 
     @Column
