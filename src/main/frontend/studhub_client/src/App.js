@@ -48,10 +48,7 @@ class App extends Component {
                     <Route exact path='/login'>
                         <Login/>
                     </Route>
-                    <Route exact path={'/user/:userId'}>
-                        <Header/>
-                        <UserProfile/>
-                    </Route>
+                    <Route exact path={'/user/:userId'} component={UserProfile}/>
                     <Route exact path='/admin/users'>
                         <Header/>
                         <AdminUsers/>
