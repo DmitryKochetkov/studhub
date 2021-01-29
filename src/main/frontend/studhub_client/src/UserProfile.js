@@ -84,7 +84,7 @@ class UserProfile extends Component {
                         {followersSpan}
                     </div>
 
-                    {user.roles.map(role => {return role.name}).includes('ROLE_STUDENT') ? <CoursesTable studentId={user.id}/> : null}
+                    {user.roles.map(role => {return role.name}).includes('ROLE_STUDENT') ? <CoursesTable courses={user.courses}/> : null}
                 </div>
             </div>
         );

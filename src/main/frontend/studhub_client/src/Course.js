@@ -25,19 +25,22 @@ class Course extends Component {
     }
 
     componentDidMount() {
-        fetch('/api/student/2/course/1')
+        const {studentId, courseId} = this.props.match.params;
+        const base = '/api/student/' + studentId + '/course/' + courseId;
+
+        fetch(base)
             .then((res) => res.json())
             .then(
-                (result) => {this.setState({course: result})}
+                (result) => {this.setState({course: result});}
             );
 
-        fetch('/api/student/2/course/1/homework-statistics?businessPeriod=MONTH')
+        fetch(base + '/homework-statistics?businessPeriod=MONTH')
             .then((res) => res.json())
             .then(
                 (result) => {this.setState({course: this.state.course, homeworkStatistics: result});}
             );
 
-        fetch('/api/specification/4')
+        fetch('/api/specification/' + this.state.course.activeSpecificationId)
             .then((res) => res.json())
             .then(
                 (result) => {
@@ -49,7 +52,7 @@ class Course extends Component {
                 }
             );
 
-        fetch('/api/student/2/course/1/specification-statistics')
+        fetch(base + '/specification-statistics/')
             .then((res) => res.json())
             .then(
                 (result) => {

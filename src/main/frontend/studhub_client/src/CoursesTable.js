@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Moment from "react-moment";
+import App from "./App";
 
 class CoursesTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            courses: []
+            courses: props.courses
         };
     }
+
+    courseStatusUI = App.courseStatusUI;
 
     render() {
         const {courses} = this.state;
