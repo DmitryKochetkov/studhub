@@ -32,13 +32,13 @@ class Course extends Component {
             .then((res) => res.json())
             .then(
                 (result) => {this.setState({course: result});}
-            );
+            ).then(() =>
 
         fetch(base + '/homework-statistics?businessPeriod=MONTH')
             .then((res) => res.json())
             .then(
                 (result) => {this.setState({course: this.state.course, homeworkStatistics: result});}
-            );
+            )).then(() =>
 
         fetch('/api/specification/' + this.state.course.activeSpecificationId)
             .then((res) => res.json())
@@ -50,7 +50,7 @@ class Course extends Component {
                         specification: result
                     });
                 }
-            );
+            ).then(() =>
 
         fetch(base + '/specification-statistics/')
             .then((res) => res.json())
@@ -73,7 +73,8 @@ class Course extends Component {
                         hasError: true
                     })
                 }
-            );
+            )
+            ));
     }
 
     courseStatusUI = App.courseStatusUI;
