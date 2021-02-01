@@ -23,7 +23,8 @@ INSERT INTO studhub.public.users (id, created, last_modified, first_name, last_n
 (14, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Robert', 'Shaw', '1234', 'ENABLED', 'robert_shaw');
 
 INSERT INTO students (id) VALUES
-(2);
+(2),
+(14);
 
 INSERT INTO studhub.public.user_roles (user_id, role_id) VALUES
 (1, 1),
@@ -41,7 +42,8 @@ INSERT INTO studhub.public.user_roles (user_id, role_id) VALUES
 (11, 1),
 (12, 1),
 (13, 1),
-(14, 1);
+(14, 1),
+(14, 2);
 
 INSERT INTO studhub.public.subjects (id, created, last_modified, title) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'Программирование на С++'),
@@ -75,8 +77,9 @@ INSERT INTO studhub.public.followers (user_id, follower_id) VALUES
 (2, 13),
 (2, 14);
 
-INSERT INTO studhub.public.courses (id, created, last_modified, course_status, course_type, student_id, active_specification_id) VALUES
-(1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ACTIVE', 5, 2, 4);
+INSERT INTO studhub.public.courses (id, created, last_modified, course_status, subject, student_id, active_specification_id) VALUES
+(1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ACTIVE', 5, 2, 4),
+(2, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ACTIVE', 5, 14, 4);
 
 INSERT INTO studhub.public.lessons (id, created, last_modified, start_date_time, status, topic, course_id) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'SCHEDULED', 'Topic 1', 1);

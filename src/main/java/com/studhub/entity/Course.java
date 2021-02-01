@@ -16,7 +16,7 @@ public class Course extends BaseEntity {
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "course_type", referencedColumnName = "id", nullable = false, updatable = false)
+    @JoinColumn(name = "subject", referencedColumnName = "id", nullable = false, updatable = false)
     private Subject subject;
 
     @Enumerated(EnumType.STRING)
