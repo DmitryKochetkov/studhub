@@ -25,8 +25,8 @@ class Course extends Component {
     }
 
     componentDidMount() {
-        const {studentId, courseId} = this.props.match.params;
-        const base = '/api/student/' + studentId + '/course/' + courseId;
+        const {courseId} = this.props.match.params;
+        const base = '/api/course/' + courseId;
 
         fetch(base)
             .then((res) => res.json())
@@ -74,13 +74,21 @@ class Course extends Component {
                     })
                 }
             )
-            ));
+            )).then(() => {
+
+        fetch('/api/user/' + this.state.course.studentId)
+           .then((res) => res.json())
+           .then(
+               (result) => {this.setState({user: result})}
+           )
+        });
     }
 
     courseStatusUI = App.courseStatusUI;
 
     async onPeriodChange(e) {
-        fetch('/api/student/2/course/1/homework-statistics?businessPeriod=' + document.getElementById('homework_stat_period').value)
+        const {courseId} = this.props.match.params;
+        fetch('/api/course/' + courseId + '/homework-statistics?businessPeriod=' + document.getElementById('homework_stat_period').value)
             .then((res) => res.json())
             .then(
                 (result) => {this.setState({course: this.state.course, homeworkStatistics: result})}
@@ -134,7 +142,7 @@ class Course extends Component {
                     <Header/>
                     <div className='container'>
                         <h2 className='font-weight-bold pb-3'>Курс #{course.id}: {course.subject.title}</h2>
-                        <div>Ученик: <a href={'/user/' + 2}>login</a></div>
+                        <div>Ученик: <a href={'/user/' + this.state.user.id}>{this.state.user.username}</a></div>
                         <div className='font-weight-bold'>Статус: {this.courseStatusUI[course.status]}</div>
 
                         <div className='row pt-3'>
@@ -173,12 +181,12 @@ class Course extends Component {
                         <div className='row'>
                             <div className={'text-center col'}>
                                 <a className='small-font'
-                                   href={'/student/' + this.props.match.params.studentId + '/course/' + this.props.match.params.courseId + '/homework'}>Все
+                                   href={'/course/' + this.props.match.params.courseId + '/homework'}>Все
                                     домашние задания</a>
                             </div>
                             <div className={'text-center col'}>
                                 <a className='small-font'
-                                   href={'/student/' + this.props.match.params.studentId + '/course/' + this.props.match.params.courseId + '/lessons'}>Все
+                                   href={'/course/' + this.props.match.params.courseId + '/lessons'}>Все
                                     занятия</a>
                             </div>
                         </div>

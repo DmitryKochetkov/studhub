@@ -16,7 +16,7 @@ class HomeworkProblems extends Component {
 
     componentDidMount() {
         const params = this.state.params;
-        fetch('/api/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + params.homeworkId + '/problems/' + params.problemNumber)
+        fetch('/api/course/' + params.courseId + '/homework/' + params.homeworkId + '/problems/' + params.problemNumber)
             .then((res) => res.json())
             .then((result) => {
                 this.setState({
@@ -51,7 +51,7 @@ class HomeworkProblems extends Component {
             };
             fetch('/api/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + params.homeworkId + '/problems/' + params.problemNumber + '/submit', requestOptions)
                 .then((response) => {
-                    if (response.status === 200) {
+                    if (response.ok) {
                         this.setState({success: true});
                     } else {
                         this.setState({success: false});
@@ -65,15 +65,15 @@ class HomeworkProblems extends Component {
     render() {
         const params = this.props.params;
         const {homework, problemInfo} = this.state;
-        if (homework === null || problemInfo === null)
-            return (<div>error</div>);
+        if (!this.state.problemInfo)
+            return (<div className="alert alert-danger">Ошибка загрузки.</div>);
 
         const problemButtons = [];
         for (let i = 1; i <= homework.totalProblemsCount; i++)
             problemButtons.push(
                 <li className='nav-item'>
                     <a className='nav-link btn btn-outline-primary'
-                       href={'/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + params.homeworkId + '/problems/' + i}>Задача {i}</a>
+                       href={'/course/' + params.courseId + '/homework/' + params.homeworkId + '/problems/' + i}>Задача {i}</a>
                 </li>);
 
         let problemInput;

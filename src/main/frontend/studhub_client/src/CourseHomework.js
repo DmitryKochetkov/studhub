@@ -13,7 +13,7 @@ class CourseHomework extends Component {
 
     componentDidMount() {
         const params = this.props.match.params;
-        fetch('/api/student/' + params.studentId + '/course/' + params.courseId + '/homework/')
+        fetch('/api/course/' + params.courseId + '/homework/')
             .then((res) => res.json())
             .then((result) => {
                 this.setState({
@@ -34,13 +34,13 @@ class CourseHomework extends Component {
             <td>{homework.lessonId}</td>
             <td><Moment format='DD.MM.YYYY HH:mm'>{homework.deadline}</Moment></td>
             <td>{homework.solvedProblemsCount}/{homework.totalProblemsCount}</td>
-            <td><a href={'/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + homework.id}>Подробнее</a></td>
+            <td><a href={'/course/' + params.courseId + '/homework/' + homework.id}>Подробнее</a></td>
         </tr>);
 
         const pagination = [];
         const x = Math.max(parseInt(courseHomeworkPage['number']) - 5, 1);
         for (let i = x; i < x + Math.min(10, courseHomeworkPage.totalPages); i++)
-            pagination.push(<li className='page-item'><a className='page-link' href={'/student/' + params.studentId + '/course/' + params.courseId + '/homework?page=' + i.valueOf()}>{i}</a></li>);
+            pagination.push(<li className='page-item'><a className='page-link' href={'/course/' + params.courseId + '/homework?page=' + i.valueOf()}>{i}</a></li>);
 
         return (
             <div>
@@ -50,7 +50,7 @@ class CourseHomework extends Component {
                         <h2 className='font-weight-bold'>Домашние работы</h2>
                         <span>
                             <span className='font-weight-bold'>по курсу </span>
-                            <a className='btn-link' href={'/student/' + params.studentId + '/course/' + params.courseId}>#{params.courseId}</a>
+                            <a className='btn-link' href={'/course/' + params.courseId}>#{params.courseId}</a>
                         </span>
                     </div>
 

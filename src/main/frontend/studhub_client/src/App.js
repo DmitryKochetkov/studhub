@@ -61,7 +61,7 @@ class App extends Component {
                         <Header />
                         <VerdictsInfo/>
                     </Route>
-                    <Route exact path='/student/:studentId/course/:courseId' component={Course}/>
+                    <Route exact path='/course/:courseId' component={Course}/>
                     <Route exact path='/admin/lessons/new' component={AdminCreateLesson}/>
                     <Route exact path='/admin/signup' component={AdminSignup}/>
                     <Route exact path='/about-courses'>
@@ -69,14 +69,14 @@ class App extends Component {
                         <AboutCourses/>
                     </Route>
 
-                    <Route exact path='/student/:studentId/course/:courseId/homework/' component={CourseHomework}/>
-                    <Route exact path='/student/:studentId/course/:courseId/homework/:homeworkId'
+                    <Route exact path='/course/:courseId/homework/' component={CourseHomework}/>
+                    <Route exact path='/course/:courseId/homework/:homeworkId'
                            render = {props => <Homework{...props} tab={'description'}/> }/>
 
-                    <Route exact path='/student/:studentId/course/:courseId/homework/:homeworkId/problems/:problemNumber'
+                    <Route exact path='/course/:courseId/homework/:homeworkId/problems/:problemNumber'
                            render = {props => <Homework{...props} tab={'problems'}/> }/>
 
-                    <Route exact path='/student/:studentId/course/:courseId/homework/:homeworkId/submissions'
+                    <Route exact path='/course/:courseId/homework/:homeworkId/submissions'
                            render = {props => <Homework{...props} tab={'submissions'}/> }/>
 
                     <Route exact path='/about-statistics' component={AboutStatistics}/>

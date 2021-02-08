@@ -21,7 +21,7 @@ class CoursesTable extends Component {
                 <td>{course.subject.title}</td>
                 <td>{this.courseStatusUI[course.status]}</td>
                 <td><Moment format='DD.MM.YYYY'>{course.created}</Moment></td>
-                <td><a href={'/student/' + 2 + '/course/' + course.id}>Перейти</a></td>
+                <td><a href={'/course/' + course.id}>Перейти</a></td>
             </tr>
         );
         return (
