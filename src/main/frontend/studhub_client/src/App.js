@@ -49,10 +49,7 @@ class App extends Component {
                         <Login/>
                     </Route>
                     <Route exact path={'/user/:userId'} component={UserProfile}/>
-                    <Route exact path='/admin/users'>
-                        <Header/>
-                        <AdminUsers/>
-                    </Route>
+                    <Route exact path='/admin/users' render={props => <AdminUsers{...props}/>}/>
                     <Route exact path='/admin/lessons'>
                         <Header/>
                         <AdminLessons/>
