@@ -1,30 +1,38 @@
 import React, {Component} from 'react';
 import App from "./App";
 import Header from "./Header";
+import ErrorPage from "./ErrorPage";
 
 class AdminUsers extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            usersPage: null
+            usersPage: null,
+            error: null
         };
     }
 
-    componentDidMount() {
-        document.title = 'StudHub: Пользователи';
-        fetch('/api/admin/users' + this.props.location.search)
-            .then((res) => res.json())
-            .then(
-                (result) => {
-                    this.setState({usersPage: result})
-                }
-            );
+    async componentDidMount() {
+        const response = await fetch('/api/admin/users' + this.props.location.search);
+        if (response.ok) {
+            const json = await response.json();
+            this.setState({usersPage: json});
+        }
+        else {
+            this.setState({error: response})
+        }
     }
 
     rolesUI = App.rolesUI;
 
     render() {
-        const usersPage = this.state.usersPage;
+        document.title = 'StudHub: Пользователи';
+        const {usersPage, error} = this.state;
+        if (error) {
+            console.log(error);
+            return <ErrorPage code={error.status} description={error.statusText}/>
+        }
+
         if (usersPage === null)
             return (<div>error</div>);
 

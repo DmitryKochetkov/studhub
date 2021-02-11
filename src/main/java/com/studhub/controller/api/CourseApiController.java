@@ -71,13 +71,15 @@ public class CourseApiController {
     public ResponseEntity<PageDto<HomeworkDto>> getAllHomeworkInCourse(
             @PathVariable Long courseId,
             @RequestParam(defaultValue = "1") Integer page) {
-        Course course = courseService.getById(courseId).orElseThrow(IllegalArgumentException::new);
-        if (course == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (page - 1 < 0)
+            throw new BadRequestException();
+        Course course = courseService.getById(courseId).orElseThrow(NotFoundException::new);
 
         //TODO: check authority
 
         Page<HomeworkDto> result = homeworkService.getAllHomeworkInCourse(course, page).map(HomeworkDto::new);
+        if (result.getTotalPages() < result.getNumber() + 1)
+            throw new BadRequestException();
         return ResponseEntity.ok(new PageDto<HomeworkDto>(result));
     }
 

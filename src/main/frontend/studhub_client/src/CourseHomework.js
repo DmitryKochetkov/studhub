@@ -2,29 +2,37 @@ import React, {Component} from 'react';
 import './App.css';
 import Header from './Header';
 import Moment from 'react-moment';
+import ErrorPage from "./ErrorPage";
 
 class CourseHomework extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            courseHomeworkPage: null
+            courseHomeworkPage: null,
+            error: null
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const params = this.props.match.params;
-        fetch('/api/course/' + params.courseId + '/homework/')
-            .then((res) => res.json())
-            .then((result) => {
-                this.setState({
-                    courseHomeworkPage: result
-                });
-            })
+        const response = await fetch('/api/course/' + params.courseId + '/homework' + this.props.location.search);
+        if (response.ok) {
+            const json = await response.json();
+            this.setState({courseHomeworkPage: json});
+        }
+        else {
+            this.setState({error: response})
+        }
     }
 
     render() {
         const params = this.props.match.params;
-        const {courseHomeworkPage} = this.state;
+        const {courseHomeworkPage, error} = this.state;
+
+        if (error) {
+            console.log(error);
+            return <ErrorPage code={error.status} description={error.statusText}/>
+        }
         if (courseHomeworkPage === null)
             return (<div>error</div>);
 
