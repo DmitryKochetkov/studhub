@@ -10,6 +10,7 @@ import moment from 'moment';
 import BarChart from 'recharts/lib/chart/BarChart';
 import SpecificationStatisticsTable from './SpecificationStatisticsTable';
 import ErrorPage from './ErrorPage';
+import TicketTableRow from "./TicketTableRow";
 
 class Course extends Component {
     constructor(props) {
@@ -137,6 +138,16 @@ class Course extends Component {
                 progressTable = <SpecificationStatisticsTable specification={specification} specificationStatistics={specificationStatistics}/>
             }
 
+            const ticket = {
+                index: 1,
+                title: 'First ticket',
+                created: '24.03.2020',
+                author: {
+                    id: 1,
+                    username: 'ivan'
+                }
+            };
+
             return (
                 <div>
                     <Header/>
@@ -207,11 +218,14 @@ class Course extends Component {
                                     </select>
                                 </div>
                             </div>
+
                             <div className='col'>
-                                <span>Средний балл ЕГЭ: </span>
-                                <span>нет данных </span>
-                                <FontAwesomeIcon icon={faQuestionCircle} data-toggle='tooltip' data-placement='top'
-                                                 title='Тестирования или домашние работы по полному варианту ЕГЭ еще не проводились.'/>
+                                <span className="font-weight-bold">Последние тикеты </span>
+                                <div className="mt-3">
+                                    <ul className="box">
+                                        {course.lastTickets.map((ticket) => {return <TicketTableRow ticket={ticket}/>})}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
 

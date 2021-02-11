@@ -190,3 +190,9 @@ INSERT INTO studhub.public.problem_codes (id, created, last_modified, specificat
 INSERT INTO studhub.public.problem_code_mapping (problem_id, problem_code_id) VALUES
 (8, 1),
 (8, 14);
+
+INSERT INTO studhub.public.tickets (id, created, last_modified, title, body, course_id, author_id, index) VALUES
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Материалы Полякова по 18 задаче', null, 1, 1, 1),
+(2, '2020-01-01 13:00:00', '2020-01-01 13:00:00', 'Не понимаю, как решить таблицу истинности', null, 1, 2, 2),
+(3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '?', null, 1, 1, 3),
+(4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '?', null, 1, 1, 4);
