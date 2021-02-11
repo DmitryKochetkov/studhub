@@ -1,26 +1,37 @@
 import React, {Component} from 'react';
 import App from './App';
 import Moment from 'react-moment';
+import Header from "./Header";
+import ErrorPage from "./ErrorPage";
 
 class AdminLessons extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lessonsPage: null
+            lessonsPage: null,
+            error: null
         };
     }
 
-    componentDidMount() {
-        fetch('/api/admin/lessons?page=1')
-            .then((res) => res.json())
-            .then(
-                (result) => {this.setState({lessonsPage: result})}
-                );
+    async componentDidMount() {
+        const response = await fetch('/api/admin/lessons' + this.props.location.search);
+        if (response.ok) {
+            const json = await response.json();
+            this.setState({lessonsPage: json});
+        }
+        else {
+            this.setState({error: response})
+        }
     }
 
     render() {
         document.title = 'StudHub: Уроки';
-        const {lessonsPage} = this.state;
+        const {lessonsPage, error} = this.state;
+
+        if (error) {
+            console.log(error);
+            return <ErrorPage code={error.status} description={error.statusText}/>
+        }
 
         try {
             const lessonsTable = lessonsPage.content.map((lesson) =>
@@ -41,33 +52,37 @@ class AdminLessons extends Component {
 
 
             return (
-                <div className='container'>
-                    <h1 className='font-weight-bold pb-3'>Уроки</h1>
-                    <div>
-                        <table className='table'>
-                            <thead className='thead-light'>
-                            <tr>
-                                <th>ID</th>
-                                <th>Дата</th>
-                                <th>Ученик</th>
-                                <th>Тема</th>
-                                <th>Статус</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                <div>
+                    <Header/>
+                    <div className='container'>
+                        <h1 className='font-weight-bold pb-3'>Уроки</h1>
+                        <div>
+                            <table className='table'>
+                                <thead className='thead-light'>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Дата</th>
+                                    <th>Ученик</th>
+                                    <th>Тема</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
                                 {lessonsTable}
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
 
-                        <ul className='pagination'>
-                            {pagination}
-                        </ul>
+                            <ul className='pagination'>
+                                {pagination}
+                            </ul>
+                        </div>
+
+                        {/*TODO: redirect to lesson page*/}
+                        <form action='/admin/lessons/new' method='get'>
+                            <button type='submit' className='btn btn-primary'>Создать урок</button>
+                        </form>
                     </div>
-
-                    <form action='/admin/lessons/new' method='get'>
-                        <button type='submit' className='btn btn-primary'>Создать урок</button>
-                    </form>
                 </div>
             );
         }

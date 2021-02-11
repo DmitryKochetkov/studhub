@@ -94,14 +94,14 @@ INSERT INTO studhub_test.public.followers (user_id, follower_id) VALUES
 (2, 13),
 (2, 14);
 
-INSERT INTO studhub_test.public.courses (id, created, last_modified, course_status, course_type, student_id, active_specification_id) VALUES
+INSERT INTO studhub_test.public.courses (id, created, last_modified, course_status, subject, student_id, active_specification_id) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'ACTIVE', 5, 2, 4);
 
 INSERT INTO studhub_test.public.lessons (id, created, last_modified, start_date_time, status, topic, course_id) VALUES
 (1, '2020-01-01 12:00:00', '2020-01-01 12:00:00', '2020-01-01 12:00:00', 'SCHEDULED', 'Topic 1', 1);
 
 INSERT INTO studhub_test.public.homework (id, created, last_modified, deadline, description, course_id, lesson_id) VALUES
-(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2021-02-01 12:00:00', 'Basics of linear algebra.', 1, 1),
+(1, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2023-02-01 12:00:00', 'Basics of linear algebra.', 1, 1),
 (2, '2019-02-07 12:00:00', '2019-02-07 12:00:00', '2020-02-07 12:00:00', 'Basics of linear algebra 2.', 1, 1),
 (3, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2020-07-14 12:00:00', 'Basics of linear algebra 3.', 1, 1),
 (4, '2020-01-01 13:00:00', '2020-01-01 13:00:00', '2020-10-21 12:00:00', 'Basics of linear algebra 4.', 1, 1),

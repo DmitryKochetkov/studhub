@@ -85,7 +85,7 @@ public class StudentApiControllerTests {
 
     @Test
     public void testGetCourse() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/student/2/course/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/course/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(10)))
                 .andExpect(jsonPath("$.studentId").value(2))
@@ -94,7 +94,7 @@ public class StudentApiControllerTests {
 
     @Test
     public void testGetAllHomeworkInCourse() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/student/2/course/1/homework"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/course/1/homework"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(5)))
                 .andExpect(jsonPath("$.hasNext").value(false))
@@ -105,7 +105,7 @@ public class StudentApiControllerTests {
 
     @Test
     public void testGetHomeworkById() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/student/2/course/1/homework/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/course/1/homework/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(10)))
                 .andExpect(jsonPath("$.id").value(1))
@@ -122,7 +122,7 @@ public class StudentApiControllerTests {
 
     @Test
     public void testGetProblemFromHomework() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/student/2/course/1/homework/1/problems/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/course/1/homework/1/problems/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(6)))
                 .andExpect(jsonPath("$.homeworkId").value(1))
@@ -136,7 +136,7 @@ public class StudentApiControllerTests {
 
     @Test
     public void testGetSubmissionsFromHomework() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/student/2/course/1/homework/1/submissions"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/course/1/homework/1/submissions"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].answer").exists())
                 .andExpect(jsonPath("$.content[0].verdict").exists())
