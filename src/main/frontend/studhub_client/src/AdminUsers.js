@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import App from "./App";
 import Header from "./Header";
 import ErrorPage from "./ErrorPage";
+import PaginationPanel from "./PaginationPanel";
 
 class AdminUsers extends Component {
     constructor(props) {
@@ -36,30 +37,25 @@ class AdminUsers extends Component {
         if (usersPage === null)
             return (<div>error</div>);
 
-        const userTable = usersPage.content.map((user) =>
-            <tr key={user.id}>
-                <td>{user.id}</td>
-                <td><a href={'/user/' + user.id}>{user.username}</a></td>
-                <td>{user.firstName + ' ' + user.lastName}</td>
-                <td>{user.roles.map((role) => this.rolesUI[role.name]).join(', ')}</td>
-                <td>{user.status}</td>
-            </tr>
-        );
-
-        const pagination = [];
-        const x = Math.max(parseInt(usersPage['number']) - 5, 1);
-        for (let i = x; i < x + Math.min(10, usersPage.totalPages); i++)
-            pagination.push(<li className='page-item'><a className='page-link' href={'/admin/users?page=' + i}>{i}</a>
-            </li>);
+        let userTable = <div>Нет зарегистрированных пользователей.</div>
+        if (usersPage.content.length !== 0) {
+            userTable = usersPage.content.map((user) =>
+                <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td><a href={'/user/' + user.id}>{user.username}</a></td>
+                    <td>{user.firstName + ' ' + user.lastName}</td>
+                    <td>{user.roles.map((role) => this.rolesUI[role.name]).join(', ')}</td>
+                    <td>{user.status}</td>
+                </tr>
+            );
+        }
 
         return (
             <div>
                 <Header/>
                 <div className='container'>
                     <h1 className='font-weight-bold pb-3'>Пользователи</h1>
-                    {/*<div className='table_empty_info' th:if='${!page.isHasPrevious() && page.getContent().isEmpty()}'>*/}
-                    {/*    Нет зарегистрированных пользователей.*/}
-                    {/*</div>*/}
+
                     <div className='users_table'>
                         <table className='table'>
                             <thead className='thead-light'>
@@ -76,9 +72,7 @@ class AdminUsers extends Component {
                             </tbody>
                         </table>
 
-                        <ul className='pagination'>
-                            {pagination}
-                        </ul>
+                        <PaginationPanel currentPage={usersPage.number} totalPages={usersPage.totalPages} path={this.props.location.pathname}/>
                     </div>
 
                     <form action='/admin/signup' method='get'>
