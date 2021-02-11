@@ -27,12 +27,15 @@ public class StatisticsService {
      */
     public CourseStatisticsBySpecificationDto getCourseStatisticsBySpecification(Course course, Specification specification) {
         Session session = entityManager.unwrap(Session.class);
-        Query query = session.createSQLQuery("select problem_codes.id, description, index_in_specification, specification_id, count(verdict_id) as all_submissions_cnt, count(case when verdict_id = 1 then 1 else null end) as correct_submissions_cnt from problem_codes\n" +
+        Query query = session.createSQLQuery("select problem_codes.id, problem_codes.description, index_in_specification, specification_id, count(verdict_id) as all_submissions_cnt, count(case when verdict_id = 1 then 1 else null end) as correct_submissions_cnt from problem_codes\n" +
                 "    full outer join problem_code_mapping pcm on problem_codes.id = pcm.problem_code_id\n" +
                 "    left join homework_problems hp on pcm.problem_id = hp.problem_id\n" +
+                "    left join homework h on hp.homework_id = h.id\n" +
+                "    left join courses c on h.course_id = c.id" +
                 "    left join submissions s on hp.id = s.homework_problem_id\n" +
-                "where specification_id in (select active_specification_id from courses where id = :course_id)\n" +
-                "group by description, index_in_specification, specification_id, problem_codes.id\n" +
+                "where specification_id = c.active_specification_id\n" +
+                "and course_id = :course_id\n" +
+                "group by problem_codes.description, index_in_specification, specification_id, problem_codes.id\n" +
                 "order by index_in_specification;")
                 .unwrap(org.hibernate.query.Query.class)
                 .setResultTransformer(new ResultTransformer() {

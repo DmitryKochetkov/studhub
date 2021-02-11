@@ -15,7 +15,7 @@ class HomeworkSubmissions extends Component {
 
     componentDidMount() {
         const params = this.props.params;
-        fetch('/api/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + params.homeworkId + '/submissions')
+        fetch('/api/course/' + params.courseId + '/homework/' + params.homeworkId + '/submissions')
             .then((res) => res.json())
             .then((result) => {
                 this.setState({
@@ -29,8 +29,8 @@ class HomeworkSubmissions extends Component {
         const params = this.props.params;
         const {homework, submissionsPage} = this.state;
 
-        if (submissionsPage === null)
-            return <div>error</div>;
+        if (!this.state.submissionsPage)
+            return <div className="alert alert-danger">Ошибка загрузки.</div>;
 
         const submissions = submissionsPage.content.map((submission) => {
             let verdictStyle;

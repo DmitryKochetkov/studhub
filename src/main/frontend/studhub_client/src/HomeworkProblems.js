@@ -16,7 +16,7 @@ class HomeworkProblems extends Component {
 
     componentDidMount() {
         const params = this.state.params;
-        fetch('/api/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + params.homeworkId + '/problems/' + params.problemNumber)
+        fetch('/api/course/' + params.courseId + '/homework/' + params.homeworkId + '/problems/' + params.problemNumber)
             .then((res) => res.json())
             .then((result) => {
                 this.setState({
@@ -51,7 +51,7 @@ class HomeworkProblems extends Component {
             };
             fetch('/api/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + params.homeworkId + '/problems/' + params.problemNumber + '/submit', requestOptions)
                 .then((response) => {
-                    if (response.status === 200) {
+                    if (response.ok) {
                         this.setState({success: true});
                     } else {
                         this.setState({success: false});
@@ -65,15 +65,17 @@ class HomeworkProblems extends Component {
     render() {
         const params = this.props.params;
         const {homework, problemInfo} = this.state;
-        if (homework === null || problemInfo === null)
-            return (<div>error</div>);
+        if (!this.state.problemInfo)
+            return (<div className="alert alert-danger">Ошибка загрузки.</div>);
+
+        const problemSubmitDisabled = (problemInfo.usedAttempts >= problemInfo.maxAttempts) || (new Date(homework.deadline) <= new Date());
 
         const problemButtons = [];
         for (let i = 1; i <= homework.totalProblemsCount; i++)
             problemButtons.push(
                 <li className='nav-item'>
                     <a className='nav-link btn btn-outline-primary'
-                       href={'/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + params.homeworkId + '/problems/' + i}>Задача {i}</a>
+                       href={'/course/' + params.courseId + '/homework/' + params.homeworkId + '/problems/' + i}>Задача {i}</a>
                 </li>);
 
         let problemInput;
@@ -86,9 +88,9 @@ class HomeworkProblems extends Component {
                 <form autoComplete='off' className='p-2' onSubmit={this.submitProblem}>
                     <div>
                         <label htmlFor='answer' className='pr-2'>Ответ</label>
-                        <input type='text' id='answer' autoComplete='off' disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}/>
+                        <input type='text' id='answer' autoComplete='off' disabled={problemSubmitDisabled}/>
                         <button type='submit' className='btn btn-primary ml-2'
-                                disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}>Отправить</button>
+                                disabled={problemSubmitDisabled}>Отправить</button>
                     </div>
                 </form>
             </div>;
@@ -101,11 +103,11 @@ class HomeworkProblems extends Component {
                 <form autoComplete='off' className='p-2' onSubmit={this.submitProblem}>
                     {problemInfo.problem.answers.map((answer, index) => (<div>
                         <input type='radio' id={'radioButtonAnswer' + index} name={'answer'} className='mr-2'
-                               disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}/>
+                               disabled={problemSubmitDisabled}/>
                         <label htmlFor={'radioButtonAnswer' + index} id={'answer' + index}>{answer}</label>
                     </div>))}
                     <button type='submit' className='btn btn-primary ml-2'
-                            disabled={problemInfo.usedAttempts >= problemInfo.maxAttempts}>Отправить</button>
+                            disabled={problemSubmitDisabled}>Отправить</button>
                 </form>
             </div>;
         }

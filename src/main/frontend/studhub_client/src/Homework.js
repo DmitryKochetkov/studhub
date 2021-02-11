@@ -16,7 +16,7 @@ class Homework extends Component {
 
     componentDidMount() {
         const params = this.props.match.params;
-        fetch('/api/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + params.homeworkId)
+        fetch('/api/course/' + params.courseId + '/homework/' + params.homeworkId)
             .then((res) => res.json())
             .then((result) => {
                 this.setState({
@@ -56,11 +56,11 @@ class Homework extends Component {
                         <span>
                             <span className='font-weight-bold'>
                                 <span>по курсу </span>
-                                <a className='btn-link' href={'/student/' + params.studentId + '/course/' + params.courseId}>#{params.courseId}</a>
+                                <a className='btn-link' href={'/course/' + params.courseId}>#{params.courseId}</a>
                             </span>
 
                             <span className='font-weight-bold'> к уроку </span>
-                            <a className='btn-link' href={'/student/' + params.studentId + '/course/' + params.courseId + '/lesson/' + homework.lessonId}>#{homework.lessonId}</a>
+                            <a className='btn-link' href={'/course/' + params.courseId + '/lesson/' + homework.lessonId}>#{homework.lessonId}</a>
                         </span>
                     </div>
 
@@ -72,13 +72,13 @@ class Homework extends Component {
                     <div className='pt-3 pb-2'>
                         <ul className='nav nav-tabs' id='homework' role='tablist'>
                             <li className='nav-item'>
-                                <a className='nav-link' href={'/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + homework.id}>Описание</a>
+                                <a className='nav-link' href={'/course/' + params.courseId + '/homework/' + homework.id}>Описание</a>
                             </li>
                             <li className='nav-item'>
-                                <a className='nav-link' href={'/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + homework.id + '/problems/' + this.state.problemNumber}>Задачи</a>
+                                <a className='nav-link' href={'/course/' + params.courseId + '/homework/' + homework.id + '/problems/' + this.state.problemNumber}>Задачи</a>
                             </li>
                             <li className='nav-item'>
-                                <a className='nav-link' href={'/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + homework.id + '/submissions'}>Посылки</a>
+                                <a className='nav-link' href={'/course/' + params.courseId + '/homework/' + homework.id + '/submissions'}>Посылки</a>
                             </li>
                         </ul>
                     </div>
