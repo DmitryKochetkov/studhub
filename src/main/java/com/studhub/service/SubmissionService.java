@@ -32,7 +32,7 @@ public class SubmissionService {
     private HomeworkProblemRepository homeworkProblemRepository;
 
     public Page<Submission> getByHomeworkId(Long homeworkId, Integer page) {
-        Page<Submission> result = submissionRepository.findByHomeworkProblem_Homework_Id(homeworkId, PageRequest.of(page-1, 10, Sort.by("id").ascending()));
+        Page<Submission> result = submissionRepository.findByHomeworkProblem_Homework_Id(homeworkId, PageRequest.of(page-1, 10, Sort.by("created").descending()));
         return result;
     }
 
