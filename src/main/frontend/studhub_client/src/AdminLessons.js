@@ -3,6 +3,7 @@ import App from './App';
 import Moment from 'react-moment';
 import Header from "./Header";
 import ErrorPage from "./ErrorPage";
+import PaginationPanel from "./PaginationPanel";
 
 class AdminLessons extends Component {
     constructor(props) {
@@ -45,12 +46,6 @@ class AdminLessons extends Component {
                 </tr>
             );
 
-            const pagination = [];
-            const x = Math.max(parseInt(lessonsPage['number']) - 5, 1);
-            for (let i = x; i < x + Math.min(10, lessonsPage.totalPages); i++)
-                pagination.push(<li className='page-item'><a className='page-link' href={'/admin/users?page=' + i}>{i}</a></li>);
-
-
             return (
                 <div>
                     <Header/>
@@ -73,9 +68,7 @@ class AdminLessons extends Component {
                                 </tbody>
                             </table>
 
-                            <ul className='pagination'>
-                                {pagination}
-                            </ul>
+                            <PaginationPanel currentPage={lessonsPage.number} totalPages={lessonsPage.totalPages} path={this.props.location.pathname}/>
                         </div>
 
                         {/*TODO: redirect to lesson page*/}

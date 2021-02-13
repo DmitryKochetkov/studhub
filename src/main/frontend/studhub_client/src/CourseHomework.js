@@ -3,6 +3,7 @@ import './App.css';
 import Header from './Header';
 import Moment from 'react-moment';
 import ErrorPage from "./ErrorPage";
+import PaginationPanel from "./PaginationPanel";
 
 class CourseHomework extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class CourseHomework extends Component {
             this.setState({courseHomeworkPage: json});
         }
         else {
-            this.setState({error: response})
+            this.setState({error: response});
         }
     }
 
@@ -45,11 +46,6 @@ class CourseHomework extends Component {
             <td><a href={'/course/' + params.courseId + '/homework/' + homework.id}>Подробнее</a></td>
         </tr>);
 
-        const pagination = [];
-        const x = Math.max(parseInt(courseHomeworkPage['number']) - 5, 1);
-        for (let i = x; i < x + Math.min(10, courseHomeworkPage.totalPages); i++)
-            pagination.push(<li className='page-item'><a className='page-link' href={'/course/' + params.courseId + '/homework?page=' + i.valueOf()}>{i}</a></li>);
-
         return (
             <div>
                 <Header/>
@@ -65,22 +61,20 @@ class CourseHomework extends Component {
                     <div className='pt-3'>
                         <table className='table small-font'>
                             <thead className='thead-light'>
-                            <tr>
-                                <th>Тема</th>
-                                <th>Занятие</th>
-                                <th>Срок сдачи</th>
-                                <th>Прогресс</th>
-                                <th></th>
-                            </tr>
+                                <tr>
+                                    <th>Тема</th>
+                                    <th>Занятие</th>
+                                    <th>Срок сдачи</th>
+                                    <th>Прогресс</th>
+                                    <th></th>
+                                </tr>
                             </thead>
-                            <tbody>
-                            {homeworkList}
-                            </tbody>
+                                <tbody>
+                                {homeworkList}
+                                </tbody>
                         </table>
 
-                        <ul className='pagination'>
-                            {pagination}
-                        </ul>
+                        <PaginationPanel currentPage={courseHomeworkPage.number} totalPages={courseHomeworkPage.totalPages} path={this.props.location.pathname}/>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import com.studhub.payload.SubmissionRequest;
 import com.studhub.repository.HomeworkProblemRepository;
 import com.studhub.repository.SubmissionRepository;
 import com.studhub.repository.VerdictRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Slf4j
 public class SubmissionService {
     @Autowired
     private TaskExecutor taskExecutor;
@@ -39,11 +41,15 @@ public class SubmissionService {
                 submissionRequest.getHomeworkId(),
                 submissionRequest.getProblemNumber()).orElseThrow(IllegalArgumentException::new);
 
-        if (homeworkProblem.getHomework().getDeadline().isBefore(LocalDateTime.now()))
+        if (homeworkProblem.getHomework().getDeadline().isBefore(LocalDateTime.now())) {
+            log.info("Submission was not created: deadline passed");
             throw new IllegalArgumentException();
+        }
 
-        if (homeworkProblem.getSubmissions().size() >= homeworkProblem.getMaxAttempts())
+        if (homeworkProblem.getSubmissions().size() >= homeworkProblem.getMaxAttempts()) {
+            log.info("Submission was not created: attempts used");
             throw new IllegalArgumentException();
+        }
 
         Submission submission = new Submission();
         submission.setAnswer(submissionRequest.getAnswer());
@@ -68,11 +74,11 @@ public class SubmissionService {
 
             verdict = verdictRepository.findByCode(code);
             finalSubmission.setVerdict(verdict);
-            submissionRepository.save(finalSubmission);
         } finally {
             finalSubmission.setVerdict(verdictRepository.findByCode("ERR"));
         }
-        return finalSubmission;
+
+        return submissionRepository.save(finalSubmission);
     }
 
     public List<Submission> getByCourse(Course course) {
