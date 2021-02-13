@@ -4,13 +4,14 @@ import com.studhub.dto.*;
 import com.studhub.entity.Course;
 import com.studhub.entity.Homework;
 import com.studhub.entity.Specification;
-import com.studhub.entity.Submission;
 import com.studhub.enums.BusinessPeriod;
 import com.studhub.exception.BadRequestException;
 import com.studhub.exception.NotAcceptableException;
 import com.studhub.exception.NotFoundException;
-import com.studhub.payload.SubmissionRequest;
-import com.studhub.service.*;
+import com.studhub.service.CourseService;
+import com.studhub.service.HomeworkService;
+import com.studhub.service.StatisticsService;
+import com.studhub.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -37,9 +38,6 @@ public class CourseApiController {
 
     @Autowired
     private HomeworkService homeworkService;
-
-    @Autowired
-    private SubmissionService submissionService;
 
     @Autowired
     private StatisticsService statisticsService;
@@ -122,52 +120,6 @@ public class CourseApiController {
 
         HomeworkProblemDto result = new HomeworkProblemDto(homeworkService.getProblemInHomework(homeworkId, problemNumber).orElseThrow(NotFoundException::new));
         return ResponseEntity.ok(result);
-    }
-
-    @GetMapping(value = "/course/{courseId}/homework/{homeworkId}/submissions", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Get submissions in homework")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Not Found")
-    }
-    )
-    public ResponseEntity<PageDto<SubmissionDto>> getSubmissionsFromHomework(
-            @PathVariable Long courseId,
-            @PathVariable Long homeworkId,
-            @RequestParam(defaultValue = "1") Integer page) {
-        Course course = courseService.getById(courseId).orElseThrow(IllegalArgumentException::new);
-        if (course == null)
-            throw new NotFoundException();
-
-        Page<SubmissionDto> result = submissionService.getByHomeworkId(homeworkId, page).map(SubmissionDto::new);
-        return ResponseEntity.ok(new PageDto<>(result));
-    }
-
-    @PostMapping(value = "/course/{courseId}/homework/{homeworkId}/problems/{problemNumber}/submit", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Submit problem in homework")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 406, message = "Not Acceptable")
-    }
-    )
-    public ResponseEntity<SubmissionDto> submitProblemInHomework(
-            @PathVariable Long courseId,
-            @PathVariable Long homeworkId,
-            @PathVariable Integer problemNumber,
-            @RequestBody SubmissionRequest submissionRequest) {
-        Course course = courseService.getById(courseId).orElseThrow(IllegalArgumentException::new);
-        if (course == null)
-            throw new NotFoundException();
-
-        submissionRequest.setHomeworkId(homeworkId);
-        submissionRequest.setProblemNumber(problemNumber);
-        try {
-            Submission created = submissionService.createSubmission(submissionRequest);
-            return new ResponseEntity<SubmissionDto>(new SubmissionDto(created), HttpStatus.CREATED);
-        }
-        catch (IllegalArgumentException e) {
-            throw new NotAcceptableException();
-        }
     }
 
     @GetMapping(value = "/course/{courseId}/homework-statistics", produces = MediaType.APPLICATION_JSON_VALUE)
