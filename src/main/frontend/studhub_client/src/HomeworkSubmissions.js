@@ -3,6 +3,7 @@ import './App.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faQuestionCircle} from '@fortawesome/free-solid-svg-icons';
 import Moment from 'react-moment';
+import PaginationPanel from "./PaginationPanel";
 
 class HomeworkSubmissions extends Component {
     constructor(props) {
@@ -62,7 +63,7 @@ class HomeworkSubmissions extends Component {
             <h3 className='font-weight-bold pb-2'>Посылки</h3>
             <p>Если указано, что ваше решение тестируется, для обновления результатов необходимо обновить страницу.</p>
 
-            <table className='table'>
+            <table className='table table-bordered small-font'>
                 <thead className='thead-light'>
                     <tr>
                         <th>ID</th>
@@ -81,6 +82,8 @@ class HomeworkSubmissions extends Component {
                 {submissions}
                 </tbody>
             </table>
+
+            <PaginationPanel currentPage={submissionsPage.number} totalPages={submissionsPage.totalPages} path={"/"} />
         </div>
     }
 };

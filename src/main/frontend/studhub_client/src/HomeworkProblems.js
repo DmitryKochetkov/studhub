@@ -49,7 +49,7 @@ class HomeworkProblems extends Component {
                     answer: answer
                 })
             };
-            fetch('/api/student/' + params.studentId + '/course/' + params.courseId + '/homework/' + params.homeworkId + '/problems/' + params.problemNumber + '/submit', requestOptions)
+            fetch('/api/course/' + params.courseId + '/homework/' + params.homeworkId + '/problems/' + params.problemNumber + '/submit', requestOptions)
                 .then((response) => {
                     if (response.ok) {
                         this.setState({success: true});
@@ -125,7 +125,9 @@ class HomeworkProblems extends Component {
                 {problemInput}
 
                 <div className='small-font font-weight-bold'>Всего попыток: {problemInfo.maxAttempts}</div>
-                <div className='small-font font-weight-bold'>Осталось попыток: {problemInfo.maxAttempts - problemInfo.usedAttempts}</div>
+                <div className='small-font font-weight-bold' style={problemInfo.maxAttempts - problemInfo.usedAttempts > 0 ? {color: "black"} : {color: "red"}}>
+                    Осталось попыток: {problemInfo.maxAttempts - problemInfo.usedAttempts}
+                </div>
             </div>
         </div>
     }
