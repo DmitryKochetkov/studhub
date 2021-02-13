@@ -58,7 +58,32 @@ public class SubmissionService {
         submission.setLastModified(LocalDateTime.now());
         submission = submissionRepository.save(submission);
 
-        Submission finalSubmission = submission; //???
+        taskExecutor.execute(new Evaluator(submission.getId(), submissionRepository, verdictRepository));
+
+        return submission;
+    }
+
+    public List<Submission> getByCourse(Course course) {
+        return submissionRepository.findAllByHomeworkProblem_Homework_Course(course);
+    }
+}
+
+@Slf4j
+class Evaluator implements Runnable {
+    Long submissionId;
+
+    private SubmissionRepository submissionRepository;
+    private VerdictRepository verdictRepository;
+
+    public Evaluator(Long submissionId, SubmissionRepository submissionRepository, VerdictRepository verdictRepository) {
+        this.submissionId = submissionId;
+        this.submissionRepository = submissionRepository;
+        this.verdictRepository = verdictRepository;
+    }
+
+    @Override
+    public void run() {
+        Submission finalSubmission = submissionRepository.findById(submissionId).orElseThrow(); //???
         Verdict verdict = null;
         String code = null;
         try {
@@ -74,18 +99,14 @@ public class SubmissionService {
 
             verdict = verdictRepository.findByCode(code);
             finalSubmission.setVerdict(verdict);
-        } finally {
-            finalSubmission.setVerdict(verdictRepository.findByCode("ERR"));
+        } catch (RuntimeException e) {
+            log.info("Error while evaluating submission");
+            finalSubmission.setVerdict(verdictRepository.findByCode("SE"));
         }
 
-        return submissionRepository.save(finalSubmission);
-    }
+        if (verdict == null)
+            finalSubmission.setVerdict(verdictRepository.findByCode("SE"));
 
-    public List<Submission> getByCourse(Course course) {
-        return submissionRepository.findAllByHomeworkProblem_Homework_Course(course);
+        submissionRepository.save(finalSubmission);
     }
-
-//    public List<Submission> getAllByCourseAndProblemCode(Course course, ProblemCode problemCode) {
-//        submissionRepository.findAllByCourseAndProblemCode(course, problemCode);
-//    }
 }
