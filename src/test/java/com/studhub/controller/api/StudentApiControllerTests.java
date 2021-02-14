@@ -133,15 +133,4 @@ public class StudentApiControllerTests {
                 .andExpect(jsonPath("$.problem.type").exists())
                 .andExpect(jsonPath("$.problem.formulation").exists());
     }
-
-    @Test
-    public void testGetSubmissionsFromHomework() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/course/1/homework/1/submissions"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content[0].answer").exists())
-                .andExpect(jsonPath("$.content[0].verdict").exists())
-                .andExpect(jsonPath("$.content[0].homeworkId").exists())
-                .andExpect(jsonPath("$.content[0].problemId").exists());
-    }
-
 }

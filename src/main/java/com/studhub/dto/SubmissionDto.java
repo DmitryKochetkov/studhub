@@ -1,5 +1,6 @@
 package com.studhub.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.studhub.entity.Submission;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,13 +10,13 @@ import lombok.NoArgsConstructor;
 public class SubmissionDto extends BaseDto {
     private String answer;
     private String verdict;
-    private Long homeworkId;
-    private Long problemId;
+
+    @JsonProperty("homeworkProblem")
+    private HomeworkProblemDto homeworkProblemDto;
 
     public SubmissionDto(Submission submission) {
         super(submission);
-        this.homeworkId = submission.getHomeworkProblem().getHomework().getId();
-        this.problemId = submission.getHomeworkProblem().getProblem().getId();
+        this.homeworkProblemDto = new HomeworkProblemDto(submission.getHomeworkProblem());
         this.answer = submission.getAnswer();
         if (submission.getVerdict() != null)
             this.verdict = submission.getVerdict().getCode();

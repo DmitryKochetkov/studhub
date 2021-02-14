@@ -53,7 +53,7 @@ class HomeworkSubmissions extends Component {
                 <tr>
                     <td>{submission.id}</td>
                     <td><Moment format='DD.MM.YYYY HH:mm:ss'>{submission.created}</Moment></td>
-                    <td>{submission.problemId}</td>
+                    <td><a href={'/course/1/homework/1/problems/' + submission.homeworkProblem.number}>Задача {submission.homeworkProblem.number}</a></td>
                     <td>{submission.answer}</td>
                     <td style={verdictStyle}>{submission.verdict ? submission.verdict : 'Тестируется...'}</td>
                 </tr>
