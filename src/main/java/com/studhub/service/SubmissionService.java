@@ -53,6 +53,7 @@ public class SubmissionService {
         submission.setCreated(LocalDateTime.now());
         submission.setLastModified(LocalDateTime.now());
         submission = submissionRepository.save(submission);
+        log.info("Created " + submission.toString());
 
         taskExecutor.execute(new Evaluator(submission.getId(), submissionRepository, verdictRepository));
 
@@ -96,13 +97,13 @@ class Evaluator implements Runnable {
             verdict = verdictRepository.findByCode(code);
             finalSubmission.setVerdict(verdict);
         } catch (RuntimeException e) {
-            log.info("Error while evaluating submission");
             finalSubmission.setVerdict(verdictRepository.findByCode("SE"));
         }
 
         if (verdict == null)
             finalSubmission.setVerdict(verdictRepository.findByCode("SE"));
 
+        log.info(finalSubmission.toString() + " evaluated with verdict " + verdict.toString());
         submissionRepository.save(finalSubmission);
     }
 }
