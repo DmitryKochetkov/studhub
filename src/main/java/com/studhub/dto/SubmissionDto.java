@@ -10,14 +10,12 @@ import lombok.NoArgsConstructor;
 public class SubmissionDto extends BaseDto {
     private String answer;
     private String verdict;
-    private Long homeworkId;
 
     @JsonProperty("homeworkProblem")
     private HomeworkProblemDto homeworkProblemDto;
 
     public SubmissionDto(Submission submission) {
         super(submission);
-        this.homeworkId = submission.getHomeworkProblem().getHomework().getId();
         this.homeworkProblemDto = new HomeworkProblemDto(submission.getHomeworkProblem());
         this.answer = submission.getAnswer();
         if (submission.getVerdict() != null)

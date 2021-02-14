@@ -46,20 +46,6 @@ public class SubmissionApiControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].answer").exists())
                 .andExpect(jsonPath("$.content[0].verdict").exists())
-                .andExpect(jsonPath("$.content[0].homeworkId").exists())
-                .andExpect(jsonPath("$.content[0].problemId").exists());
+                .andExpect(jsonPath("$.content[0].homeworkProblem").exists());
     }
-
-//    @Test
-//    public void testPostSubmitProblemFromHomework() throws Exception {
-//        JSONObject requestBody = new JSONObject();
-//
-//        mockMvc.perform(
-//                MockMvcRequestBuilders
-//                    .post("/api/course/1/homework/1/problem/1")
-//                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-//        )
-//                .andExpect(status().isCreated());
-//    }
-
 }
