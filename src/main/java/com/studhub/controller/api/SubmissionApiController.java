@@ -3,10 +3,12 @@ package com.studhub.controller.api;
 import com.studhub.dto.PageDto;
 import com.studhub.dto.SubmissionDto;
 import com.studhub.entity.Course;
+import com.studhub.entity.HomeworkProblem;
 import com.studhub.entity.Submission;
 import com.studhub.exception.NotAcceptableException;
 import com.studhub.exception.NotFoundException;
 import com.studhub.payload.SubmissionRequest;
+import com.studhub.repository.HomeworkProblemRepository;
 import com.studhub.service.CourseService;
 import com.studhub.service.SubmissionService;
 import io.swagger.annotations.Api;
@@ -29,6 +31,9 @@ public class SubmissionApiController {
 
     @Autowired
     private SubmissionService submissionService;
+
+    @Autowired
+    private HomeworkProblemRepository homeworkProblemRepository;
 
     @GetMapping(value = "/course/{courseId}/homework/{homeworkId}/submissions", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get submissions in homework")
@@ -53,6 +58,7 @@ public class SubmissionApiController {
     @ApiOperation(value = "Submit problem in homework")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 406, message = "Not Acceptable")
     }
     )
@@ -65,10 +71,10 @@ public class SubmissionApiController {
         if (course == null)
             throw new NotFoundException();
 
-        submissionRequest.setHomeworkId(homeworkId);
-        submissionRequest.setProblemNumber(problemNumber);
+        HomeworkProblem homeworkProblem = homeworkProblemRepository.findByHomework_IdAndNumberInHomework(homeworkId, problemNumber).orElseThrow(NotFoundException::new);
+
         try {
-            Submission created = submissionService.createSubmission(submissionRequest);
+            Submission created = submissionService.createSubmission(homeworkProblem, submissionRequest);
             return new ResponseEntity<SubmissionDto>(new SubmissionDto(created), HttpStatus.CREATED);
         }
         catch (IllegalArgumentException e) {

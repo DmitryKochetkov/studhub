@@ -36,11 +36,7 @@ public class SubmissionService {
         return result;
     }
 
-    public Submission createSubmission(SubmissionRequest submissionRequest) {
-        HomeworkProblem homeworkProblem = homeworkProblemRepository.findByHomework_IdAndNumberInHomework(
-                submissionRequest.getHomeworkId(),
-                submissionRequest.getProblemNumber()).orElseThrow(IllegalArgumentException::new);
-
+    public Submission createSubmission(HomeworkProblem homeworkProblem, SubmissionRequest submissionRequest) {
         if (homeworkProblem.getHomework().getDeadline().isBefore(LocalDateTime.now())) {
             log.info("Submission was not created: deadline passed");
             throw new IllegalArgumentException();
