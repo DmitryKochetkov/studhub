@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from './Header';
 
 class AboutStatistics extends Component {
     constructor(props) {
@@ -12,8 +11,7 @@ class AboutStatistics extends Component {
 
     render() {
         return (
-            <div>
-                <Header/>
+            <div className="page-container">
                 <div className='container'>
                     <h1 className='font-weight-bold pb-3'>О расчёте статистики</h1>
                     <p>Я, признаться честно, не в восторге от школьной пятибалльной системы оценивания, так как в контексте отдельно взятого ученика она слишком субъективна и не формирует значимой картины, по которой можно сделать вывод о его знаниях. Поэтому на данном сайте формируется подробная статистика по домашним работам ученика.</p>
