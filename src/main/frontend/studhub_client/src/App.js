@@ -5,18 +5,17 @@ import Mainpage from './Mainpage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './Login';
 import ErrorPage from './ErrorPage';
-import Header from './Header';
 import AdminUsers from './AdminUsers';
 import UserProfile from './UserProfile';
 import AboutCourses from './AboutCourses';
 import AdminLessons from './AdminLessons';
 import Course from './Course';
 import AdminCreateLesson from './AdminCreateLesson';
-import AdminSignup from './AdminSignup';
 import VerdictsInfo from './VerdictsInfo';
 import CourseHomework from './CourseHomework';
 import Homework from './Homework';
 import AboutStatistics from './AboutStatistics';
+import PageWrapper from "./PageWrapper";
 
 class App extends Component {
     constructor(props) {
@@ -41,39 +40,37 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route exact path='/'>
-                        <Header/>
-                        <Mainpage/>
-                    </Route>
+                    <Route exact path='/' render={props => <PageWrapper{...props} child={Mainpage}/>}/>
+
                     <Route exact path='/login'>
                         <Login/>
                     </Route>
-                    <Route exact path={'/user/:userId'} component={UserProfile}/>
-                    <Route exact path='/admin/users' render={props => <AdminUsers{...props}/>}/>
-                    <Route exact path='/admin/lessons' render={props => <AdminLessons{...props}/>}/>
-                    <Route exact path='/verdicts'>
-                        <Header />
-                        <VerdictsInfo/>
-                    </Route>
-                    <Route exact path='/course/:courseId' component={Course}/>
-                    <Route exact path='/admin/lessons/new' component={AdminCreateLesson}/>
-                    <Route exact path='/admin/signup' component={AdminSignup}/>
-                    <Route exact path='/about-courses'>
-                        <Header/>
-                        <AboutCourses/>
-                    </Route>
 
-                    <Route exact path='/course/:courseId/homework/' component={CourseHomework}/>
+                    <Route exact path={'/user/:userId'} render={props => <PageWrapper{...props} child={UserProfile}/>}/>
+
+                    <Route exact path='/admin/users' render={props => <PageWrapper{...props} child={AdminUsers}/>}/>
+
+                    <Route exact path='/admin/lessons' render={props => <PageWrapper{...props} child={AdminLessons}/>}/>
+
+                    <Route exact path='/verdicts' render={props => <PageWrapper{...props} child={VerdictsInfo}/>}/>
+
+                    <Route exact path='/course/:courseId' render={props => <PageWrapper{...props} child={Course}/>}/>
+                    <Route exact path='/admin/lessons/new' render={props => <PageWrapper{...props} child={AdminCreateLesson}/>}/>
+                    <Route exact path='/admin/signup' render={props => <PageWrapper{...props} child={AdminLessons}/>}/>
+                    <Route exact path='/about-courses' render={props => <PageWrapper{...props} child={AboutCourses}/>}/>
+
+                    <Route exact path='/course/:courseId/homework/' render={props => <PageWrapper{...props} child={CourseHomework}/>}/>
+
                     <Route exact path='/course/:courseId/homework/:homeworkId'
-                           render = {props => <Homework{...props} tab={'description'}/> }/>
+                           render = {props => <PageWrapper{...props} tab={'description'} child={Homework}/> }/>
 
                     <Route exact path='/course/:courseId/homework/:homeworkId/problems/:problemNumber'
-                           render = {props => <Homework{...props} tab={'problems'}/> }/>
+                           render = {props => <PageWrapper{...props} tab={'problems'} child={Homework}/> }/>
 
                     <Route exact path='/course/:courseId/homework/:homeworkId/submissions'
-                           render = {props => <Homework{...props} tab={'submissions'}/> }/>
+                           render = {props => <PageWrapper{...props} tab={'submissions'} child={Homework}/> }/>
 
-                    <Route exact path='/about-statistics' component={AboutStatistics}/>
+                    <Route exact path='/about-statistics' render={props => <PageWrapper{...props} child={AboutStatistics}/>}/>
 
                     <Route>
                         <ErrorPage code={404} description={'Страница не найдена.'}/>

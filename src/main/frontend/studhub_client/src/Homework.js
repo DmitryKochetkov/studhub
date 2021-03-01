@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-import Header from './Header';
 import HomeworkProblems from './HomeworkProblems';
 import HomeworkSubmissions from './HomeworkSubmissions';
 import Moment from 'react-moment';
@@ -48,8 +47,7 @@ class Homework extends Component {
             tab = <HomeworkSubmissions homework={homework} params={this.props.match.params}/>;
 
         return (
-            <div>
-                <Header/>
+            <div className="page-container">
                 <div className='container'>
                     <div>
                         <h2 className='font-weight-bold'>Домашняя работа</h2>

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import profilePic from './profilePic.jpg';
 import './App.css';
 import App from './App';
-import Header from "./Header";
 import CoursesTable from "./CoursesTable";
 
 class UserProfile extends Component {
@@ -51,8 +50,7 @@ class UserProfile extends Component {
         );
 
         return (
-            <div>
-                <Header/>
+            <div className="page-container">
                 <div className='container'>
                     <h1 className='font-weight-bold pb-3'>Личный кабинет</h1>
                     <div className='row align-items-center'>

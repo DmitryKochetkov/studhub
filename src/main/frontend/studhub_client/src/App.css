@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  display: flex;
 }
 
 .App-logo {
@@ -65,4 +66,14 @@ h1, h2, h3, h4, h5, h6 {
   height: 40px;
   text-align: center;
   border: 2px solid black;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrap {
+  flex: 1;
 }

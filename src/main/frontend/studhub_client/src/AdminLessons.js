@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import App from './App';
 import Moment from 'react-moment';
-import Header from "./Header";
 import ErrorPage from "./ErrorPage";
 import PaginationPanel from "./PaginationPanel";
 
@@ -47,8 +46,7 @@ class AdminLessons extends Component {
             );
 
             return (
-                <div>
-                    <Header/>
+                <div className="page-container">
                     <div className='container'>
                         <h1 className='font-weight-bold pb-3'>Уроки</h1>
                         <div>
