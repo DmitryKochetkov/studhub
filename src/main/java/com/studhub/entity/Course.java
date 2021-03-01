@@ -1,27 +1,42 @@
 package com.studhub.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "courses")
 @Data
 public class Course extends BaseEntity {
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, updatable = false)
-    User student;
+    @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false, updatable = false)
+    private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "course_type", referencedColumnName = "id", nullable = false, updatable = false)
-    RefCourse refCourse;
+    @JoinColumn(name = "subject", referencedColumnName = "id", nullable = false, updatable = false)
+    private Subject subject;
 
     @Enumerated(EnumType.STRING)
-    CourseStatus courseStatus;
+    private CourseStatus courseStatus;
 
     @OneToMany(mappedBy = "course")
-    List<Lesson> lessons;
+    private List<Lesson> lessons;
 
-    //CodificatorProgress codificatorProgress = new Codificator(refCourse.getCodificatorTemplate())
+    @OneToMany(mappedBy = "course")
+    private List<Homework> homework;
+
+    @OneToOne
+    @JoinColumn(name = "active_specification_id", referencedColumnName = "id")
+    private Specification activeSpecification; // актуальная спецификация, по которой ведется сбор статистики
+  
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + this.getId() +
+                ", student='" + student.getUsername() +
+                "'}";
+    }
 }

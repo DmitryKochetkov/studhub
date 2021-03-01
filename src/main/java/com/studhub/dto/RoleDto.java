@@ -26,19 +26,6 @@ public class RoleDto extends BaseDto {
         if (!(obj instanceof RoleDto))
             return true;
 
-        return ((RoleDto)obj).getName() == this.name;
-    }
-
-    public String getNameForUI() {
-        if (name.equals("ROLE_USER"))
-            return "Пользователь";
-
-        if (name.equals("ROLE_STUDENT"))
-            return "Ученик";
-
-        if (name.equals("ROLE_ADMIN"))
-            return "Администратор";
-
-        return name;
+        return ((RoleDto) obj).getName().equals(this.name);
     }
 }

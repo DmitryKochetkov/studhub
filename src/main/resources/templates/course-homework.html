@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'StudHub: ' + ${student.getFirstName() + student.getLastName()} + ' - Домашние работы по курсу ' + ${course_id}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css}">
+</head>
+<body>
+    <header th:insert="common/header :: header"></header>
+    <div class="container">
+        <div>
+            <h2 class="font-weight-bold">Домашние работы</h2>
+            <span>
+                <span class="font-weight-bold" th:text="'по курсу'"></span>
+                <a class="btn-link" th:text="${course_id}" th:href="'/student/' + ${student_id} + '/course/' + ${course_id}"></a>
+            </span>
+        </div>
+
+        <div class="pt-3">
+            <table class="table" style="font-size: 10pt;">
+                <thead class="thead-light">
+                <tr>
+                    <th>Тема</th>
+                    <th>Занятие</th>
+                    <th>Срок сдачи</th>
+                    <th>Прогресс</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="homework: ${homeworkList}">
+                    <td th:text="${homework.getDescription()}"></td>
+                    <td th:text="${homework.getLessonId()}"></td>
+                    <td th:text="${#temporals.format(homework.getDeadline(), 'dd.MM.yyyy hh:mm')}"></td>
+                    <td>
+                        <span th:text="${homework.getSolvedProblemsCount()} + '/' + ${homework.getTotalProblemsCount()}"></span>
+                        <a class="btn-link pl-2" th:href="@{'/student/' + ${student_id} + '/course/' + ${course_id} + '/homework/' + ${homework.getId()}}">Подробнее</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,22 +1,30 @@
 package com.studhub.dto;
 
 import com.studhub.entity.Lesson;
+import com.studhub.entity.LessonStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class LessonDto extends BaseDto {
-    String topic;
-    Date startDate;
+    private String topic;
+    private Long courseId;
+    private Long studentId;
+    private LessonStatus status;
+
+    private LocalDateTime startDateTime;
 
     public LessonDto(Lesson lesson) {
         super(lesson);
         this.topic = lesson.getTopic();
-        this.startDate = lesson.getStartDate();
+        this.startDateTime = lesson.getStartDateTime();
+        this.courseId = lesson.getCourse().getId();
+        this.studentId = lesson.getCourse().getStudent().getId();
+        this.status = lesson.getStatus();
     }
 }

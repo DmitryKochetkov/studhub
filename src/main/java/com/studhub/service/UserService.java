@@ -1,54 +1,84 @@
 package com.studhub.service;
 
 import com.studhub.entity.Role;
+import com.studhub.entity.Student;
 import com.studhub.entity.User;
 import com.studhub.entity.UserStatus;
 import com.studhub.payload.SignupRequest;
 import com.studhub.repository.RoleRepository;
+import com.studhub.repository.StudentRepository;
 import com.studhub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private StudentRepository studentRepository;
 
-    public List<User> getAll() {
-        return userRepository.findAll();
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Page<User> getAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
-    public User getByUsername(String username) {
+    public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     public User register(SignupRequest dto) {
+        if (dto.getUsername() == null || dto.getUsername().equals(""))
+            return null;
+
         User user = new User();
         List<Role> roles = new ArrayList<>();
         roles.add(roleRepository.findByName("ROLE_USER"));
-        if (dto.getRole().equals("STUDENT"))
+        if (dto.getRole().equals("STUDENT")) {
+            user = new Student();
             roles.add(roleRepository.findByName("ROLE_STUDENT"));
+        }
 
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword()); //TODO: bCryptPasswordEncoder
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setStatus(UserStatus.ENABLED);
         user.setRoles(roles);
-        Date now = new Date();
+        user.setFollowers(new ArrayList<>());
+        user.setFollowing(new ArrayList<>());
+        LocalDateTime now = LocalDateTime.now();
         user.setCreated(now);
         user.setLastModified(now);
         return userRepository.save(user);
     }
 
-    public User getById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public Optional<? extends User> getById(Long id) {
+        Optional<? extends User> result = studentRepository.findById(id);
+        if (!result.isPresent())
+            result = userRepository.findById(id);
+        return result;
+    }
+
+    public Page<User> getUsersWhoFollowUser(User user, Pageable pageable) {
+        return userRepository.findUsersByFollowingContains(user, pageable);
+    }
+
+    public Page<User> getUsersWhoAreFollowedByUser(User user, Pageable pageable) {
+        return userRepository.findUsersByFollowersContains(user, pageable);
     }
 }

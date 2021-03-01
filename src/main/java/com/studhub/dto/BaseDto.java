@@ -4,14 +4,14 @@ import com.studhub.entity.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 public class BaseDto {
-    Long id;
-    Date created;
-    Date lastModified;
+    protected Long id;
+    protected LocalDateTime created;
+    protected LocalDateTime lastModified;
 
     BaseDto(BaseEntity entity) {
         this.id = entity.getId();

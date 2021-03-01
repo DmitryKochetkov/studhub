@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'Studhub: Error ' + ${errorCode}">Studhub: Error</title>
+    <title th:text="'StudHub: Error ' + ${errorCode}">StudHub: Error</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
 </head>
@@ -12,18 +12,12 @@
             <div class="row justify-content-center">
                 <div class="col-md-12 text-center">
                     <span class="font-weight-bold lead">Ошибка</span>
-                    <span class="display-1 d-block" th:text="${errorCode}">Error Code</span>
-                    <div class="mb-4 lead" th:text="${errorMsg}">Error Message.</div>
+                    <span class="display-1 d-block" th:text="${errorCode}" style="font-weight: 500">Error Code</span>
+                    <div class="mb-4 lead" th:text="${errorMsg}" style="font-weight: 400;">Error Message.</div>
                     <a href="/" class="btn btn-primary">На главную</a>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="container" th:if="${!errorDescription.empty}">
-        <h5 class="font-weight-bold">Описание ошибки:</h5>
-<!--        <span th:text="${errorDescription}" style="font-family: 'Source Code Pro', monospace;"></span>-->
-        <pre th:text="${errorDescription}"></pre>
     </div>
 </body>
 </html>

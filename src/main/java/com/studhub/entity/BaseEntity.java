@@ -8,20 +8,27 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Data
-public class BaseEntity {
+public abstract class BaseEntity {
     @Id
     @GeneratedValue(generator = "increment")
     @Column(name = "id", nullable = false)
-    private long id;
+    private Long id;
 
     @CreatedDate
     @Column(name = "created")
-    private Date created;
+    private LocalDateTime created;
 
     @LastModifiedDate
-    private Date lastModified;
+    private LocalDateTime lastModified;
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "{" +
+                "id=" + id +
+                '}';
+    }
 }

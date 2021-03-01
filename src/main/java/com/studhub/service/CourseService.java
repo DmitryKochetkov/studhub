@@ -5,12 +5,14 @@ import com.studhub.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CourseService {
     @Autowired
-    CourseRepository courseRepository;
+    private CourseRepository courseRepository;
 
-    public Course getById(Long id) {
-        return courseRepository.findById(id).orElse(null);
+    public Optional<Course> getById(Long id) {
+        return courseRepository.findById(id);
     }
 }

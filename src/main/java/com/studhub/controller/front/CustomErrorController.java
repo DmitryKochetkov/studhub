@@ -4,22 +4,25 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
+/**
+ * Класс, генерирующий веб-страницу с сообщением об ошибке в случае необработнных исключений в контроллерах
+ * представлений.
+ */
 @Controller
 public class CustomErrorController implements ErrorController {
-    @RequestMapping(value = "errors")
+    @RequestMapping(value = "errors", produces = "text/html;charset=UTF-8")
     public ModelAndView renderErrorPage(HttpServletRequest httpRequest) {
 
         ModelAndView errorPage = new ModelAndView("custom_error");
         String errorMsg = "Неизвестная ошибка.";
-        int httpErrorCode = getErrorCode(httpRequest);
-        String errorDescription = "";
+        Integer httpErrorCode = getErrorCode(httpRequest);
+        if (httpErrorCode == null) {
+            httpErrorCode = 404;
+        }
 
         switch (httpErrorCode) {
             case 400: {
@@ -42,27 +45,16 @@ public class CustomErrorController implements ErrorController {
                     errorMsg = "Ошибка сервера.";
                 if (httpErrorCode == HttpStatus.INTERNAL_SERVER_ERROR.value())
                     errorMsg = "Внутренняя ошибка сервера.";
-                errorDescription = getErrorDescription(httpRequest);
                 break;
         }
 
         errorPage.addObject("errorCode", httpErrorCode);
         errorPage.addObject("errorMsg", errorMsg);
-        errorPage.addObject("errorDescription", errorDescription);
         return errorPage;
     }
 
-    private int getErrorCode(HttpServletRequest httpRequest) {
+    private Integer getErrorCode(HttpServletRequest httpRequest) {
         return (Integer) httpRequest.getAttribute("javax.servlet.error.status_code");
-    }
-
-    private String getErrorDescription(HttpServletRequest httpServletRequest) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        Throwable t = ((Throwable)httpServletRequest.getAttribute("javax.servlet.error.exception"));
-        if (t != null)
-            t.printStackTrace(pw);
-        return sw.toString();
     }
 
     @Override
@@ -70,7 +62,3 @@ public class CustomErrorController implements ErrorController {
         return "/errors";
     }
 }
-
-//class CustomErrorController {
-//
-//}
