@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import App from "./App";
-import Header from "./Header";
 import ErrorPage from "./ErrorPage";
 import PaginationPanel from "./PaginationPanel";
 
@@ -51,35 +50,37 @@ class AdminUsers extends Component {
         }
 
         return (
-            <div>
-                <Header/>
-                <div className='container'>
-                    <h1 className='font-weight-bold pb-3'>Пользователи</h1>
+            <div className="page-container">
+                <div className="content-wrap">
+                    <div className='container'>
+                        <h1 className='font-weight-bold pb-3'>Пользователи</h1>
 
-                    <div className='users_table'>
-                        <table className='table'>
-                            <thead className='thead-light'>
-                            <tr>
-                                <th>ID</th>
-                                <th>Логин</th>
-                                <th>Имя</th>
-                                <th>Тип аккаунта</th>
-                                <th>Статус</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {userTable}
-                            </tbody>
-                        </table>
+                        <div className='users_table'>
+                            <table className='table'>
+                                <thead className='thead-light'>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Логин</th>
+                                    <th>Имя</th>
+                                    <th>Тип аккаунта</th>
+                                    <th>Статус</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {userTable}
+                                </tbody>
+                            </table>
 
-                        <PaginationPanel currentPage={usersPage.number} totalPages={usersPage.totalPages} path={this.props.location.pathname}/>
+                            <PaginationPanel currentPage={usersPage.number} totalPages={usersPage.totalPages} path={this.props.location.pathname}/>
+                        </div>
+
+                        <form action='/admin/signup' method='get'>
+                            <button type='submit' className='btn btn-primary'>Создать пользователя</button>
+                        </form>
                     </div>
-
-                    <form action='/admin/signup' method='get'>
-                        <button type='submit' className='btn btn-primary'>Создать пользователя</button>
-                    </form>
                 </div>
             </div>
+
         );
     }
 }

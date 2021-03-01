@@ -11,10 +11,13 @@ class PageWrapper extends Component {
     render() {
         const Child = this.props.child;
         const props = this.props;
+
         return (
             <div>
                 <Header/>
-                <Child{...props}/>
+                <div className="page-wrapper">
+                    <Child{...props}/>
+                </div>
                 <Footer/>
             </div>
         );

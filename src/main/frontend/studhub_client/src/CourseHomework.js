@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-import Header from './Header';
 import Moment from 'react-moment';
 import ErrorPage from "./ErrorPage";
 import PaginationPanel from "./PaginationPanel";
@@ -47,8 +46,7 @@ class CourseHomework extends Component {
         </tr>);
 
         return (
-            <div>
-                <Header/>
+            <div className="page-container">
                 <div className='container'>
                     <div>
                         <h2 className='font-weight-bold'>Домашние работы</h2>

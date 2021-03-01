@@ -35,22 +35,24 @@ class VerdictsInfo extends Component {
         );
 
         return (
-            <div className='container'>
-                <h2 className='font-weight-bold pb-2'>Вердикты</h2>
+            <div className="page-container">
+                <div className='container'>
+                    <h2 className='font-weight-bold pb-2'>Вердикты</h2>
 
-                <div className='verdicts_table'>
-                    <table className='table'>
-                        <thead className='thead-light'>
-                        <tr>
-                            <th>Сокращение</th>
-                            <th>Транскрипция</th>
-                            <th>Значение</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {verdictsTableBody}
-                        </tbody>
-                    </table>
+                    <div className='verdicts_table'>
+                        <table className='table'>
+                            <thead className='thead-light'>
+                            <tr>
+                                <th>Сокращение</th>
+                                <th>Транскрипция</th>
+                                <th>Значение</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {verdictsTableBody}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         );

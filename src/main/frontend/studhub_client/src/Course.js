@@ -4,7 +4,6 @@ import App from './App';
 import {faQuestionCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Bar, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
-import Header from './Header';
 import Moment from 'react-moment';
 import moment from 'moment';
 import BarChart from 'recharts/lib/chart/BarChart';
@@ -138,96 +137,97 @@ class Course extends Component {
             }
 
             return (
-                <div>
-                    <Header/>
-                    <div className='container'>
-                        <h2 className='font-weight-bold pb-3'>Курс #{course.id}: {course.subject.title}</h2>
-                        <div>Ученик: <a href={'/user/' + this.state.user.id}>{this.state.user.username}</a></div>
-                        <div className='font-weight-bold'>Статус: {this.courseStatusUI[course.status]}</div>
+                <div className="page-container">
+                    <div className="content-wrap">
+                        <div className='container'>
+                            <h2 className='font-weight-bold pb-3'>Курс #{course.id}: {course.subject.title}</h2>
+                            <div>Ученик: <a href={'/user/' + this.state.user.id}>{this.state.user.username}</a></div>
+                            <div className='font-weight-bold'>Статус: {this.courseStatusUI[course.status]}</div>
 
-                        <div className='row pt-3'>
-                            <div className='col'>
-                                <div className='font-weight-bold pb-3'>Ближайшие дедлайны</div>
-                                <table className='table small-font'>
-                                    <thead className='thead-light'>
-                                    <tr>
-                                        <th>Срок сдачи</th>
-                                        <th>Разделы</th>
-                                        <th>Заданий</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {comingHomework}
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className='col'>
-                                <div className='font-weight-bold pb-3'>Ближайшие занятия</div>
-                                <table className='table small-font'>
-                                    <thead className='thead-light'>
-                                    <tr>
-                                        <th>Дата</th>
-                                        <th>Тема</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {comingLessons}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div className='row'>
-                            <div className={'text-center col'}>
-                                <a className='small-font'
-                                   href={'/course/' + this.props.match.params.courseId + '/homework'}>Все
-                                    домашние задания</a>
-                            </div>
-                            <div className={'text-center col'}>
-                                <a className='small-font'
-                                   href={'/course/' + this.props.match.params.courseId + '/lessons'}>Все
-                                    занятия</a>
-                            </div>
-                        </div>
-
-                        <div className='row pt-4'>
-                            <div className='col'>
-                                <div className='pb-3'>Динамика выполнения домашних работ:</div>
-                                <div>
-                                    {chart_avg_homework}
+                            <div className='row pt-3'>
+                                <div className='col'>
+                                    <div className='font-weight-bold pb-3'>Ближайшие дедлайны</div>
+                                    <table className='table small-font'>
+                                        <thead className='thead-light'>
+                                        <tr>
+                                            <th>Срок сдачи</th>
+                                            <th>Разделы</th>
+                                            <th>Заданий</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {comingHomework}
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div className='form-group'>
-                                    <label htmlFor='homework_stat_period'>Промежуток:</label>
-                                    <select name='homework_stat_period' id='homework_stat_period' className='form-control' onChange={this.onPeriodChange}>
-                                        <option value='MONTH'>Месяц</option>
-                                        <option value='THREE_MONTH'>3 месяца</option>
-                                        <option value='SIX_MONTH'>Полгода</option>
-                                        <option value='YEAR'>Год</option>
-                                    </select>
+
+                                <div className='col'>
+                                    <div className='font-weight-bold pb-3'>Ближайшие занятия</div>
+                                    <table className='table small-font'>
+                                        <thead className='thead-light'>
+                                        <tr>
+                                            <th>Дата</th>
+                                            <th>Тема</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {comingLessons}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div className='col'>
-                                <span>Средний балл ЕГЭ: </span>
-                                <span>нет данных </span>
-                                <FontAwesomeIcon icon={faQuestionCircle} data-toggle='tooltip' data-placement='top'
-                                                 title='Тестирования или домашние работы по полному варианту ЕГЭ еще не проводились.'/>
+
+                            <div className='row'>
+                                <div className={'text-center col'}>
+                                    <a className='small-font'
+                                       href={'/course/' + this.props.match.params.courseId + '/homework'}>Все
+                                        домашние задания</a>
+                                </div>
+                                <div className={'text-center col'}>
+                                    <a className='small-font'
+                                       href={'/course/' + this.props.match.params.courseId + '/lessons'}>Все
+                                        занятия</a>
+                                </div>
                             </div>
-                        </div>
 
-                        <div>
-                            <div className='font-weight-bold pb-3'>
-                                <span>Прогресс по заданиям экзамена </span>
-                                <FontAwesomeIcon icon={faQuestionCircle} data-toggle='tooltip' data-placement='top'
-                                                 title='Для задания с соотвествующим номером при наведении выводится процент правильно решенных заданий в домашних работах.'/>
+                            <div className='row pt-4'>
+                                <div className='col'>
+                                    <div className='pb-3'>Динамика выполнения домашних работ:</div>
+                                    <div>
+                                        {chart_avg_homework}
+                                    </div>
+                                    <div className='form-group'>
+                                        <label htmlFor='homework_stat_period'>Промежуток:</label>
+                                        <select name='homework_stat_period' id='homework_stat_period' className='form-control' onChange={this.onPeriodChange}>
+                                            <option value='MONTH'>Месяц</option>
+                                            <option value='THREE_MONTH'>3 месяца</option>
+                                            <option value='SIX_MONTH'>Полгода</option>
+                                            <option value='YEAR'>Год</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className='col'>
+                                    <span>Средний балл ЕГЭ: </span>
+                                    <span>нет данных </span>
+                                    <FontAwesomeIcon icon={faQuestionCircle} data-toggle='tooltip' data-placement='top'
+                                                     title='Тестирования или домашние работы по полному варианту ЕГЭ еще не проводились.'/>
+                                </div>
                             </div>
 
-                            {progressTable}
-                        </div>
+                            <div>
+                                <div className='font-weight-bold pb-3'>
+                                    <span>Прогресс по заданиям экзамена </span>
+                                    <FontAwesomeIcon icon={faQuestionCircle} data-toggle='tooltip' data-placement='top'
+                                                     title='Для задания с соотвествующим номером при наведении выводится процент правильно решенных заданий в домашних работах.'/>
+                                </div>
 
-                        <div>
-                            <a className='small-font'
-                               href={'/about-statistics'}>Подробнее об оценивании и статистике</a>
+                                {progressTable}
+                            </div>
+
+                            <div>
+                                <a className='small-font'
+                                   href={'/about-statistics'}>Подробнее об оценивании и статистике</a>
+                            </div>
                         </div>
                     </div>
                 </div>
